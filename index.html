@@ -25,9 +25,9 @@
        ================================================================ */
     :root {
       /* 3.1 WGU Brand Colors → Paragon semantic roles */
-      --pgn-color-primary-base: #0A1E3C;   /* Brand Dark Navy — headers, structural */
-      --pgn-color-brand-base:   #0055D4;   /* Brand Blue — action, CTAs, links */
-      --pgn-color-info-base:    #4DB5E8;   /* Brand Sky Blue — accents, progress, info */
+      --pgn-color-primary-base: #001730;   /* Brand Dark Navy — headers, structural */
+      --pgn-color-brand-base:   #0070F0;   /* Brand Blue — action, CTAs, links */
+      --pgn-color-info-base:    #46B1EF;   /* Brand Sky Blue — accents, progress, info */
       --pgn-color-danger-base:  #C13232;   /* Accent 55 — error, emphasis */
       --pgn-color-success-base: #2E7D32;   /* Success green */
       --pgn-color-warning-base: #FBAE40;   /* Amber (FY26) */
@@ -45,6 +45,15 @@
       --color-bright-blue:   #0070F0;
       --color-dark-navy:     #002855;
       --color-sky-blue:      #46B1EF;
+
+      /* Code syntax highlighting (intentionally outside brand palette for legibility) */
+      --code-bg: #0d1117;
+      --code-text: #c9d1d9;
+      --code-keyword: #ff7b72;
+      --code-function: #79c0ff;
+      --code-string: #a5d6ff;
+      --code-comment: #8b949e;
+      --code-border: #30363d;
 
       /* 3.3 Grayscale */
       --pgn-color-white:    #FFFFFF;
@@ -75,15 +84,19 @@
       --pgn-size-border-radius-sm:   0.25rem;
       --pgn-size-rounded-pill:       50rem;
       --pgn-size-container-max-width-lg: 1192px;
+
+      /* Font tokens */
+      --pgn-font-family-heading: 'Sora', 'Segoe UI', Arial, sans-serif;
+      --pgn-font-family-body: 'Lato', 'Segoe UI', Arial, sans-serif;
     }
 
     /* ================================================================
        DARK MODE OVERRIDES
        ================================================================ */
     [data-theme="dark"] {
-      --pgn-color-bg-base: #1a1a2e;
-      --pgn-color-bg-light: #16213e;
-      --pgn-color-white: #1a1a2e;
+      --pgn-color-bg-base: #0D1A2E;
+      --pgn-color-bg-light: #0F2240;
+      --pgn-color-white: #0D1A2E;
       --pgn-color-gray-900: #E6E6E6;
       --pgn-color-gray-800: #CCCCCC;
       --pgn-color-gray-700: #B3B3B3;
@@ -92,14 +105,14 @@
       --pgn-color-gray-400: #666666;
       --pgn-color-gray-300: #4D4D4D;
       --pgn-color-gray-200: #333333;
-      --pgn-color-gray-100: #2a2a4a;
-      --pgn-color-primary-tint: #1a2a4a;
-      --pgn-color-brand-tint: #0a1a3a;
-      --pgn-color-info-tint: #0a2a3a;
-      --pgn-color-success-tint: #0a2a1a;
-      --pgn-color-danger-tint: #3a1a1a;
-      --color-deep-navy: #0a0a1e;
-      --color-ice-blue: #1a2a3e;
+      --pgn-color-gray-100: #1A2A45;
+      --pgn-color-primary-tint: #0D2240;
+      --pgn-color-brand-tint: #001E3E;
+      --pgn-color-info-tint: #002E4A;
+      --pgn-color-success-tint: #0A2E1A;
+      --pgn-color-danger-tint: #3A1A1A;
+      --color-deep-navy: #000D1A;
+      --color-ice-blue: #0D2240;
     }
     [data-theme="dark"] body {
       background: var(--pgn-color-bg-light);
@@ -111,64 +124,64 @@
     [data-theme="dark"] .ai-prompt-card,
     [data-theme="dark"] .skill-card,
     [data-theme="dark"] .snapshot-table {
-      background: #1e1e3e;
-      border-color: #2a2a4a;
+      background: #0D2240;
+      border-color: #1A2A45;
     }
     [data-theme="dark"] .skill-card.recommended {
-      background: #0a1a3a;
+      background: #001E3E;
       border-color: var(--pgn-color-brand-base);
     }
     [data-theme="dark"] .skill-card.in-progress {
-      background: #0a2a3a;
+      background: #002E4A;
       border-color: var(--pgn-color-info-base);
     }
     [data-theme="dark"] .screen-footer {
-      background: #1e1e3e;
-      border-color: #2a2a4a;
+      background: #0D2240;
+      border-color: #1A2A45;
     }
     [data-theme="dark"] .navbar-dark {
-      background: #0a0a1e;
+      background: #000D1A;
     }
     [data-theme="dark"] .lms-sidebar {
-      background: #1e1e3e;
-      border-color: #2a2a4a;
+      background: #0D2240;
+      border-color: #1A2A45;
     }
     [data-theme="dark"] .lms-content {
-      background: #1a1a2e;
+      background: #0D1A2E;
     }
     [data-theme="dark"] .lms-nav li a:hover {
-      background: #2a2a4a;
+      background: #1A2A45;
     }
     [data-theme="dark"] .lms-nav li a.active {
-      background: #0a1a3a;
+      background: #001E3E;
     }
     [data-theme="dark"] .lms-resource-link {
-      background: #0a1a3a;
+      background: #001E3E;
     }
     [data-theme="dark"] .badge-gray {
-      background: #2a2a4a;
+      background: #1A2A45;
       color: #999999;
     }
     [data-theme="dark"] .alert-info {
-      background: #0a2a3a;
-      border-color: #1a3a5a;
-      color: #7ec8e3;
+      background: #002E4A;
+      border-color: #003355;
+      color: var(--pgn-color-info-base);
     }
     [data-theme="dark"] .feedback-card {
-      background: #3a1a1a;
-      color: #e8a0a0;
+      background: #3A1A1A;
+      color: #E8827A;
     }
     [data-theme="dark"] .snapshot-row {
-      border-color: #2a2a4a;
+      border-color: #1A2A45;
     }
     [data-theme="dark"] .progress {
-      background: #2a2a4a;
+      background: #1A2A45;
     }
     [data-theme="dark"] .textbook-placeholder {
-      background: #2a2a4a;
+      background: #1A2A45;
     }
     [data-theme="dark"] .lms-nav-divider {
-      background: #2a2a4a;
+      background: #1A2A45;
     }
 
     /* ================================================================
@@ -238,7 +251,7 @@
     .btn-primary {
       background: var(--pgn-color-brand-base); color: #fff; border-color: var(--pgn-color-brand-base);
     }
-    .btn-primary:hover { background: #003FA0; border-color: #003FA0; }
+    .btn-primary:hover { background: #005CC8; border-color: #005CC8; }
     .btn-outline-primary {
       background: transparent; color: var(--pgn-color-brand-base);
       border-color: var(--pgn-color-brand-base);
@@ -251,14 +264,14 @@
     .btn-inverse-primary {
       background: #fff; color: var(--pgn-color-primary-base); border-color: #fff;
     }
-    .btn-inverse-primary:hover { background: #e8e8e8; }
+    .btn-inverse-primary:hover { background: var(--pgn-color-gray-100); }
     .btn .material-icons-outlined { font-size: 20px; }
 
     /* Theme toggle button */
     .btn-theme-toggle {
       background: rgba(255,255,255,0.12);
       border: 1px solid rgba(255,255,255,0.2);
-      color: rgba(255,255,255,0.85);
+      color: #FFFFFF;
       width: 36px; height: 36px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; transition: background 150ms;
@@ -296,13 +309,13 @@
        BADGES / CHIPS (Paragon Badge)
        ================================================================ */
     .badge {
-      display: inline-flex; align-items: center; gap: 4px;
-      padding: 4px 12px; border-radius: var(--pgn-size-border-radius-sm);
-      font-size: 13px; font-weight: 700; line-height: 1.4;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 16px; border-radius: var(--pgn-size-border-radius-sm);
+      font-size: 12px; font-weight: 700; line-height: 1.4;
     }
     .badge-primary { background: var(--pgn-color-primary-tint); color: var(--pgn-color-primary-base); }
     .badge-brand   { background: var(--pgn-color-brand-tint); color: var(--pgn-color-brand-base); }
-    .badge-info    { background: var(--pgn-color-info-tint); color: #1d4a64; }
+    .badge-info    { background: var(--pgn-color-info-tint); color: var(--color-dark-navy); }
     .badge-success { background: var(--pgn-color-success-tint); color: #1B5E20; }
     .badge-danger  { background: var(--pgn-color-danger-tint); color: #8A1E1E; }
     .badge-gray    { background: var(--pgn-color-bg-light); color: var(--pgn-color-gray-600); }
@@ -315,9 +328,9 @@
       border-radius: var(--pgn-size-border-radius-base);
       border: 1px solid transparent;
     }
-    .alert-success { background: var(--pgn-color-success-tint); border-color: #C8E6C9; color: #1B5E20; }
-    .alert-info    { background: var(--pgn-color-info-tint); border-color: #B3E5FC; color: #01579B; }
-    .alert-danger  { background: var(--pgn-color-danger-tint); border-color: #F5C6CB; color: #8A1E1E; }
+    .alert-success { background: var(--pgn-color-success-tint); border-color: var(--pgn-color-success-base); color: #1B5E20; }
+    .alert-info    { background: var(--pgn-color-info-tint); border-color: var(--pgn-color-info-base); color: var(--color-dark-navy); }
+    .alert-danger  { background: var(--pgn-color-danger-tint); border-color: var(--pgn-color-danger-base); color: #8A1E1E; }
 
     /* ================================================================
        PROGRESS BAR (Paragon ProgressBar)
@@ -347,12 +360,12 @@
       height: 28px; width: auto;
     }
     .navbar-brand-text {
-      font-family: 'Sora', sans-serif; font-size: 17px; font-weight: 700; color: #fff;
+      font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 700; color: #fff;
     }
     .navbar-right { display: flex; align-items: center; gap: var(--pgn-spacing-2); }
     .navbar-chip {
       background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85);
-      font-size: 13px; padding: 4px 12px; border-radius: var(--pgn-size-rounded-pill);
+      font-size: 14px; padding: 8px 16px; border-radius: var(--pgn-size-rounded-pill);
       border: 1px solid rgba(255,255,255,0.2);
     }
     .navbar-user { display: flex; align-items: center; gap: var(--pgn-spacing-1); color: rgba(255,255,255,0.85); font-size: 14px; }
@@ -379,21 +392,21 @@
        CODE BLOCKS & EDITOR
        ================================================================ */
     .code-block {
-      background: #0d1117; color: #c9d1d9;
+      background: var(--code-bg); color: var(--code-text);
       font-family: 'Lato', 'Segoe UI', Arial, sans-serif; font-size: 14px; line-height: 1.6;
       border-radius: var(--pgn-size-border-radius-base);
       padding: var(--pgn-spacing-2) var(--pgn-spacing-3); overflow-x: auto;
     }
-    .code-block .kw { color: #ff7b72; }
-    .code-block .fn { color: #79c0ff; }
-    .code-block .str { color: #a5d6ff; }
-    .code-block .num { color: #79c0ff; }
-    .code-block .cm { color: #8b949e; }
+    .code-block .kw { color: var(--code-keyword); }
+    .code-block .fn { color: var(--code-function); }
+    .code-block .str { color: var(--code-string); }
+    .code-block .num { color: var(--code-function); }
+    .code-block .cm { color: var(--code-comment); }
     .code-editor {
       width: 100%; min-height: 160px;
-      background: #0d1117; color: #c9d1d9;
+      background: var(--code-bg); color: var(--code-text);
       font-family: 'Lato', 'Segoe UI', Arial, sans-serif; font-size: 14px; line-height: 1.6;
-      border: 2px solid #30363d; border-radius: var(--pgn-size-border-radius-base);
+      border: 2px solid var(--code-border); border-radius: var(--pgn-size-border-radius-base);
       padding: var(--pgn-spacing-2); resize: vertical;
     }
     .code-editor:focus { outline: none; border-color: var(--pgn-color-brand-base); }
@@ -415,7 +428,7 @@
       display: flex; align-items: center; justify-content: space-between;
       flex-shrink: 0;
     }
-    .footer-meta { font-size: 13px; color: var(--pgn-color-gray-600); }
+    .footer-meta { font-size: 14px; color: var(--pgn-color-gray-600); }
     .footer-actions { display: flex; gap: var(--pgn-spacing-1); }
 
     /* ================================================================
@@ -457,8 +470,8 @@
     }
     .ai-label {
       display: flex; align-items: center; gap: var(--pgn-spacing-1);
-      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
-      color: #1d4a64; margin-bottom: var(--pgn-spacing-2);
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--color-dark-navy); margin-bottom: var(--pgn-spacing-2);
     }
     .ai-label .material-icons-outlined { font-size: 16px; }
 
@@ -507,10 +520,10 @@
       color: var(--pgn-color-gray-900); text-transform: uppercase; letter-spacing: 0.05em;
       margin-bottom: var(--pgn-spacing-2);
     }
-    .lms-nav { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .lms-nav { list-style: none; display: flex; flex-direction: column; gap: 8px; }
     .lms-nav li a {
       display: flex; align-items: center; gap: var(--pgn-spacing-1);
-      padding: 10px 12px; border-radius: var(--pgn-size-border-radius-sm);
+      padding: 8px 16px; border-radius: var(--pgn-size-border-radius-sm);
       font-size: 14px; color: var(--pgn-color-gray-700); text-decoration: none;
       transition: background 100ms;
     }
@@ -523,12 +536,12 @@
     }
     .lms-resource-link {
       display: flex; align-items: center; gap: var(--pgn-spacing-1);
-      padding: 12px; border-radius: var(--pgn-size-border-radius-base);
+      padding: 16px; border-radius: var(--pgn-size-border-radius-base);
       background: var(--pgn-color-brand-tint); border: 2px solid var(--pgn-color-brand-base);
       color: var(--pgn-color-brand-base); font-weight: 700; font-size: 14px;
       cursor: pointer; text-decoration: none; transition: background 150ms;
     }
-    .lms-resource-link:hover { background: #D6E4FF; text-decoration: none; }
+    .lms-resource-link:hover { background: var(--pgn-color-brand-tint); text-decoration: none; }
     .lms-resource-link .material-icons-outlined { font-size: 20px; }
     .lms-content {
       padding: var(--pgn-spacing-5) var(--pgn-spacing-5);
@@ -599,45 +612,63 @@
     .meta-bar {
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
       background: var(--color-deep-navy); color: #fff;
-      font-size: 12px; padding: 10px var(--pgn-spacing-4) 12px;
+      font-size: 12px; padding: 8px var(--pgn-spacing-4) 16px;
       display: flex; flex-direction: column; gap: 8px;
     }
     .meta-bar-header {
       display: flex; align-items: center; gap: var(--pgn-spacing-2);
-      padding-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1);
     }
     .meta-bar .meta-id { color: var(--pgn-color-info-base); font-weight: 700; }
     .meta-bar-flows {
       display: grid;
       grid-template-columns: auto auto auto;
-      gap: 6px 16px;
+      gap: 8px 16px;
       align-items: center;
       justify-content: start;
     }
     .flow-id {
-      font-size: 11px; font-weight: 700; color: var(--pgn-color-info-base);
+      font-size: 12px; font-weight: 700; color: var(--pgn-color-info-base);
       white-space: nowrap;
     }
     .flow-desc {
-      font-size: 11px; color: rgba(255,255,255,0.5);
+      font-size: 12px; color: rgba(255,255,255,0.78);
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .flow-nav { display: flex; gap: 4px; flex-wrap: wrap; }
+    .flow-nav { display: flex; gap: 8px; flex-wrap: wrap; }
     .step-btn {
       background: transparent; border: 1px solid rgba(255,255,255,0.25);
-      color: rgba(255,255,255,0.6); font-size: 11px; font-family: 'Lato', sans-serif;
-      padding: 3px 8px; border-radius: var(--pgn-size-rounded-pill);
+      color: rgba(255,255,255,0.78); font-size: 12px; font-family: 'Lato', sans-serif;
+      padding: 8px; border-radius: var(--pgn-size-rounded-pill);
       cursor: pointer; transition: all 100ms; white-space: nowrap;
-      min-width: 28px; text-align: center;
+      min-width: 32px; min-height: 32px; text-align: center;
     }
     .step-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
     .step-btn.active { background: var(--pgn-color-info-base); border-color: var(--pgn-color-info-base); color: #fff; font-weight: 700; }
+
+    .skip-nav {
+      position: absolute; left: -9999px; top: auto;
+      width: 1px; height: 1px; overflow: hidden;
+      z-index: 9999; padding: 8px 16px;
+      background: var(--pgn-color-brand-base); color: #fff;
+      font-size: 16px; font-weight: 700; text-decoration: none;
+    }
+    .skip-nav:focus {
+      position: fixed; left: 0; top: 0;
+      width: auto; height: auto;
+    }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
 
     /* Ensure screens don't overlap the meta bar */
     body { padding-bottom: 140px; }
   </style>
 </head>
 <body>
+<a href="#screen-1" class="skip-nav">Skip to main content</a>
 
 
 <!-- ================================================================
@@ -647,7 +678,7 @@
      ================================================================ -->
 <section class="screen active" id="screen-1" aria-labelledby="s1-heading">
   <!-- LMS Header -->
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand" aria-label="Western Governors University">
       <img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;">
       <span class="navbar-brand-text">WGU Student Portal</span>
@@ -663,7 +694,7 @@
         <span>Sally R.</span>
       </div>
     </div>
-  </nav>
+  </header>
 
   <div class="lms-layout">
     <!-- Sidebar -->
@@ -683,12 +714,12 @@
       </ul>
       <div class="lms-nav-divider"></div>
       <p class="lms-sidebar-heading" style="margin-top:8px;">Practice Tools</p>
-      <a href="#" class="lms-resource-link" onclick="goToScreen(2); return false;" aria-label="Launch Coding Coach for Python practice">
+      <button type="button" class="lms-resource-link" onclick="goToScreen(2); return false;" aria-label="Launch Coding Coach for Python practice">
         <span class="material-icons-outlined" aria-hidden="true">rocket_launch</span>
         Coding Coach — Python
         <span class="material-icons-outlined" aria-hidden="true" style="margin-left:auto; font-size:16px;">open_in_new</span>
-      </a>
-      <p style="font-size:12px; color:var(--pgn-color-gray-600); margin-top:8px; padding:0 4px;">
+      </button>
+      <p style="font-size:12px; color:var(--pgn-color-gray-600); margin-top:8px; padding:0 8px;">
         AI-powered Python practice. Launches via LTI in a new tab. No separate login required.
       </p>
     </aside>
@@ -712,7 +743,7 @@
       <div class="textbook-placeholder">
         <span class="material-icons-outlined" style="font-size:32px; margin-bottom:8px; display:block;">auto_stories</span>
         Additional course content continues below...<br>
-        <span style="font-size:13px;">(This is a mock textbook page for storyboard purposes)</span>
+        <span style="font-size:12px;">(This is a mock textbook page for storyboard purposes)</span>
       </div>
     </main>
   </div>
@@ -734,7 +765,7 @@
      entry screen. Brief plain-language description. Prompt to begin."
      ================================================================ -->
 <section class="screen" id="screen-2" aria-labelledby="s2-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand" aria-label="Western Governors University">
       <img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;">
       <span class="navbar-brand-text">Western Governors University</span>
@@ -750,7 +781,7 @@
         <span>Sally R.</span>
       </div>
     </div>
-  </nav>
+  </header>
 
   <div class="screen-main">
     <div class="container">
@@ -767,7 +798,7 @@
           <p style="font-size:18px; line-height:1.6; margin-top:24px;">
             This tool finds where you actually are in Python — not where a fixed syllabus assumes you are — and builds practice tasks around your specific gaps.
           </p>
-          <p class="text-muted" style="margin-top:12px;">
+          <p class="text-muted" style="margin-top:16px;">
             Start with a short diagnostic. Your progress saves automatically. No separate account needed — you're already verified through WGU.
           </p>
 
@@ -798,23 +829,23 @@
         <!-- Right: 13 sub-section preview -->
         <div class="col-6">
           <div style="background:linear-gradient(135deg, var(--color-deep-navy) 0%, var(--color-dark-navy) 100%); border-radius:var(--pgn-size-border-radius-lg); padding:32px; color:#fff;">
-            <p style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--pgn-color-info-base); margin-bottom:16px;">13 Practice Areas</p>
-            <ul style="list-style:none; display:flex; flex-direction:column; gap:10px;" aria-label="List of 13 coaching sub-sections">
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Basic Syntax &amp; Data Types</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Control Flow &amp; Logic</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Functions &amp; Modular Programming</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Data Structures</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Working with Files &amp; I/O</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Error Handling &amp; Debugging</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Object-Oriented Programming</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Python Libraries &amp; Modules</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Advanced Data Handling</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Regular Expressions &amp; Strings</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Working with Databases</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Introduction to Automation</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Introduction to Machine Learning</li>
+            <p style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--pgn-color-info-base); margin-bottom:16px;">13 Practice Areas</p>
+            <ul style="list-style:none; display:flex; flex-direction:column; gap:8px;" aria-label="List of 13 coaching sub-sections">
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Basic Syntax &amp; Data Types</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Control Flow &amp; Logic</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Functions &amp; Modular Programming</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Data Structures</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Working with Files &amp; I/O</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Error Handling &amp; Debugging</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Object-Oriented Programming</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Python Libraries &amp; Modules</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Advanced Data Handling</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Regular Expressions &amp; Strings</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Working with Databases</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Introduction to Automation</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Introduction to Machine Learning</li>
             </ul>
-            <div style="margin-top:24px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.15); font-size:13px; color:rgba(255,255,255,0.6);">
+            <div style="margin-top:24px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.15); font-size:12px; color:rgba(255,255,255,0.6);">
               The diagnostic samples across all 13 areas. You'll only practice what you don't already know.
             </div>
           </div>
@@ -840,7 +871,7 @@
      sub-sections — calibrated for zero prior experience."
      ================================================================ -->
 <section class="screen" id="screen-3" aria-labelledby="s3-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand" aria-label="Western Governors University">
       <img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;">
       <span class="navbar-brand-text">Western Governors University</span>
@@ -853,7 +884,7 @@
       <span class="navbar-chip">Coding Coach — Python</span>
       <div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div>
     </div>
-  </nav>
+  </header>
 
   <div class="screen-main">
     <div class="container" style="max-width:800px;">
@@ -887,7 +918,7 @@ Write a Python code snippet that defines a variable named
 <span class="str">'greeting'</span> and assigns it the value <span class="str">"Hello, World!"</span>.
 Then, print the value of <span class="str">'greeting'</span> to the console.
         </div>
-        <p class="small text-muted" style="margin-top:12px;">
+        <p class="small text-muted" style="margin-top:16px;">
           <strong>Topic:</strong> Basic Syntax &amp; Data Types
         </p>
       </div>
@@ -895,7 +926,7 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
       <div class="response-panel">
         <div class="d-flex justify-between align-items-center mb-2">
           <label for="diag-response" class="h5" style="margin:0;">Your Answer</label>
-          <a href="#" class="btn btn-tertiary btn-sm" style="font-size:13px;">
+          <a href="#" class="btn btn-tertiary btn-sm" style="font-size:14px;">
             <span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span>
             Need a Hint?
           </a>
@@ -930,10 +961,10 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
      Results show no measurable prior knowledge across any sub-section."
      ================================================================ -->
 <section class="screen" id="screen-4" aria-labelledby="s4-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
 
   <div class="screen-main centered">
     <div class="pgn__card-featured" style="max-width:620px; width:100%; text-align:center; padding:var(--pgn-spacing-5);">
@@ -944,12 +975,12 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
       <h1 id="s4-heading" class="h3">We've established your starting point</h1>
       <p class="text-muted" style="margin-top:16px;">You completed 10 questions sampled across the 13 sub-sections. Your baseline has been saved to your WGU account.</p>
 
-      <div style="background:var(--pgn-color-primary-tint); border-radius:var(--pgn-size-border-radius-base); padding:20px 24px; margin:24px 0; text-align:left;">
+      <div style="background:var(--pgn-color-primary-tint); border-radius:var(--pgn-size-border-radius-base); padding:24px; margin:24px 0; text-align:left;">
         <p style="font-size:14px; font-weight:700; color:var(--pgn-color-gray-900); margin-bottom:8px;">Baseline Result</p>
         <p style="line-height:1.6;">No measurable prior knowledge detected across any of the 13 sub-sections. Your coaching tasks will be calibrated for a student starting Python from scratch — that's exactly what this tool is designed for.</p>
       </div>
 
-      <p class="micro" style="font-weight:700; color:var(--pgn-color-gray-600); margin-bottom:12px;">Sub-sections assessed:</p>
+      <p class="micro" style="font-weight:700; color:var(--pgn-color-gray-600); margin-bottom:16px;">Sub-sections assessed:</p>
       <div class="chip-grid">
         <span class="badge badge-gray">Basic Syntax &amp; Data Types</span>
         <span class="badge badge-gray">Control Flow &amp; Logic</span>
@@ -988,10 +1019,10 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
      map showing her starting position across all 13 sub-sections."
      ================================================================ -->
 <section class="screen" id="screen-5" aria-labelledby="s5-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
 
   <div class="screen-main">
     <div class="container">
@@ -1057,10 +1088,10 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
      first coaching task based on diagnostic. Chat/hybrid layout.
      ================================================================ -->
 <section class="screen" id="screen-6" aria-labelledby="s6-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
 
   <div class="screen-main">
     <div class="container">
@@ -1090,12 +1121,12 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
             AI Coaching Prompt
           </div>
           <h2 class="h5" style="margin-bottom:16px;">Let's start with variables.</h2>
-          <p style="line-height:1.7;">In Python, a <strong>variable</strong> is a name that stores a value. You create one with a single <code style="background:var(--pgn-color-bg-light); padding:1px 6px; border-radius:4px; font-family:monospace; font-size:14px;">=</code> sign.</p>
-          <p style="line-height:1.7; margin-top:16px;">Write a Python statement that creates a variable called <code style="background:var(--pgn-color-bg-light); padding:1px 6px; border-radius:4px; font-family:monospace; font-size:14px;">student_name</code> and assigns your first name to it as a string.</p>
+          <p style="line-height:1.7;">In Python, a <strong>variable</strong> is a name that stores a value. You create one with a single <code style="background:var(--pgn-color-bg-light); padding:0 8px; border-radius:4px; font-family:monospace; font-size:14px;">=</code> sign.</p>
+          <p style="line-height:1.7; margin-top:16px;">Write a Python statement that creates a variable called <code style="background:var(--pgn-color-bg-light); padding:0 8px; border-radius:4px; font-family:monospace; font-size:14px;">student_name</code> and assigns your first name to it as a string.</p>
 
-          <div style="background:var(--pgn-color-info-tint); border-radius:var(--pgn-size-border-radius-sm); padding:16px; margin-top:20px;">
-            <p style="font-size:13px; font-weight:700; color:#1d4a64; margin-bottom:4px;">Tip</p>
-            <p style="font-size:14px; color:#1d4a64; line-height:1.5;">Strings are wrapped in single <code style="font-family:monospace;">'</code> or double <code style="font-family:monospace;">"</code> quotes. Variable names use lowercase letters with underscores between words.</p>
+          <div style="background:var(--pgn-color-info-tint); border-radius:var(--pgn-size-border-radius-sm); padding:16px; margin-top:24px;">
+            <p style="font-size:14px; font-weight:700; color:var(--color-dark-navy); margin-bottom:4px;">Tip</p>
+            <p style="font-size:14px; color:var(--color-dark-navy); line-height:1.5;">Strings are wrapped in single <code style="font-family:monospace;">'</code> or double <code style="font-family:monospace;">"</code> quotes. Variable names use lowercase letters with underscores between words.</p>
           </div>
         </div>
 
@@ -1103,7 +1134,7 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
         <div class="response-panel">
           <div class="d-flex justify-between align-items-center mb-2">
             <label for="task-response" class="h5" style="margin:0;">Your Answer</label>
-            <a href="#" class="btn btn-tertiary btn-sm" style="font-size:13px;">
+            <a href="#" class="btn btn-tertiary btn-sm" style="font-size:14px;">
               <span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span>
               Need a Hint?
             </a>
@@ -1143,10 +1174,10 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
      saves her session progress before she exits."
      ================================================================ -->
 <section class="screen" id="screen-7" aria-labelledby="s7-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
 
   <div class="screen-main centered">
     <div class="pgn__card-featured" style="max-width:540px; width:100%; text-align:center; padding:var(--pgn-spacing-5);">
@@ -1165,7 +1196,7 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
         <div class="snapshot-row"><span class="snapshot-label">Resume next time</span><span class="snapshot-value" style="color:var(--pgn-color-brand-base);">Variables &amp; Assignment — Task 2</span></div>
       </div>
 
-      <div style="display:flex; flex-direction:column; gap:12px; margin-top:24px;">
+      <div style="display:flex; flex-direction:column; gap:16px; margin-top:24px;">
         <a href="#" class="btn btn-primary btn-lg" style="justify-content:center;" onclick="goToScreen(1); return false;">
           <span class="material-icons-outlined" aria-hidden="true">school</span> Return to E010 Course
         </a>
@@ -1197,10 +1228,10 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
      position. Data Structures is now her active gap area.
      ================================================================ -->
 <section class="screen" id="screen-8" aria-labelledby="s8-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
 
   <div class="screen-main">
     <div class="container">
@@ -1253,10 +1284,10 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
      targeted feedback identifying the specific error + correct pattern.
      ================================================================ -->
 <section class="screen" id="screen-9" aria-labelledby="s9-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
 
   <div class="screen-main">
     <div class="container" style="max-width:900px;">
@@ -1277,7 +1308,7 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
       <!-- Question -->
       <div class="ai-prompt-card mb-3">
         <div class="ai-label"><span class="material-icons-outlined" aria-hidden="true">smart_toy</span> AI Coaching Prompt</div>
-        <p style="line-height:1.7;">Write a Python loop that iterates over the following dictionary and prints each key-value pair in the format <code style="background:var(--pgn-color-bg-light); padding:1px 6px; border-radius:4px; font-family:monospace;">key: value</code>.</p>
+        <p style="line-height:1.7;">Write a Python loop that iterates over the following dictionary and prints each key-value pair in the format <code style="background:var(--pgn-color-bg-light); padding:0 8px; border-radius:4px; font-family:monospace;">key: value</code>.</p>
         <div class="code-block mt-2">
 <span class="kw">student_scores</span> = {<span class="str">"Alice"</span>: <span class="num">92</span>, <span class="str">"Bob"</span>: <span class="num">87</span>, <span class="str">"Charlie"</span>: <span class="num">95</span>}
         </div>
@@ -1298,8 +1329,8 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
           <span class="material-icons-outlined" aria-hidden="true" style="color:var(--pgn-color-danger-base);">error</span>
           <span style="font-weight:700; color:#8A1E1E;">Incorrect — Here's what happened</span>
         </div>
-        <p style="line-height:1.7; color:#5a1a1a;">Your loop iterates over the dictionary keys correctly, but <code style="background:rgba(193,50,50,0.1); padding:1px 6px; border-radius:4px; font-family:monospace;">print(student_scores)</code> prints the <strong>entire dictionary</strong> on each iteration instead of the individual key-value pair.</p>
-        <p style="line-height:1.7; margin-top:12px; color:#5a1a1a;">To access both the key and value, use the <code style="background:rgba(193,50,50,0.1); padding:1px 6px; border-radius:4px; font-family:monospace;">.items()</code> method and unpack into two variables:</p>
+        <p style="line-height:1.7; color:#8A1E1E;">Your loop iterates over the dictionary keys correctly, but <code style="background:rgba(193,50,50,0.1); padding:0 8px; border-radius:4px; font-family:monospace;">print(student_scores)</code> prints the <strong>entire dictionary</strong> on each iteration instead of the individual key-value pair.</p>
+        <p style="line-height:1.7; margin-top:16px; color:#8A1E1E;">To access both the key and value, use the <code style="background:rgba(193,50,50,0.1); padding:0 8px; border-radius:4px; font-family:monospace;">.items()</code> method and unpack into two variables:</p>
         <div class="code-block mt-2">
 <span class="kw">for</span> <span class="kw">key</span>, <span class="kw">value</span> <span class="kw">in</span> student_scores.<span class="fn">items</span>():
     <span class="fn">print</span>(<span class="kw">f</span><span class="str">"{key}: {value}"</span>)
@@ -1331,10 +1362,10 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
      correctly. Difficulty advances.
      ================================================================ -->
 <section class="screen" id="screen-10" aria-labelledby="s10-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
 
   <div class="screen-main">
     <div class="container" style="max-width:900px;">
@@ -1365,7 +1396,7 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
         <div class="response-panel">
           <div class="d-flex justify-between align-items-center mb-2">
             <label for="verify-response" class="h5" style="margin:0;">Your Answer</label>
-            <a href="#" class="btn btn-tertiary btn-sm" style="font-size:13px;"><span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span> Need a Hint?</a>
+            <a href="#" class="btn btn-tertiary btn-sm" style="font-size:14px;"><span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span> Need a Hint?</a>
           </div>
           <textarea id="verify-response" class="code-editor" placeholder="# Write your answer here..." spellcheck="false"></textarea>
           <div class="response-actions">
@@ -1392,10 +1423,10 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
      all 13 sub-sections. One requires verification.
      ================================================================ -->
 <section class="screen" id="screen-11" aria-labelledby="s11-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
 
   <div class="screen-main centered">
     <div class="pgn__card-featured" style="max-width:680px; width:100%; text-align:center; padding:var(--pgn-spacing-5);">
@@ -1406,7 +1437,7 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
       <h1 id="s11-heading" class="h3">Strong baseline detected</h1>
       <p class="text-muted" style="margin-top:16px;">Your diagnostic responses demonstrate mastery across nearly all 13 sub-sections. You won't be routed into introductory coaching content.</p>
 
-      <div style="background:var(--pgn-color-brand-tint); border-radius:var(--pgn-size-border-radius-base); padding:20px 24px; margin:24px 0; text-align:left;">
+      <div style="background:var(--pgn-color-brand-tint); border-radius:var(--pgn-size-border-radius-base); padding:24px; margin:24px 0; text-align:left;">
         <p style="font-size:14px; font-weight:700; color:var(--pgn-color-gray-900); margin-bottom:8px;">Verification Required</p>
         <p style="line-height:1.6;">One sub-section requires a hands-on verification task beyond the diagnostic: <strong>Functions &amp; Modular Programming</strong>. This asks you to write, organize, and import a short Python module.</p>
       </div>
@@ -1449,10 +1480,10 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
      as text — no in-browser code execution.
      ================================================================ -->
 <section class="screen" id="screen-12" aria-labelledby="s12-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
 
   <div class="screen-main">
     <div class="container" style="max-width:900px;">
@@ -1473,7 +1504,7 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
         <div class="ai-prompt-card">
           <div class="ai-label"><span class="material-icons-outlined" aria-hidden="true">smart_toy</span> AI Verification Task</div>
           <h2 class="h5" style="margin-bottom:16px;">Create a reusable math utilities module.</h2>
-          <p style="line-height:1.7;">Write a Python module called <code style="background:var(--pgn-color-bg-light); padding:1px 6px; border-radius:4px; font-family:monospace;">math_utils.py</code> that contains:</p>
+          <p style="line-height:1.7;">Write a Python module called <code style="background:var(--pgn-color-bg-light); padding:0 8px; border-radius:4px; font-family:monospace;">math_utils.py</code> that contains:</p>
           <ol style="margin:16px 0; padding-left:24px; line-height:2;">
             <li>A function <code style="font-family:monospace;">add(a, b)</code> that returns the sum</li>
             <li>A function <code style="font-family:monospace;">multiply(a, b)</code> that returns the product</li>
@@ -1513,10 +1544,10 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
      available. Sally can continue practicing or select any sub-section.
      ================================================================ -->
 <section class="screen" id="screen-13" aria-labelledby="s13-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
 
   <div class="screen-main centered">
     <div class="pgn__card-featured" style="max-width:600px; width:100%; text-align:center; padding:var(--pgn-spacing-5);">
@@ -1527,7 +1558,7 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
       <h1 id="s13-heading" class="h3">No coaching gaps identified</h1>
       <p class="text-muted" style="margin-top:16px;">Your diagnostic and verification results confirm proficiency across all 13 sub-sections. The Coding Coach remains available for continued Python practice at any time.</p>
 
-      <div style="background:var(--pgn-color-success-tint); border-radius:var(--pgn-size-border-radius-base); padding:20px 24px; margin:24px 0; text-align:left;">
+      <div style="background:var(--pgn-color-success-tint); border-radius:var(--pgn-size-border-radius-base); padding:24px; margin:24px 0; text-align:left;">
         <p style="font-size:14px; font-weight:700; color:#1B5E20; margin-bottom:8px;">What you can do from here</p>
         <ul style="padding-left:20px; line-height:2; color:#2E7D32;">
           <li>Continue practicing from your current competency position</li>
@@ -1536,7 +1567,7 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
         </ul>
       </div>
 
-      <div style="display:flex; flex-direction:column; gap:12px; margin-top:24px;">
+      <div style="display:flex; flex-direction:column; gap:16px; margin-top:24px;">
         <button class="btn btn-primary btn-lg" style="justify-content:center;" onclick="goToScreen(5)">
           <span class="material-icons-outlined" aria-hidden="true">map</span> Browse Sub-Sections for Practice
         </button>
@@ -1563,10 +1594,10 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
      prior progress map. Resumes at last completed task boundary.
      ================================================================ -->
 <section class="screen" id="screen-14" aria-labelledby="s14-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
 
   <div class="screen-main">
     <div class="container">
@@ -1641,7 +1672,7 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
      (Control Flow & Logic) to show the diagnostic samples broadly.
      ================================================================ -->
 <section class="screen" id="screen-18" aria-labelledby="s18-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand" aria-label="Western Governors University">
       <img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;">
       <span class="navbar-brand-text">Western Governors University</span>
@@ -1654,7 +1685,7 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
       <span class="navbar-chip">Coding Coach — Python</span>
       <div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div>
     </div>
-  </nav>
+  </header>
 
   <div class="screen-main">
     <div class="container" style="max-width:800px;">
@@ -1690,7 +1721,7 @@ numeric <span class="kw">score</span> as input and returns:
 
 Then call the function with a score of <span class="num">85</span> and print the result.
         </div>
-        <p class="small text-muted" style="margin-top:12px;">
+        <p class="small text-muted" style="margin-top:16px;">
           <strong>Topic:</strong> Control Flow &amp; Logic
         </p>
       </div>
@@ -1698,7 +1729,7 @@ Then call the function with a score of <span class="num">85</span> and print the
       <div class="response-panel">
         <div class="d-flex justify-between align-items-center mb-2">
           <label for="diag-response-2" class="h5" style="margin:0;">Your Answer</label>
-          <a href="#" class="btn btn-tertiary btn-sm" style="font-size:13px;">
+          <a href="#" class="btn btn-tertiary btn-sm" style="font-size:14px;">
             <span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span>
             Need a Hint?
           </a>
@@ -1733,10 +1764,10 @@ Then call the function with a score of <span class="num">85</span> and print the
      Difficulty will increase for the next question.
      ================================================================ -->
 <section class="screen" id="screen-19" aria-labelledby="s19-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
 
   <div class="screen-main">
     <div class="container" style="max-width:900px;">
@@ -1757,7 +1788,7 @@ Then call the function with a score of <span class="num">85</span> and print the
       <!-- Question -->
       <div class="ai-prompt-card mb-3">
         <div class="ai-label"><span class="material-icons-outlined" aria-hidden="true">smart_toy</span> AI Coaching Prompt</div>
-        <p style="line-height:1.7;">What is the correct Python syntax to append the value <code style="background:var(--pgn-color-bg-light); padding:1px 6px; border-radius:4px; font-family:monospace;">'grape'</code> to a list called <code style="background:var(--pgn-color-bg-light); padding:1px 6px; border-radius:4px; font-family:monospace;">fruits</code>?</p>
+        <p style="line-height:1.7;">What is the correct Python syntax to append the value <code style="background:var(--pgn-color-bg-light); padding:0 8px; border-radius:4px; font-family:monospace;">'grape'</code> to a list called <code style="background:var(--pgn-color-bg-light); padding:0 8px; border-radius:4px; font-family:monospace;">fruits</code>?</p>
         <div class="code-block mt-2">
 <span class="kw">fruits</span> = [<span class="str">"apple"</span>, <span class="str">"banana"</span>, <span class="str">"cherry"</span>]
 <span class="cm"># Add 'grape' to this list</span>
@@ -1778,8 +1809,8 @@ Then call the function with a score of <span class="num">85</span> and print the
           <span class="material-icons-outlined" aria-hidden="true" style="color:var(--pgn-color-success-base);">check_circle</span>
           <span style="font-weight:700; color:#1B5E20;">Correct!</span>
         </div>
-        <p style="line-height:1.7; color:#2E7D32;">You used the <code style="background:rgba(46,125,50,0.1); padding:1px 6px; border-radius:4px; font-family:monospace;">.append()</code> method properly. Lists in Python are mutable, and <code style="background:rgba(46,125,50,0.1); padding:1px 6px; border-radius:4px; font-family:monospace;">.append()</code> adds a single element to the end of the list.</p>
-        <div style="background:var(--pgn-color-success-tint); border-radius:var(--pgn-size-border-radius-sm); padding:12px 16px; margin-top:12px;">
+        <p style="line-height:1.7; color:#2E7D32;">You used the <code style="background:rgba(46,125,50,0.1); padding:0 8px; border-radius:4px; font-family:monospace;">.append()</code> method properly. Lists in Python are mutable, and <code style="background:rgba(46,125,50,0.1); padding:0 8px; border-radius:4px; font-family:monospace;">.append()</code> adds a single element to the end of the list.</p>
+        <div style="background:var(--pgn-color-success-tint); border-radius:var(--pgn-size-border-radius-sm); padding:16px; margin-top:16px;">
           <p class="small" style="color:#1B5E20; margin:0;"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; vertical-align:middle;">trending_up</span> <strong>Difficulty will increase</strong> for your next question.</p>
         </div>
       </div>
@@ -1808,10 +1839,10 @@ Then call the function with a score of <span class="num">85</span> and print the
      advances. Coaching continues or session ends.
      ================================================================ -->
 <section class="screen" id="screen-20" aria-labelledby="s20-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
 
   <div class="screen-main centered">
     <div class="pgn__card-featured" style="max-width:620px; width:100%; text-align:center; padding:var(--pgn-spacing-5);">
@@ -1822,8 +1853,8 @@ Then call the function with a score of <span class="num">85</span> and print the
       <h1 id="s20-heading" class="h3">Gap resolved — difficulty advancing</h1>
       <p class="text-muted" style="margin-top:16px;">Your understanding of dictionary iteration has been verified. The coaching engine is advancing your difficulty level.</p>
 
-      <div style="background:var(--pgn-color-bg-light); border-radius:var(--pgn-size-border-radius-base); padding:20px 24px; margin:24px 0; text-align:left;">
-        <p style="font-size:14px; font-weight:700; color:var(--pgn-color-gray-900); margin-bottom:12px;">Difficulty Progression</p>
+      <div style="background:var(--pgn-color-bg-light); border-radius:var(--pgn-size-border-radius-base); padding:24px; margin:24px 0; text-align:left;">
+        <p style="font-size:14px; font-weight:700; color:var(--pgn-color-gray-900); margin-bottom:16px;">Difficulty Progression</p>
         <div class="d-flex align-items-center gap-2" style="margin-bottom:8px;">
           <span class="badge badge-gray">Foundational</span>
           <span class="material-icons-outlined" style="font-size:16px; color:var(--pgn-color-gray-400);">arrow_forward</span>
@@ -1840,7 +1871,7 @@ Then call the function with a score of <span class="num">85</span> and print the
         <div class="snapshot-row"><span class="snapshot-label">Current difficulty</span><span class="snapshot-value" style="color:var(--pgn-color-brand-base);">Intermediate</span></div>
       </div>
 
-      <div style="display:flex; gap:12px; justify-content:center;">
+      <div style="display:flex; gap:16px; justify-content:center;">
         <button class="btn btn-primary btn-lg" onclick="goToScreen(21)">
           <span class="material-icons-outlined" aria-hidden="true">save</span> Save &amp; Exit
         </button>
@@ -1865,10 +1896,10 @@ Then call the function with a score of <span class="num">85</span> and print the
      Step 7: Sally ends session. Progress saved, confirmed.
      ================================================================ -->
 <section class="screen" id="screen-21" aria-labelledby="s21-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
 
   <div class="screen-main centered">
     <div class="pgn__card-featured" style="max-width:540px; width:100%; text-align:center; padding:var(--pgn-spacing-5);">
@@ -1888,7 +1919,7 @@ Then call the function with a score of <span class="num">85</span> and print the
         <div class="snapshot-row"><span class="snapshot-label">Resume next time</span><span class="snapshot-value" style="color:var(--pgn-color-brand-base);">Dictionary Comprehensions — Task 6</span></div>
       </div>
 
-      <div style="display:flex; flex-direction:column; gap:12px; margin-top:24px;">
+      <div style="display:flex; flex-direction:column; gap:16px; margin-top:24px;">
         <a href="#" class="btn btn-primary btn-lg" style="justify-content:center;" onclick="goToScreen(15); return false;">
           <span class="material-icons-outlined" aria-hidden="true">school</span> Return to E010 Course
         </a>
@@ -1919,10 +1950,10 @@ Then call the function with a score of <span class="num">85</span> and print the
      Sub-section: Advanced Data Handling.
      ================================================================ -->
 <section class="screen" id="screen-22" aria-labelledby="s22-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
 
   <div class="screen-main">
     <div class="container" style="max-width:800px;">
@@ -1953,7 +1984,7 @@ greater than 10</strong>.
 
 <span class="kw">numbers</span> = [<span class="num">3</span>, <span class="num">8</span>, <span class="num">12</span>, <span class="num">15</span>, <span class="num">22</span>, <span class="num">7</span>, <span class="num">18</span>, <span class="num">4</span>, <span class="num">30</span>]
         </div>
-        <p class="small text-muted" style="margin-top:12px;"><strong>Topic:</strong> Advanced Data Handling</p>
+        <p class="small text-muted" style="margin-top:16px;"><strong>Topic:</strong> Advanced Data Handling</p>
       </div>
 
       <!-- Sally's correct answer (shown) -->
@@ -1971,7 +2002,7 @@ greater than 10</strong>.
           <span style="font-weight:700; color:#1B5E20;">Excellent</span>
         </div>
         <p style="line-height:1.7; color:#2E7D32;">Your response demonstrates fluent use of list comprehensions with compound filtering conditions. This is characteristic of an experienced Python developer.</p>
-        <div style="background:var(--pgn-color-success-tint); border-radius:var(--pgn-size-border-radius-sm); padding:12px 16px; margin-top:12px;">
+        <div style="background:var(--pgn-color-success-tint); border-radius:var(--pgn-size-border-radius-sm); padding:16px; margin-top:16px;">
           <p class="small" style="color:#1B5E20; margin:0;"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; vertical-align:middle;">bolt</span> <strong>Your responses indicate strong proficiency.</strong> The diagnostic is calibrating your baseline.</p>
         </div>
       </div>
@@ -1999,10 +2030,10 @@ greater than 10</strong>.
      Steps 3-4: Sally picks up coaching at her prior difficulty level.
      ================================================================ -->
 <section class="screen" id="screen-23" aria-labelledby="s23-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
 
   <div class="screen-main">
     <div class="container">
@@ -2031,16 +2062,16 @@ greater than 10</strong>.
 <span class="kw">scores</span> = {<span class="str">"Alice"</span>: <span class="num">92</span>, <span class="str">"Bob"</span>: <span class="num">67</span>, <span class="str">"Charlie"</span>: <span class="num">85</span>, <span class="str">"Diana"</span>: <span class="num">78</span>}
 <span class="cm"># Expected: {"Alice": 92, "Charlie": 85} (average is 80.5)</span>
           </div>
-          <div style="background:var(--pgn-color-info-tint); border-radius:var(--pgn-size-border-radius-sm); padding:16px; margin-top:20px;">
-            <p style="font-size:13px; font-weight:700; color:#1d4a64; margin-bottom:4px;">Tip</p>
-            <p style="font-size:14px; color:#1d4a64; line-height:1.5;">Use <code style="font-family:monospace;">sum()</code> and <code style="font-family:monospace;">len()</code> to calculate the average, then a dictionary comprehension to filter.</p>
+          <div style="background:var(--pgn-color-info-tint); border-radius:var(--pgn-size-border-radius-sm); padding:16px; margin-top:24px;">
+            <p style="font-size:14px; font-weight:700; color:var(--color-dark-navy); margin-bottom:4px;">Tip</p>
+            <p style="font-size:14px; color:var(--color-dark-navy); line-height:1.5;">Use <code style="font-family:monospace;">sum()</code> and <code style="font-family:monospace;">len()</code> to calculate the average, then a dictionary comprehension to filter.</p>
           </div>
         </div>
 
         <div class="response-panel">
           <div class="d-flex justify-between align-items-center mb-2">
             <label for="resume-response" class="h5" style="margin:0;">Your Answer</label>
-            <a href="#" class="btn btn-tertiary btn-sm" style="font-size:13px;">
+            <a href="#" class="btn btn-tertiary btn-sm" style="font-size:14px;">
               <span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span> Need a Hint?
             </a>
           </div>
@@ -2078,10 +2109,10 @@ greater than 10</strong>.
      Step 5: Sally closes tool. Progress saved.
      ================================================================ -->
 <section class="screen" id="screen-24" aria-labelledby="s24-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
 
   <div class="screen-main centered">
     <div class="pgn__card-featured" style="max-width:540px; width:100%; text-align:center; padding:var(--pgn-spacing-5);">
@@ -2101,7 +2132,7 @@ greater than 10</strong>.
         <div class="snapshot-row"><span class="snapshot-label">Resume next time</span><span class="snapshot-value" style="color:var(--pgn-color-brand-base);">Dictionary Operations — Task 8</span></div>
       </div>
 
-      <div style="display:flex; flex-direction:column; gap:12px; margin-top:24px;">
+      <div style="display:flex; flex-direction:column; gap:16px; margin-top:24px;">
         <a href="#" class="btn btn-primary btn-lg" style="justify-content:center;" onclick="goToScreen(17); return false;">
           <span class="material-icons-outlined" aria-hidden="true">school</span> Return to E010 Course
         </a>
@@ -2131,10 +2162,10 @@ greater than 10</strong>.
      Copy of Screen 2 for the Advanced flow. Same entry experience.
      ================================================================ -->
 <section class="screen" id="screen-25" aria-labelledby="s25-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">E010: Foundations of Programming (Python)</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
   <div class="screen-main">
     <div class="container">
       <div class="row">
@@ -2143,7 +2174,7 @@ greater than 10</strong>.
           <h1 id="s25-heading" class="h1" style="margin-top:8px;">Coding Coach</h1>
           <p class="h4" style="color:var(--pgn-color-gray-600); font-weight:400; margin-top:4px;">Python Foundations</p>
           <p style="font-size:18px; line-height:1.6; margin-top:24px;">This tool finds where you actually are in Python — not where a fixed syllabus assumes you are — and builds practice tasks around your specific gaps.</p>
-          <p class="text-muted" style="margin-top:12px;">Start with a short diagnostic. Your progress saves automatically. No separate account needed — you're already verified through WGU.</p>
+          <p class="text-muted" style="margin-top:16px;">Start with a short diagnostic. Your progress saves automatically. No separate account needed — you're already verified through WGU.</p>
           <div class="d-flex align-items-center gap-2 flex-wrap" style="margin-top:32px;">
             <button class="btn btn-primary btn-lg" onclick="goToScreen(26)"><span class="material-icons-outlined" aria-hidden="true">play_arrow</span> Begin Diagnostic</button>
             <span class="small text-muted">Takes about 5-8 minutes</span>
@@ -2156,23 +2187,23 @@ greater than 10</strong>.
         </div>
         <div class="col-6">
           <div style="background:linear-gradient(135deg, var(--color-deep-navy) 0%, var(--color-dark-navy) 100%); border-radius:var(--pgn-size-border-radius-lg); padding:32px; color:#fff;">
-            <p style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--pgn-color-info-base); margin-bottom:16px;">13 Practice Areas</p>
-            <ul style="list-style:none; display:flex; flex-direction:column; gap:10px;">
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Basic Syntax &amp; Data Types</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Control Flow &amp; Logic</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Functions &amp; Modular Programming</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Data Structures</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Working with Files &amp; I/O</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Error Handling &amp; Debugging</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Object-Oriented Programming</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Python Libraries &amp; Modules</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Advanced Data Handling</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Regular Expressions &amp; Strings</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Working with Databases</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Introduction to Automation</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Introduction to Machine Learning</li>
+            <p style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--pgn-color-info-base); margin-bottom:16px;">13 Practice Areas</p>
+            <ul style="list-style:none; display:flex; flex-direction:column; gap:8px;">
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Basic Syntax &amp; Data Types</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Control Flow &amp; Logic</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Functions &amp; Modular Programming</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Data Structures</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Working with Files &amp; I/O</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Error Handling &amp; Debugging</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Object-Oriented Programming</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Python Libraries &amp; Modules</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Advanced Data Handling</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Regular Expressions &amp; Strings</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Working with Databases</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Introduction to Automation</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Introduction to Machine Learning</li>
             </ul>
-            <div style="margin-top:24px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.15); font-size:13px; color:rgba(255,255,255,0.6);">The diagnostic samples across all 13 areas. You'll only practice what you don't already know.</div>
+            <div style="margin-top:24px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.15); font-size:12px; color:rgba(255,255,255,0.6);">The diagnostic samples across all 13 areas. You'll only practice what you don't already know.</div>
           </div>
         </div>
       </div>
@@ -2193,10 +2224,10 @@ greater than 10</strong>.
      Same diagnostic question as Basic, but this student knows some Python.
      ================================================================ -->
 <section class="screen" id="screen-26" aria-labelledby="s26-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
   <div class="screen-main">
     <div class="container" style="max-width:800px;">
       <div class="d-flex justify-between align-items-center flex-wrap gap-2 mb-3">
@@ -2222,12 +2253,12 @@ Write a Python code snippet that defines a variable named
 <span class="str">'greeting'</span> and assigns it the value <span class="str">"Hello, World!"</span>.
 Then, print the value of <span class="str">'greeting'</span> to the console.
         </div>
-        <p class="small text-muted" style="margin-top:12px;"><strong>Topic:</strong> Basic Syntax &amp; Data Types</p>
+        <p class="small text-muted" style="margin-top:16px;"><strong>Topic:</strong> Basic Syntax &amp; Data Types</p>
       </div>
       <div class="response-panel">
         <div class="d-flex justify-between align-items-center mb-2">
           <label for="s02-diag-q1" class="h5" style="margin:0;">Your Answer</label>
-          <a href="#" class="btn btn-tertiary btn-sm" style="font-size:13px;"><span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span> Need a Hint?</a>
+          <a href="#" class="btn btn-tertiary btn-sm" style="font-size:14px;"><span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span> Need a Hint?</a>
         </div>
         <textarea id="s02-diag-q1" class="code-editor" placeholder="# Type your answer here..." spellcheck="false" autocomplete="off"></textarea>
         <div class="response-actions">
@@ -2253,10 +2284,10 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
      After this, flows into screen 8 (Progress Map with partial knowledge).
      ================================================================ -->
 <section class="screen" id="screen-27" aria-labelledby="s27-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
   <div class="screen-main">
     <div class="container" style="max-width:800px;">
       <div class="d-flex justify-between align-items-center flex-wrap gap-2 mb-3">
@@ -2285,12 +2316,12 @@ numeric <span class="kw">score</span> as input and returns:
 
 Then call the function with a score of <span class="num">85</span> and print the result.
         </div>
-        <p class="small text-muted" style="margin-top:12px;"><strong>Topic:</strong> Control Flow &amp; Logic</p>
+        <p class="small text-muted" style="margin-top:16px;"><strong>Topic:</strong> Control Flow &amp; Logic</p>
       </div>
       <div class="response-panel">
         <div class="d-flex justify-between align-items-center mb-2">
           <label for="s02-diag-q2" class="h5" style="margin:0;">Your Answer</label>
-          <a href="#" class="btn btn-tertiary btn-sm" style="font-size:13px;"><span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span> Need a Hint?</a>
+          <a href="#" class="btn btn-tertiary btn-sm" style="font-size:14px;"><span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span> Need a Hint?</a>
         </div>
         <textarea id="s02-diag-q2" class="code-editor" placeholder="# Type your answer here...&#10;def check_grade(score):&#10;    " spellcheck="false" autocomplete="off"></textarea>
         <div class="response-actions">
@@ -2315,10 +2346,10 @@ Then call the function with a score of <span class="num">85</span> and print the
      Copy of Screen 2 for the Professional flow.
      ================================================================ -->
 <section class="screen" id="screen-28" aria-labelledby="s28-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">E010: Foundations of Programming (Python)</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
   <div class="screen-main">
     <div class="container">
       <div class="row">
@@ -2327,7 +2358,7 @@ Then call the function with a score of <span class="num">85</span> and print the
           <h1 id="s28-heading" class="h1" style="margin-top:8px;">Coding Coach</h1>
           <p class="h4" style="color:var(--pgn-color-gray-600); font-weight:400; margin-top:4px;">Python Foundations</p>
           <p style="font-size:18px; line-height:1.6; margin-top:24px;">This tool finds where you actually are in Python — not where a fixed syllabus assumes you are — and builds practice tasks around your specific gaps.</p>
-          <p class="text-muted" style="margin-top:12px;">Start with a short diagnostic. Your progress saves automatically. No separate account needed — you're already verified through WGU.</p>
+          <p class="text-muted" style="margin-top:16px;">Start with a short diagnostic. Your progress saves automatically. No separate account needed — you're already verified through WGU.</p>
           <div class="d-flex align-items-center gap-2 flex-wrap" style="margin-top:32px;">
             <button class="btn btn-primary btn-lg" onclick="goToScreen(29)"><span class="material-icons-outlined" aria-hidden="true">play_arrow</span> Begin Diagnostic</button>
             <span class="small text-muted">Takes about 5-8 minutes</span>
@@ -2340,23 +2371,23 @@ Then call the function with a score of <span class="num">85</span> and print the
         </div>
         <div class="col-6">
           <div style="background:linear-gradient(135deg, var(--color-deep-navy) 0%, var(--color-dark-navy) 100%); border-radius:var(--pgn-size-border-radius-lg); padding:32px; color:#fff;">
-            <p style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--pgn-color-info-base); margin-bottom:16px;">13 Practice Areas</p>
-            <ul style="list-style:none; display:flex; flex-direction:column; gap:10px;">
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Basic Syntax &amp; Data Types</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Control Flow &amp; Logic</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Functions &amp; Modular Programming</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Data Structures</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Working with Files &amp; I/O</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Error Handling &amp; Debugging</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Object-Oriented Programming</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Python Libraries &amp; Modules</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Advanced Data Handling</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Regular Expressions &amp; Strings</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Working with Databases</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Introduction to Automation</li>
-              <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Introduction to Machine Learning</li>
+            <p style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--pgn-color-info-base); margin-bottom:16px;">13 Practice Areas</p>
+            <ul style="list-style:none; display:flex; flex-direction:column; gap:8px;">
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Basic Syntax &amp; Data Types</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Control Flow &amp; Logic</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Functions &amp; Modular Programming</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Data Structures</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Working with Files &amp; I/O</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Error Handling &amp; Debugging</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Object-Oriented Programming</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Python Libraries &amp; Modules</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Advanced Data Handling</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Regular Expressions &amp; Strings</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Working with Databases</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Introduction to Automation</li>
+              <li style="display:flex; align-items:center; gap:8px; font-size:14px; color:rgba(255,255,255,0.85);"><span class="material-icons-outlined" aria-hidden="true" style="font-size:14px; color:var(--pgn-color-info-base);">fiber_manual_record</span>Introduction to Machine Learning</li>
             </ul>
-            <div style="margin-top:24px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.15); font-size:13px; color:rgba(255,255,255,0.6);">The diagnostic samples across all 13 areas. You'll only practice what you don't already know.</div>
+            <div style="margin-top:24px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.15); font-size:12px; color:rgba(255,255,255,0.6);">The diagnostic samples across all 13 areas. You'll only practice what you don't already know.</div>
           </div>
         </div>
       </div>
@@ -2377,10 +2408,10 @@ Then call the function with a score of <span class="num">85</span> and print the
      Same diagnostic question. Professional student answers easily.
      ================================================================ -->
 <section class="screen" id="screen-29" aria-labelledby="s29-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
   <div class="screen-main">
     <div class="container" style="max-width:800px;">
       <div class="d-flex justify-between align-items-center flex-wrap gap-2 mb-3">
@@ -2406,12 +2437,12 @@ Write a Python code snippet that defines a variable named
 <span class="str">'greeting'</span> and assigns it the value <span class="str">"Hello, World!"</span>.
 Then, print the value of <span class="str">'greeting'</span> to the console.
         </div>
-        <p class="small text-muted" style="margin-top:12px;"><strong>Topic:</strong> Basic Syntax &amp; Data Types</p>
+        <p class="small text-muted" style="margin-top:16px;"><strong>Topic:</strong> Basic Syntax &amp; Data Types</p>
       </div>
       <div class="response-panel">
         <div class="d-flex justify-between align-items-center mb-2">
           <label for="s03-diag-q1" class="h5" style="margin:0;">Your Answer</label>
-          <a href="#" class="btn btn-tertiary btn-sm" style="font-size:13px;"><span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span> Need a Hint?</a>
+          <a href="#" class="btn btn-tertiary btn-sm" style="font-size:14px;"><span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span> Need a Hint?</a>
         </div>
         <textarea id="s03-diag-q1" class="code-editor" placeholder="# Type your answer here..." spellcheck="false" autocomplete="off"></textarea>
         <div class="response-actions">
@@ -2437,10 +2468,10 @@ Then, print the value of <span class="str">'greeting'</span> to the console.
      After this, flows into screen 22 (Advanced Data Handling diagnostic).
      ================================================================ -->
 <section class="screen" id="screen-30" aria-labelledby="s30-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
   <div class="screen-main">
     <div class="container" style="max-width:800px;">
       <div class="d-flex justify-between align-items-center flex-wrap gap-2 mb-3">
@@ -2469,12 +2500,12 @@ numeric <span class="kw">score</span> as input and returns:
 
 Then call the function with a score of <span class="num">85</span> and print the result.
         </div>
-        <p class="small text-muted" style="margin-top:12px;"><strong>Topic:</strong> Control Flow &amp; Logic</p>
+        <p class="small text-muted" style="margin-top:16px;"><strong>Topic:</strong> Control Flow &amp; Logic</p>
       </div>
       <div class="response-panel">
         <div class="d-flex justify-between align-items-center mb-2">
           <label for="s03-diag-q2" class="h5" style="margin:0;">Your Answer</label>
-          <a href="#" class="btn btn-tertiary btn-sm" style="font-size:13px;"><span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span> Need a Hint?</a>
+          <a href="#" class="btn btn-tertiary btn-sm" style="font-size:14px;"><span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span> Need a Hint?</a>
         </div>
         <textarea id="s03-diag-q2" class="code-editor" placeholder="# Type your answer here...&#10;def check_grade(score):&#10;    " spellcheck="false" autocomplete="off"></textarea>
         <div class="response-actions">
@@ -2501,10 +2532,10 @@ Then call the function with a score of <span class="num">85</span> and print the
      Structures is a gap area requiring coaching.
      ================================================================ -->
 <section class="screen" id="screen-31" aria-labelledby="s31-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
 
   <div class="screen-main">
     <div class="container" style="max-width:800px;">
@@ -2540,13 +2571,13 @@ overlapping keys have their values <strong>summed together</strong>.
 <span class="cm"># Expected output:</span>
 <span class="cm"># {"apples": 50, "bananas": 45, "oranges": 60, "grapes": 25}</span>
         </div>
-        <p class="small text-muted" style="margin-top:12px;"><strong>Topic:</strong> Data Structures: Lists, Tuples, Sets, Dictionaries</p>
+        <p class="small text-muted" style="margin-top:16px;"><strong>Topic:</strong> Data Structures: Lists, Tuples, Sets, Dictionaries</p>
       </div>
 
       <div class="response-panel">
         <div class="d-flex justify-between align-items-center mb-2">
           <label for="s02-diag-q3" class="h5" style="margin:0;">Your Answer</label>
-          <a href="#" class="btn btn-tertiary btn-sm" style="font-size:13px;"><span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span> Need a Hint?</a>
+          <a href="#" class="btn btn-tertiary btn-sm" style="font-size:14px;"><span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span> Need a Hint?</a>
         </div>
         <textarea id="s02-diag-q3" class="code-editor" placeholder="# Type your answer here...&#10;def merge_inventory(a, b):&#10;    " spellcheck="false" autocomplete="off"></textarea>
         <div class="response-actions">
@@ -2573,10 +2604,10 @@ overlapping keys have their values <strong>summed together</strong>.
      Professional student encounters this as part of the diagnostic.
      ================================================================ -->
 <section class="screen" id="screen-32" aria-labelledby="s32-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
 
   <div class="screen-main">
     <div class="container" style="max-width:800px;">
@@ -2612,13 +2643,13 @@ overlapping keys have their values <strong>summed together</strong>.
 <span class="cm"># Expected output:</span>
 <span class="cm"># {"apples": 50, "bananas": 45, "oranges": 60, "grapes": 25}</span>
         </div>
-        <p class="small text-muted" style="margin-top:12px;"><strong>Topic:</strong> Data Structures: Lists, Tuples, Sets, Dictionaries</p>
+        <p class="small text-muted" style="margin-top:16px;"><strong>Topic:</strong> Data Structures: Lists, Tuples, Sets, Dictionaries</p>
       </div>
 
       <div class="response-panel">
         <div class="d-flex justify-between align-items-center mb-2">
           <label for="s03-diag-q3" class="h5" style="margin:0;">Your Answer</label>
-          <a href="#" class="btn btn-tertiary btn-sm" style="font-size:13px;"><span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span> Need a Hint?</a>
+          <a href="#" class="btn btn-tertiary btn-sm" style="font-size:14px;"><span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span> Need a Hint?</a>
         </div>
         <textarea id="s03-diag-q3" class="code-editor" placeholder="# Type your answer here...&#10;def merge_inventory(a, b):&#10;    " spellcheck="false" autocomplete="off"></textarea>
         <div class="response-actions">
@@ -2645,10 +2676,10 @@ overlapping keys have their values <strong>summed together</strong>.
      verify retention after a multi-week break.
      ================================================================ -->
 <section class="screen" id="screen-33" aria-labelledby="s33-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
 
   <div class="screen-main">
     <div class="container" style="max-width:800px;">
@@ -2683,13 +2714,13 @@ Given a dictionary of students and their course grades:
 Write code that prints each student's name and their
 <strong>average grade</strong> across all courses.
         </div>
-        <p class="small text-muted" style="margin-top:12px;"><strong>Topic:</strong> Data Structures — Nested Dictionaries (Intermediate)</p>
+        <p class="small text-muted" style="margin-top:16px;"><strong>Topic:</strong> Data Structures — Nested Dictionaries (Intermediate)</p>
       </div>
 
       <div class="response-panel">
         <div class="d-flex justify-between align-items-center mb-2">
           <label for="s04-reassess-q1" class="h5" style="margin:0;">Your Answer</label>
-          <a href="#" class="btn btn-tertiary btn-sm" style="font-size:13px;"><span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span> Need a Hint?</a>
+          <a href="#" class="btn btn-tertiary btn-sm" style="font-size:14px;"><span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span> Need a Hint?</a>
         </div>
         <textarea id="s04-reassess-q1" class="code-editor" placeholder="# Type your answer here..." spellcheck="false" autocomplete="off"></textarea>
         <div class="response-actions">
@@ -2715,10 +2746,10 @@ Write code that prints each student's name and their
      Second retention check on a previously completed sub-section.
      ================================================================ -->
 <section class="screen" id="screen-34" aria-labelledby="s34-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand"><img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;"><span class="navbar-brand-text">Western Governors University</span></a>
     <div class="navbar-right"><button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button><span class="navbar-chip">Coding Coach — Python</span><div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div></div>
-  </nav>
+  </header>
 
   <div class="screen-main">
     <div class="container" style="max-width:800px;">
@@ -2751,13 +2782,13 @@ two keys:
 
 Test it with: [<span class="num">85</span>, <span class="num">42</span>, <span class="num">91</span>, <span class="num">67</span>, <span class="num">73</span>, <span class="num">55</span>, <span class="num">88</span>]
         </div>
-        <p class="small text-muted" style="margin-top:12px;"><strong>Topic:</strong> Control Flow &amp; Logic — Loops and Conditionals (Intermediate)</p>
+        <p class="small text-muted" style="margin-top:16px;"><strong>Topic:</strong> Control Flow &amp; Logic — Loops and Conditionals (Intermediate)</p>
       </div>
 
       <div class="response-panel">
         <div class="d-flex justify-between align-items-center mb-2">
           <label for="s04-reassess-q2" class="h5" style="margin:0;">Your Answer</label>
-          <a href="#" class="btn btn-tertiary btn-sm" style="font-size:13px;"><span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span> Need a Hint?</a>
+          <a href="#" class="btn btn-tertiary btn-sm" style="font-size:14px;"><span class="material-icons-outlined" aria-hidden="true" style="font-size:16px;">lightbulb</span> Need a Hint?</a>
         </div>
         <textarea id="s04-reassess-q2" class="code-editor" placeholder="# Type your answer here...&#10;def count_passing(scores):&#10;    " spellcheck="false" autocomplete="off"></textarea>
         <div class="response-actions">
@@ -2784,7 +2815,7 @@ Test it with: [<span class="num">85</span>, <span class="num">42</span>, <span c
      Sidebar link navigates to Screen 8 (Returning Progress Map).
      ================================================================ -->
 <section class="screen" id="screen-15" aria-labelledby="s15-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand" aria-label="Western Governors University">
       <img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;">
       <span class="navbar-brand-text">WGU Student Portal</span>
@@ -2797,7 +2828,7 @@ Test it with: [<span class="num">85</span>, <span class="num">42</span>, <span c
       <span class="navbar-chip">E010: Foundations of Programming (Python)</span>
       <div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div>
     </div>
-  </nav>
+  </header>
   <div class="lms-layout">
     <aside class="lms-sidebar" aria-label="Course navigation">
       <p class="lms-sidebar-heading">E010 Course Modules</p>
@@ -2815,12 +2846,12 @@ Test it with: [<span class="num">85</span>, <span class="num">42</span>, <span c
       </ul>
       <div class="lms-nav-divider"></div>
       <p class="lms-sidebar-heading" style="margin-top:8px;">Practice Tools</p>
-      <a href="#" class="lms-resource-link" onclick="goToScreen(25); return false;" aria-label="Launch Coding Coach for Python practice">
+      <button type="button" class="lms-resource-link" onclick="goToScreen(25); return false;" aria-label="Launch Coding Coach for Python practice">
         <span class="material-icons-outlined" aria-hidden="true">rocket_launch</span>
         Coding Coach — Python
         <span class="material-icons-outlined" aria-hidden="true" style="margin-left:auto; font-size:16px;">open_in_new</span>
-      </a>
-      <p style="font-size:12px; color:var(--pgn-color-gray-600); margin-top:8px; padding:0 4px;">
+      </button>
+      <p style="font-size:12px; color:var(--pgn-color-gray-600); margin-top:8px; padding:0 8px;">
         AI-powered Python practice. Launches via LTI in a new tab. No separate login required.
       </p>
     </aside>
@@ -2839,7 +2870,7 @@ Test it with: [<span class="num">85</span>, <span class="num">42</span>, <span c
       <div class="textbook-placeholder">
         <span class="material-icons-outlined" style="font-size:32px; margin-bottom:8px; display:block;">auto_stories</span>
         Additional course content continues below...<br>
-        <span style="font-size:13px;">(This is a mock textbook page for storyboard purposes)</span>
+        <span style="font-size:12px;">(This is a mock textbook page for storyboard purposes)</span>
       </div>
     </main>
   </div>
@@ -2858,7 +2889,7 @@ Test it with: [<span class="num">85</span>, <span class="num">42</span>, <span c
      Sidebar link navigates to Screen 11 (Fast-Track Results).
      ================================================================ -->
 <section class="screen" id="screen-16" aria-labelledby="s16-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand" aria-label="Western Governors University">
       <img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;">
       <span class="navbar-brand-text">WGU Student Portal</span>
@@ -2871,7 +2902,7 @@ Test it with: [<span class="num">85</span>, <span class="num">42</span>, <span c
       <span class="navbar-chip">E010: Foundations of Programming (Python)</span>
       <div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div>
     </div>
-  </nav>
+  </header>
   <div class="lms-layout">
     <aside class="lms-sidebar" aria-label="Course navigation">
       <p class="lms-sidebar-heading">E010 Course Modules</p>
@@ -2889,12 +2920,12 @@ Test it with: [<span class="num">85</span>, <span class="num">42</span>, <span c
       </ul>
       <div class="lms-nav-divider"></div>
       <p class="lms-sidebar-heading" style="margin-top:8px;">Practice Tools</p>
-      <a href="#" class="lms-resource-link" onclick="goToScreen(28); return false;" aria-label="Launch Coding Coach for Python practice">
+      <button type="button" class="lms-resource-link" onclick="goToScreen(28); return false;" aria-label="Launch Coding Coach for Python practice">
         <span class="material-icons-outlined" aria-hidden="true">rocket_launch</span>
         Coding Coach — Python
         <span class="material-icons-outlined" aria-hidden="true" style="margin-left:auto; font-size:16px;">open_in_new</span>
-      </a>
-      <p style="font-size:12px; color:var(--pgn-color-gray-600); margin-top:8px; padding:0 4px;">
+      </button>
+      <p style="font-size:12px; color:var(--pgn-color-gray-600); margin-top:8px; padding:0 8px;">
         AI-powered Python practice. Launches via LTI in a new tab. No separate login required.
       </p>
     </aside>
@@ -2913,7 +2944,7 @@ Test it with: [<span class="num">85</span>, <span class="num">42</span>, <span c
       <div class="textbook-placeholder">
         <span class="material-icons-outlined" style="font-size:32px; margin-bottom:8px; display:block;">auto_stories</span>
         Additional course content continues below...<br>
-        <span style="font-size:13px;">(This is a mock textbook page for storyboard purposes)</span>
+        <span style="font-size:12px;">(This is a mock textbook page for storyboard purposes)</span>
       </div>
     </main>
   </div>
@@ -2932,7 +2963,7 @@ Test it with: [<span class="num">85</span>, <span class="num">42</span>, <span c
      Sidebar link navigates to Screen 14 (Returning Learner Welcome).
      ================================================================ -->
 <section class="screen" id="screen-17" aria-labelledby="s17-heading">
-  <nav class="navbar navbar-dark" role="banner">
+  <header class="navbar navbar-dark" role="banner">
     <a href="#" class="navbar-brand" aria-label="Western Governors University">
       <img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;">
       <span class="navbar-brand-text">WGU Student Portal</span>
@@ -2945,7 +2976,7 @@ Test it with: [<span class="num">85</span>, <span class="num">42</span>, <span c
       <span class="navbar-chip">E010: Foundations of Programming (Python)</span>
       <div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div>
     </div>
-  </nav>
+  </header>
   <div class="lms-layout">
     <aside class="lms-sidebar" aria-label="Course navigation">
       <p class="lms-sidebar-heading">E010 Course Modules</p>
@@ -2963,12 +2994,12 @@ Test it with: [<span class="num">85</span>, <span class="num">42</span>, <span c
       </ul>
       <div class="lms-nav-divider"></div>
       <p class="lms-sidebar-heading" style="margin-top:8px;">Practice Tools</p>
-      <a href="#" class="lms-resource-link" onclick="goToScreen(14); return false;" aria-label="Launch Coding Coach for Python practice">
+      <button type="button" class="lms-resource-link" onclick="goToScreen(14); return false;" aria-label="Launch Coding Coach for Python practice">
         <span class="material-icons-outlined" aria-hidden="true">rocket_launch</span>
         Coding Coach — Python
         <span class="material-icons-outlined" aria-hidden="true" style="margin-left:auto; font-size:16px;">open_in_new</span>
-      </a>
-      <p style="font-size:12px; color:var(--pgn-color-gray-600); margin-top:8px; padding:0 4px;">
+      </button>
+      <p style="font-size:12px; color:var(--pgn-color-gray-600); margin-top:8px; padding:0 8px;">
         AI-powered Python practice. Launches via LTI in a new tab. No separate login required.
       </p>
     </aside>
@@ -2987,7 +3018,7 @@ Test it with: [<span class="num">85</span>, <span class="num">42</span>, <span c
       <div class="textbook-placeholder">
         <span class="material-icons-outlined" style="font-size:32px; margin-bottom:8px; display:block;">auto_stories</span>
         Additional course content continues below...<br>
-        <span style="font-size:13px;">(This is a mock textbook page for storyboard purposes)</span>
+        <span style="font-size:12px;">(This is a mock textbook page for storyboard purposes)</span>
       </div>
     </main>
   </div>
@@ -3004,6 +3035,10 @@ Test it with: [<span class="num">85</span>, <span class="num">42</span>, <span c
      STORYBOARD META BAR — DEMO ONLY
      This bar does not represent any production UI.
      ================================================================ -->
+<footer role="contentinfo" class="sr-only">
+  <p>JFT SDP Coding Coach Storyboard v3 — Western Governors University</p>
+</footer>
+
 <div class="meta-bar" role="navigation" aria-label="Storyboard screen navigation">
   <div class="meta-bar-header">
     <span><span class="meta-id">DEMO ONLY</span> &middot; JFT SDP Coding Coach &middot; SDP Design System v1.2</span>
