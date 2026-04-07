@@ -188,6 +188,27 @@
     [data-theme="dark"] .lms-nav-divider {
       background: #1A2A45;
     }
+    /* zyBooks dark mode overrides */
+    [data-theme="dark"] .zb-header { background: #16213e; border-color: #2a2a4a; }
+    [data-theme="dark"] .zb-header .btn-theme-toggle { background: #1a1a2e; border-color: #2a2a4a; color: #999; }
+    [data-theme="dark"] .zb-breadcrumb { background: #16213e; border-color: #2a2a4a; color: #999; }
+    [data-theme="dark"] .zb-info-banner { background: #1a2a4a; }
+    [data-theme="dark"] .zb-info-banner-text { color: #B3B3B3; }
+    [data-theme="dark"] .zb-info-banner-text strong { color: #E6E6E6; }
+    [data-theme="dark"] .zb-body { background: #1a1a2e; }
+    [data-theme="dark"] .zb-body h1, [data-theme="dark"] .zb-body h2 { color: #E6E6E6; }
+    [data-theme="dark"] .zb-body p, [data-theme="dark"] .zb-body ul li { color: #B3B3B3; }
+    [data-theme="dark"] .zb-body ul li strong { color: #E6E6E6; }
+    [data-theme="dark"] .zb-coach-cta { background: #0a1a3a; border-color: #4DB5E8; color: #4DB5E8; }
+    [data-theme="dark"] .zb-coach-cta:hover { background: #0d2244; box-shadow: 0 4px 12px rgba(77, 181, 232, 0.15); }
+    [data-theme="dark"] .zb-coach-cta-sub { color: #999; }
+    [data-theme="dark"] .zb-coach-cta-desc { color: #808080; }
+    [data-theme="dark"] .zb-opt-out { border-color: #2E7D32; color: #4CAF50; }
+    [data-theme="dark"] .zb-section-footer { color: #999; }
+    [data-theme="dark"] .zb-wgu-label { color: #999; }
+    [data-theme="dark"] .zb-logo { color: #E6E6E6; }
+    [data-theme="dark"] .zb-logo .material-icons-outlined { color: #B3B3B3; }
+    [data-theme="dark"] .zb-header-right a { color: #999; }
 
     /* ================================================================
        RESET & BASE (Paragon core equivalent)
@@ -554,6 +575,133 @@
     }
 
     /* ================================================================
+       ZYBOOKS LANDING PAGE LAYOUT
+       Used by Screen 01 across all scenarios.
+       ================================================================ */
+    .zb-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 24px; background: var(--pgn-color-white);
+      border-bottom: 1px solid var(--pgn-color-gray-100);
+      font-size: 13px; color: var(--pgn-color-gray-700);
+      min-height: 44px;
+    }
+    .zb-header-left { display: flex; align-items: center; gap: 8px; }
+    .zb-logo {
+      font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 700;
+      color: var(--pgn-color-gray-900); text-decoration: none; margin-right: 12px;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .zb-logo .material-icons-outlined { font-size: 22px; color: var(--pgn-color-gray-700); }
+    .zb-logo-accent { color: #F57C20; }
+    .zb-header-right { display: flex; align-items: center; gap: 16px; font-size: 13px; }
+    .zb-header-right a { color: var(--pgn-color-gray-600); text-decoration: none; }
+    .zb-header-right a:hover { color: var(--pgn-color-brand-base); }
+    .zb-header .btn-theme-toggle {
+      background: var(--pgn-color-bg-light); border-color: var(--pgn-color-gray-200);
+      color: var(--pgn-color-gray-600);
+    }
+    .zb-header .btn-theme-toggle:hover { background: var(--pgn-color-gray-100); }
+
+    .zb-breadcrumb {
+      font-size: 12px; color: var(--pgn-color-gray-600); padding: 6px 24px;
+      background: var(--pgn-color-white); border-bottom: 1px solid var(--pgn-color-gray-100);
+    }
+    .zb-breadcrumb a { color: var(--pgn-color-brand-base); text-decoration: none; }
+    .zb-breadcrumb a:hover { text-decoration: underline; }
+
+    .zb-info-banner {
+      display: flex; align-items: center; gap: 16px;
+      padding: 12px 24px; margin: 16px 24px 0;
+      background: var(--pgn-color-bg-light); border-radius: var(--pgn-size-border-radius-base);
+    }
+    .zb-info-banner-icon {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: #F57C20; color: white;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .zb-info-banner-text { flex: 1; font-size: 13px; line-height: 1.5; color: var(--pgn-color-gray-700); }
+    .zb-info-banner-text strong { color: var(--pgn-color-gray-900); }
+    .zb-btn-watch {
+      padding: 6px 16px; border-radius: var(--pgn-size-border-radius-sm);
+      background: #F57C20; color: white; border: none; font-size: 13px;
+      font-weight: 700; cursor: pointer; white-space: nowrap;
+    }
+    .zb-btn-watch:hover { background: #e06c10; }
+
+    .zb-badge-instructor {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: #F57C20; color: white; font-size: 12px; font-weight: 700;
+      padding: 4px 10px; border-radius: var(--pgn-size-border-radius-sm);
+    }
+    .zb-badge-instructor .material-icons-outlined { font-size: 14px; }
+
+    .zb-body {
+      max-width: 860px; margin: 0 auto; padding: 24px 40px 40px;
+      background: var(--pgn-color-bg-base);
+      overflow-y: auto; flex: 1;
+    }
+    .zb-body h1 {
+      font-family: 'Sora', sans-serif; font-size: 26px; font-weight: 700;
+      color: var(--pgn-color-gray-900); margin: 12px 0 8px;
+    }
+    .zb-body h2 {
+      font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 700;
+      color: var(--pgn-color-gray-900); margin: 28px 0 12px;
+    }
+    .zb-body p { line-height: 1.7; margin-bottom: 12px; color: var(--pgn-color-gray-700); font-size: 15px; }
+    .zb-body ul { padding-left: 20px; margin-bottom: 12px; }
+    .zb-body ul li { margin-bottom: 10px; line-height: 1.5; color: var(--pgn-color-gray-700); font-size: 15px; }
+    .zb-body ul li strong { color: var(--pgn-color-gray-900); }
+
+    .zb-wgu-bar {
+      height: 6px; border-radius: 3px; margin-bottom: 8px;
+      background: linear-gradient(90deg, var(--pgn-color-primary-base) 75%, #F57C20 75%);
+    }
+    .zb-wgu-label {
+      font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 700;
+      color: var(--pgn-color-gray-600); letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 16px; display: block;
+    }
+
+    .zb-competency-row {
+      display: flex; gap: 32px; align-items: flex-start; margin-top: 8px;
+    }
+    .zb-competency-row > ul { flex: 1; }
+
+    .zb-coach-cta {
+      width: 220px; flex-shrink: 0;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      padding: 20px 16px; border-radius: var(--pgn-size-border-radius-lg);
+      background: var(--pgn-color-brand-tint); border: 2px solid var(--pgn-color-brand-base);
+      color: var(--pgn-color-brand-base); text-align: center;
+      cursor: pointer; text-decoration: none; transition: box-shadow 150ms, background 150ms;
+    }
+    .zb-coach-cta:hover {
+      background: #D6E4FF; box-shadow: 0 4px 12px rgba(0, 85, 212, 0.15);
+      text-decoration: none;
+    }
+    .zb-coach-cta .material-icons-outlined { font-size: 28px; }
+    .zb-coach-cta-title {
+      font-family: 'Sora', sans-serif; font-size: 16px; font-weight: 700;
+    }
+    .zb-coach-cta-sub { font-size: 13px; color: var(--pgn-color-gray-600); }
+    .zb-coach-cta-desc { font-size: 11px; color: var(--pgn-color-gray-base); line-height: 1.4; }
+
+    .zb-opt-out {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; color: var(--pgn-color-success-base);
+      border: 1px solid var(--pgn-color-success-base); border-radius: var(--pgn-size-rounded-pill);
+      padding: 4px 12px; margin-top: 32px;
+    }
+
+    .zb-section-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 40px; max-width: 860px; margin: 0 auto;
+      font-size: 13px; color: var(--pgn-color-gray-600);
+    }
+    .zb-section-footer a { color: var(--pgn-color-brand-base); text-decoration: none; font-weight: 700; }
+
+    /* ================================================================
        COACHING LAYOUT (2-column: prompt + response)
        ================================================================ */
     .coaching-layout {
@@ -669,82 +817,69 @@
 
 
 <!-- ================================================================
-     SCREEN 1 — MOCK LMS COURSE PAGE (E010)
-     SC-MVP-01: Sally is already logged in, browsing her course.
-     She clicks the LRPS resource link to launch the Coding Coach.
+     SCREEN 1 — ZYBOOKS COURSE PAGE (E010)
+     SC-MVP-01: Sally is on the zyBooks course page.
+     She clicks the Coding Coach CTA to launch the Coding Coach.
      ================================================================ -->
 <section class="screen active" id="screen-1" aria-labelledby="s1-heading">
-  <!-- LMS Header -->
-  <header class="navbar navbar-dark" role="banner">
-    <a href="#" class="navbar-brand" aria-label="Western Governors University">
-      <img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;">
-      <span class="navbar-brand-text">WGU Student Portal</span>
-    </a>
-    <div class="navbar-right">
+  <div class="zb-header">
+    <div class="zb-header-left">
+      <a href="#" class="zb-logo"><span class="material-icons-outlined" aria-hidden="true">auto_stories</span> zy<span class="zb-logo-accent">Books</span></a>
       <button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode">
         <span class="material-icons-outlined theme-icon-light">dark_mode</span>
         <span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span>
       </button>
-      <span class="navbar-chip">E010: Foundations of Programming (Python)</span>
+    </div>
+    <div class="zb-header-right">
+      <a href="#">zyBooks catalog</a><a href="#">Help/FAQ</a>
       <div class="navbar-user">
         <div class="avatar" aria-hidden="true">SR</div>
         <span>Sally R.</span>
       </div>
     </div>
-  </header>
-
-  <div class="lms-layout">
-    <!-- Sidebar -->
-    <aside class="lms-sidebar" aria-label="Course navigation">
-      <p class="lms-sidebar-heading">E010 Course Modules</p>
-      <ul class="lms-nav">
-        <li><a href="#" class="active"><span class="material-icons-outlined" aria-hidden="true">menu_book</span> Module 1: Python Basics</a></li>
-        <li><a href="#"><span class="material-icons-outlined" aria-hidden="true">menu_book</span> Module 2: Control Flow</a></li>
-        <li><a href="#"><span class="material-icons-outlined" aria-hidden="true">menu_book</span> Module 3: Functions</a></li>
-        <li><a href="#"><span class="material-icons-outlined" aria-hidden="true">menu_book</span> Module 4: Data Structures</a></li>
-      </ul>
-      <div class="lms-nav-divider"></div>
-      <p class="lms-sidebar-heading" style="margin-top:8px;">Supplemental Resources</p>
-      <ul class="lms-nav">
-        <li><a href="#"><span class="material-icons-outlined" aria-hidden="true">library_books</span> Course Textbook</a></li>
-        <li><a href="#"><span class="material-icons-outlined" aria-hidden="true">video_library</span> Video Lectures</a></li>
-      </ul>
-      <div class="lms-nav-divider"></div>
-      <p class="lms-sidebar-heading" style="margin-top:8px;">Practice Tools</p>
-      <button type="button" class="lms-resource-link" onclick="goToScreen(2); return false;" aria-label="Launch Coding Coach for Python practice">
-        <span class="material-icons-outlined" aria-hidden="true">rocket_launch</span>
-        Coding Coach — Python
-        <span class="material-icons-outlined" aria-hidden="true" style="margin-left:auto; font-size:16px;">open_in_new</span>
-      </button>
-      <p style="font-size:12px; color:var(--pgn-color-gray-600); margin-top:8px; padding:0 8px;">
-        AI-powered Python practice. Launches via LTI in a new tab. No separate login required.
-      </p>
-    </aside>
-
-    <!-- Main content area — mock textbook page -->
-    <main class="lms-content">
-      <span class="badge badge-brand mb-2" style="display:inline-flex;">Module 1: Python Basics</span>
-      <h1 id="s1-heading" class="h3">Introduction to Python Programming</h1>
-      <p>Python is a high-level, interpreted programming language known for its readability and versatility. Created by Guido van Rossum and first released in 1991, Python has become one of the most popular programming languages in the world.</p>
-      <p>In this module, you will learn the fundamental building blocks of Python programming, including variables, data types, basic operators, and how to write your first Python script.</p>
-      <p>Python uses indentation to define code blocks, making the code visually clean and easy to read. Unlike many other programming languages, Python does not use curly braces or semicolons to delimit statements.</p>
-
-      <div class="code-block mt-3">
-<span class="cm"># Your first Python program</span>
-<span class="kw">name</span> = <span class="str">"Sally"</span>
-<span class="fn">print</span>(<span class="str">"Hello, "</span> + <span class="kw">name</span> + <span class="str">"! Welcome to Python."</span>)
-      </div>
-
-      <p class="mt-3">The example above demonstrates variable assignment and string concatenation, two concepts you will master in this module.</p>
-
-      <div class="textbook-placeholder">
-        <span class="material-icons-outlined" style="font-size:32px; margin-bottom:8px; display:block;">auto_stories</span>
-        Additional course content continues below...<br>
-        <span style="font-size:12px;">(This is a mock textbook page for storyboard purposes)</span>
-      </div>
-    </main>
   </div>
-
+  <div class="zb-breadcrumb"><a href="#">My library</a> &gt; <a href="#">E 010: Foundations of Programming (Python) home</a> &gt; 1.1: Welcome to Foundations of Programming</div>
+  <div class="zb-info-banner">
+    <div class="zb-info-banner-icon"><span class="material-icons-outlined">lightbulb</span></div>
+    <div class="zb-info-banner-text"><strong>What is a zyBook?</strong><br>New to zyBooks? Check out a short video to learn how zyBooks uses concise writing, interactive activities, and research-backed approaches to help students learn.</div>
+    <button class="zb-btn-watch">Watch now</button>
+  </div>
+  <div class="zb-body" style="display:flex; flex-direction:column; overflow-y:auto;">
+    <div style="flex:1;">
+      <span class="zb-badge-instructor"><span class="material-icons-outlined" aria-hidden="true">person</span> Instructor created</span>
+      <h1 id="s1-heading">1.1 Welcome to Foundations of Programming</h1>
+      <div class="zb-wgu-bar"></div>
+      <span class="zb-wgu-label">WGU School of Technology</span>
+      <h2>Overview</h2>
+      <p>Welcome to Foundations of Programming Python! This course will introduce you to core programming principles using the Python programming language. You will learn how to write, troubleshoot, and debug basic Python scripts by working with programming elements, including variables, loops, conditional statements, and data structures.</p>
+      <h2>Competencies</h2>
+      <p>This course provides guidance to help you demonstrate the following competencies:</p>
+      <div class="zb-competency-row">
+        <ul>
+          <li><strong>Identifies Python Programming Constructs</strong><br>The learner identifies basic Python programming constructs to create simple functions.</li>
+          <li><strong>Executes Python Code</strong><br>The learner executes Python code in different development environments.</li>
+          <li><strong>Manipulates Data Structures</strong><br>The learner manipulates data structures to effectively store, retrieve, and process data.</li>
+          <li><strong>Creates Functional Programs</strong><br>The learner creates functional programs by writing and debugging code.</li>
+        </ul>
+        <a href="#" class="zb-coach-cta" onclick="goToScreen(2); return false;" aria-label="Launch Coding Coach for Python practice">
+          <span class="material-icons-outlined" aria-hidden="true">rocket_launch</span>
+          <span class="zb-coach-cta-title">Coding Coach</span>
+          <span class="zb-coach-cta-sub">Python Foundations</span>
+          <span class="zb-coach-cta-desc">AI-powered practice aligned to these competencies</span>
+        </a>
+      </div>
+      <h2>Prerequisites</h2>
+      <p>This course has no prerequisites.</p>
+      <h2>Instructor Assistance</h2>
+      <p>As you prepare to demonstrate competency in this subject, remember that instructors can help you reach your educational goals. Instructors are able to share tips on approaches, tools, and skills that can help you apply the content you are studying.</p>
+      <h2>On-the-Job at TechSource Solutions</h2>
+      <p>Throughout this course, you will take on the role of an IT Support Technician for TechSource Solutions, where you will learn new skills and complete Python programming tasks.</p>
+      <div class="zb-section-footer">
+        <span class="zb-opt-out"><span class="material-icons-outlined" style="font-size:14px;">verified_user</span> Opt-Out Signal Honored</span>
+        <a href="#">Feedback?</a>
+      </div>
+    </div>
+  </div>
 </section>
 
 
@@ -2591,205 +2726,193 @@ Test it with: [<span class="num">85</span>, <span class="num">42</span>, <span c
 
 
 <!-- ================================================================
-     SCREEN 15 — MOCK LMS PAGE (SC-MVP-02 Entry)
-     Duplicate of Screen 1 for the Advanced flow.
-     Sidebar link navigates to Screen 8 (Returning Progress Map).
+     SCREEN 15 — ZYBOOKS COURSE PAGE (SC-MVP-02 Entry)
+     zyBooks landing page for the Advanced flow.
+     Coding Coach CTA navigates to Screen 25 (Welcome).
      ================================================================ -->
 <section class="screen" id="screen-15" aria-labelledby="s15-heading">
-  <header class="navbar navbar-dark" role="banner">
-    <a href="#" class="navbar-brand" aria-label="Western Governors University">
-      <img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;">
-      <span class="navbar-brand-text">WGU Student Portal</span>
-    </a>
-    <div class="navbar-right">
+  <div class="zb-header">
+    <div class="zb-header-left">
+      <a href="#" class="zb-logo"><span class="material-icons-outlined" aria-hidden="true">auto_stories</span> zy<span class="zb-logo-accent">Books</span></a>
       <button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode">
         <span class="material-icons-outlined theme-icon-light">dark_mode</span>
         <span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span>
       </button>
-      <span class="navbar-chip">E010: Foundations of Programming (Python)</span>
+    </div>
+    <div class="zb-header-right">
+      <a href="#">zyBooks catalog</a><a href="#">Help/FAQ</a>
       <div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div>
     </div>
-  </header>
-  <div class="lms-layout">
-    <aside class="lms-sidebar" aria-label="Course navigation">
-      <p class="lms-sidebar-heading">E010 Course Modules</p>
-      <ul class="lms-nav">
-        <li><a href="#" class="active"><span class="material-icons-outlined" aria-hidden="true">menu_book</span> Module 1: Python Basics</a></li>
-        <li><a href="#"><span class="material-icons-outlined" aria-hidden="true">menu_book</span> Module 2: Control Flow</a></li>
-        <li><a href="#"><span class="material-icons-outlined" aria-hidden="true">menu_book</span> Module 3: Functions</a></li>
-        <li><a href="#"><span class="material-icons-outlined" aria-hidden="true">menu_book</span> Module 4: Data Structures</a></li>
-      </ul>
-      <div class="lms-nav-divider"></div>
-      <p class="lms-sidebar-heading" style="margin-top:8px;">Supplemental Resources</p>
-      <ul class="lms-nav">
-        <li><a href="#"><span class="material-icons-outlined" aria-hidden="true">library_books</span> Course Textbook</a></li>
-        <li><a href="#"><span class="material-icons-outlined" aria-hidden="true">video_library</span> Video Lectures</a></li>
-      </ul>
-      <div class="lms-nav-divider"></div>
-      <p class="lms-sidebar-heading" style="margin-top:8px;">Practice Tools</p>
-      <button type="button" class="lms-resource-link" onclick="goToScreen(25); return false;" aria-label="Launch Coding Coach for Python practice">
-        <span class="material-icons-outlined" aria-hidden="true">rocket_launch</span>
-        Coding Coach — Python
-        <span class="material-icons-outlined" aria-hidden="true" style="margin-left:auto; font-size:16px;">open_in_new</span>
-      </button>
-      <p style="font-size:12px; color:var(--pgn-color-gray-600); margin-top:8px; padding:0 8px;">
-        AI-powered Python practice. Launches via LTI in a new tab. No separate login required.
-      </p>
-    </aside>
-    <main class="lms-content">
-      <span class="badge badge-brand mb-2" style="display:inline-flex;">Module 1: Python Basics</span>
-      <h1 id="s15-heading" class="h3">Introduction to Python Programming</h1>
-      <p>Python is a high-level, interpreted programming language known for its readability and versatility. Created by Guido van Rossum and first released in 1991, Python has become one of the most popular programming languages in the world.</p>
-      <p>In this module, you will learn the fundamental building blocks of Python programming, including variables, data types, basic operators, and how to write your first Python script.</p>
-      <p>Python uses indentation to define code blocks, making the code visually clean and easy to read. Unlike many other programming languages, Python does not use curly braces or semicolons to delimit statements.</p>
-      <div class="code-block mt-3">
-<span class="cm"># Your first Python program</span>
-<span class="kw">name</span> = <span class="str">"Sally"</span>
-<span class="fn">print</span>(<span class="str">"Hello, "</span> + <span class="kw">name</span> + <span class="str">"! Welcome to Python."</span>)
+  </div>
+  <div class="zb-breadcrumb"><a href="#">My library</a> &gt; <a href="#">E 010: Foundations of Programming (Python) home</a> &gt; 1.1: Welcome to Foundations of Programming</div>
+  <div class="zb-info-banner">
+    <div class="zb-info-banner-icon"><span class="material-icons-outlined">lightbulb</span></div>
+    <div class="zb-info-banner-text"><strong>What is a zyBook?</strong><br>New to zyBooks? Check out a short video to learn how zyBooks uses concise writing, interactive activities, and research-backed approaches to help students learn.</div>
+    <button class="zb-btn-watch">Watch now</button>
+  </div>
+  <div class="zb-body" style="display:flex; flex-direction:column; overflow-y:auto;">
+    <div style="flex:1;">
+      <span class="zb-badge-instructor"><span class="material-icons-outlined" aria-hidden="true">person</span> Instructor created</span>
+      <h1 id="s15-heading">1.1 Welcome to Foundations of Programming</h1>
+      <div class="zb-wgu-bar"></div>
+      <span class="zb-wgu-label">WGU School of Technology</span>
+      <h2>Overview</h2>
+      <p>Welcome to Foundations of Programming Python! This course will introduce you to core programming principles using the Python programming language. You will learn how to write, troubleshoot, and debug basic Python scripts by working with programming elements, including variables, loops, conditional statements, and data structures.</p>
+      <h2>Competencies</h2>
+      <p>This course provides guidance to help you demonstrate the following competencies:</p>
+      <div class="zb-competency-row">
+        <ul>
+          <li><strong>Identifies Python Programming Constructs</strong><br>The learner identifies basic Python programming constructs to create simple functions.</li>
+          <li><strong>Executes Python Code</strong><br>The learner executes Python code in different development environments.</li>
+          <li><strong>Manipulates Data Structures</strong><br>The learner manipulates data structures to effectively store, retrieve, and process data.</li>
+          <li><strong>Creates Functional Programs</strong><br>The learner creates functional programs by writing and debugging code.</li>
+        </ul>
+        <a href="#" class="zb-coach-cta" onclick="goToScreen(25); return false;" aria-label="Launch Coding Coach for Python practice">
+          <span class="material-icons-outlined" aria-hidden="true">rocket_launch</span>
+          <span class="zb-coach-cta-title">Coding Coach</span>
+          <span class="zb-coach-cta-sub">Python Foundations</span>
+          <span class="zb-coach-cta-desc">AI-powered practice aligned to these competencies</span>
+        </a>
       </div>
-      <p class="mt-3">The example above demonstrates variable assignment and string concatenation, two concepts you will master in this module.</p>
-      <div class="textbook-placeholder">
-        <span class="material-icons-outlined" style="font-size:32px; margin-bottom:8px; display:block;">auto_stories</span>
-        Additional course content continues below...<br>
-        <span style="font-size:12px;">(This is a mock textbook page for storyboard purposes)</span>
+      <h2>Prerequisites</h2>
+      <p>This course has no prerequisites.</p>
+      <h2>Instructor Assistance</h2>
+      <p>As you prepare to demonstrate competency in this subject, remember that instructors can help you reach your educational goals. Instructors are able to share tips on approaches, tools, and skills that can help you apply the content you are studying.</p>
+      <h2>On-the-Job at TechSource Solutions</h2>
+      <p>Throughout this course, you will take on the role of an IT Support Technician for TechSource Solutions, where you will learn new skills and complete Python programming tasks.</p>
+      <div class="zb-section-footer">
+        <span class="zb-opt-out"><span class="material-icons-outlined" style="font-size:14px;">verified_user</span> Opt-Out Signal Honored</span>
+        <a href="#">Feedback?</a>
       </div>
-    </main>
+    </div>
   </div>
 </section>
 
 
 <!-- ================================================================
-     SCREEN 16 — MOCK LMS PAGE (SC-MVP-03 Entry)
-     Duplicate of Screen 1 for the Professional flow.
-     Sidebar link navigates to Screen 11 (Fast-Track Results).
+     SCREEN 16 — ZYBOOKS COURSE PAGE (SC-MVP-03 Entry)
+     zyBooks landing page for the Professional flow.
+     Coding Coach CTA navigates to Screen 28 (Welcome).
      ================================================================ -->
 <section class="screen" id="screen-16" aria-labelledby="s16-heading">
-  <header class="navbar navbar-dark" role="banner">
-    <a href="#" class="navbar-brand" aria-label="Western Governors University">
-      <img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;">
-      <span class="navbar-brand-text">WGU Student Portal</span>
-    </a>
-    <div class="navbar-right">
+  <div class="zb-header">
+    <div class="zb-header-left">
+      <a href="#" class="zb-logo"><span class="material-icons-outlined" aria-hidden="true">auto_stories</span> zy<span class="zb-logo-accent">Books</span></a>
       <button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode">
         <span class="material-icons-outlined theme-icon-light">dark_mode</span>
         <span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span>
       </button>
-      <span class="navbar-chip">E010: Foundations of Programming (Python)</span>
+    </div>
+    <div class="zb-header-right">
+      <a href="#">zyBooks catalog</a><a href="#">Help/FAQ</a>
       <div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div>
     </div>
-  </header>
-  <div class="lms-layout">
-    <aside class="lms-sidebar" aria-label="Course navigation">
-      <p class="lms-sidebar-heading">E010 Course Modules</p>
-      <ul class="lms-nav">
-        <li><a href="#" class="active"><span class="material-icons-outlined" aria-hidden="true">menu_book</span> Module 1: Python Basics</a></li>
-        <li><a href="#"><span class="material-icons-outlined" aria-hidden="true">menu_book</span> Module 2: Control Flow</a></li>
-        <li><a href="#"><span class="material-icons-outlined" aria-hidden="true">menu_book</span> Module 3: Functions</a></li>
-        <li><a href="#"><span class="material-icons-outlined" aria-hidden="true">menu_book</span> Module 4: Data Structures</a></li>
-      </ul>
-      <div class="lms-nav-divider"></div>
-      <p class="lms-sidebar-heading" style="margin-top:8px;">Supplemental Resources</p>
-      <ul class="lms-nav">
-        <li><a href="#"><span class="material-icons-outlined" aria-hidden="true">library_books</span> Course Textbook</a></li>
-        <li><a href="#"><span class="material-icons-outlined" aria-hidden="true">video_library</span> Video Lectures</a></li>
-      </ul>
-      <div class="lms-nav-divider"></div>
-      <p class="lms-sidebar-heading" style="margin-top:8px;">Practice Tools</p>
-      <button type="button" class="lms-resource-link" onclick="goToScreen(28); return false;" aria-label="Launch Coding Coach for Python practice">
-        <span class="material-icons-outlined" aria-hidden="true">rocket_launch</span>
-        Coding Coach — Python
-        <span class="material-icons-outlined" aria-hidden="true" style="margin-left:auto; font-size:16px;">open_in_new</span>
-      </button>
-      <p style="font-size:12px; color:var(--pgn-color-gray-600); margin-top:8px; padding:0 8px;">
-        AI-powered Python practice. Launches via LTI in a new tab. No separate login required.
-      </p>
-    </aside>
-    <main class="lms-content">
-      <span class="badge badge-brand mb-2" style="display:inline-flex;">Module 1: Python Basics</span>
-      <h1 id="s16-heading" class="h3">Introduction to Python Programming</h1>
-      <p>Python is a high-level, interpreted programming language known for its readability and versatility. Created by Guido van Rossum and first released in 1991, Python has become one of the most popular programming languages in the world.</p>
-      <p>In this module, you will learn the fundamental building blocks of Python programming, including variables, data types, basic operators, and how to write your first Python script.</p>
-      <p>Python uses indentation to define code blocks, making the code visually clean and easy to read. Unlike many other programming languages, Python does not use curly braces or semicolons to delimit statements.</p>
-      <div class="code-block mt-3">
-<span class="cm"># Your first Python program</span>
-<span class="kw">name</span> = <span class="str">"Sally"</span>
-<span class="fn">print</span>(<span class="str">"Hello, "</span> + <span class="kw">name</span> + <span class="str">"! Welcome to Python."</span>)
+  </div>
+  <div class="zb-breadcrumb"><a href="#">My library</a> &gt; <a href="#">E 010: Foundations of Programming (Python) home</a> &gt; 1.1: Welcome to Foundations of Programming</div>
+  <div class="zb-info-banner">
+    <div class="zb-info-banner-icon"><span class="material-icons-outlined">lightbulb</span></div>
+    <div class="zb-info-banner-text"><strong>What is a zyBook?</strong><br>New to zyBooks? Check out a short video to learn how zyBooks uses concise writing, interactive activities, and research-backed approaches to help students learn.</div>
+    <button class="zb-btn-watch">Watch now</button>
+  </div>
+  <div class="zb-body" style="display:flex; flex-direction:column; overflow-y:auto;">
+    <div style="flex:1;">
+      <span class="zb-badge-instructor"><span class="material-icons-outlined" aria-hidden="true">person</span> Instructor created</span>
+      <h1 id="s16-heading">1.1 Welcome to Foundations of Programming</h1>
+      <div class="zb-wgu-bar"></div>
+      <span class="zb-wgu-label">WGU School of Technology</span>
+      <h2>Overview</h2>
+      <p>Welcome to Foundations of Programming Python! This course will introduce you to core programming principles using the Python programming language. You will learn how to write, troubleshoot, and debug basic Python scripts by working with programming elements, including variables, loops, conditional statements, and data structures.</p>
+      <h2>Competencies</h2>
+      <p>This course provides guidance to help you demonstrate the following competencies:</p>
+      <div class="zb-competency-row">
+        <ul>
+          <li><strong>Identifies Python Programming Constructs</strong><br>The learner identifies basic Python programming constructs to create simple functions.</li>
+          <li><strong>Executes Python Code</strong><br>The learner executes Python code in different development environments.</li>
+          <li><strong>Manipulates Data Structures</strong><br>The learner manipulates data structures to effectively store, retrieve, and process data.</li>
+          <li><strong>Creates Functional Programs</strong><br>The learner creates functional programs by writing and debugging code.</li>
+        </ul>
+        <a href="#" class="zb-coach-cta" onclick="goToScreen(28); return false;" aria-label="Launch Coding Coach for Python practice">
+          <span class="material-icons-outlined" aria-hidden="true">rocket_launch</span>
+          <span class="zb-coach-cta-title">Coding Coach</span>
+          <span class="zb-coach-cta-sub">Python Foundations</span>
+          <span class="zb-coach-cta-desc">AI-powered practice aligned to these competencies</span>
+        </a>
       </div>
-      <p class="mt-3">The example above demonstrates variable assignment and string concatenation, two concepts you will master in this module.</p>
-      <div class="textbook-placeholder">
-        <span class="material-icons-outlined" style="font-size:32px; margin-bottom:8px; display:block;">auto_stories</span>
-        Additional course content continues below...<br>
-        <span style="font-size:12px;">(This is a mock textbook page for storyboard purposes)</span>
+      <h2>Prerequisites</h2>
+      <p>This course has no prerequisites.</p>
+      <h2>Instructor Assistance</h2>
+      <p>As you prepare to demonstrate competency in this subject, remember that instructors can help you reach your educational goals. Instructors are able to share tips on approaches, tools, and skills that can help you apply the content you are studying.</p>
+      <h2>On-the-Job at TechSource Solutions</h2>
+      <p>Throughout this course, you will take on the role of an IT Support Technician for TechSource Solutions, where you will learn new skills and complete Python programming tasks.</p>
+      <div class="zb-section-footer">
+        <span class="zb-opt-out"><span class="material-icons-outlined" style="font-size:14px;">verified_user</span> Opt-Out Signal Honored</span>
+        <a href="#">Feedback?</a>
       </div>
-    </main>
+    </div>
   </div>
 </section>
 
 
 <!-- ================================================================
-     SCREEN 17 — MOCK LMS PAGE (SC-MVP-04 Entry)
-     Duplicate of Screen 1 for the Returning flow.
-     Sidebar link navigates to Screen 14 (Returning Learner Welcome).
+     SCREEN 17 — ZYBOOKS COURSE PAGE (SC-MVP-04 Entry)
+     zyBooks landing page for the Returning flow.
+     Coding Coach CTA navigates to Screen 14 (Returning Learner Welcome).
      ================================================================ -->
 <section class="screen" id="screen-17" aria-labelledby="s17-heading">
-  <header class="navbar navbar-dark" role="banner">
-    <a href="#" class="navbar-brand" aria-label="Western Governors University">
-      <img class="navbar-brand-logo" src="" alt="WGU" data-logo="white" style="height:28px; width:auto;">
-      <span class="navbar-brand-text">WGU Student Portal</span>
-    </a>
-    <div class="navbar-right">
+  <div class="zb-header">
+    <div class="zb-header-left">
+      <a href="#" class="zb-logo"><span class="material-icons-outlined" aria-hidden="true">auto_stories</span> zy<span class="zb-logo-accent">Books</span></a>
       <button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode">
         <span class="material-icons-outlined theme-icon-light">dark_mode</span>
         <span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span>
       </button>
-      <span class="navbar-chip">E010: Foundations of Programming (Python)</span>
+    </div>
+    <div class="zb-header-right">
+      <a href="#">zyBooks catalog</a><a href="#">Help/FAQ</a>
       <div class="navbar-user"><div class="avatar" aria-hidden="true">SR</div><span>Sally R.</span></div>
     </div>
-  </header>
-  <div class="lms-layout">
-    <aside class="lms-sidebar" aria-label="Course navigation">
-      <p class="lms-sidebar-heading">E010 Course Modules</p>
-      <ul class="lms-nav">
-        <li><a href="#" class="active"><span class="material-icons-outlined" aria-hidden="true">menu_book</span> Module 1: Python Basics</a></li>
-        <li><a href="#"><span class="material-icons-outlined" aria-hidden="true">menu_book</span> Module 2: Control Flow</a></li>
-        <li><a href="#"><span class="material-icons-outlined" aria-hidden="true">menu_book</span> Module 3: Functions</a></li>
-        <li><a href="#"><span class="material-icons-outlined" aria-hidden="true">menu_book</span> Module 4: Data Structures</a></li>
-      </ul>
-      <div class="lms-nav-divider"></div>
-      <p class="lms-sidebar-heading" style="margin-top:8px;">Supplemental Resources</p>
-      <ul class="lms-nav">
-        <li><a href="#"><span class="material-icons-outlined" aria-hidden="true">library_books</span> Course Textbook</a></li>
-        <li><a href="#"><span class="material-icons-outlined" aria-hidden="true">video_library</span> Video Lectures</a></li>
-      </ul>
-      <div class="lms-nav-divider"></div>
-      <p class="lms-sidebar-heading" style="margin-top:8px;">Practice Tools</p>
-      <button type="button" class="lms-resource-link" onclick="goToScreen(14); return false;" aria-label="Launch Coding Coach for Python practice">
-        <span class="material-icons-outlined" aria-hidden="true">rocket_launch</span>
-        Coding Coach — Python
-        <span class="material-icons-outlined" aria-hidden="true" style="margin-left:auto; font-size:16px;">open_in_new</span>
-      </button>
-      <p style="font-size:12px; color:var(--pgn-color-gray-600); margin-top:8px; padding:0 8px;">
-        AI-powered Python practice. Launches via LTI in a new tab. No separate login required.
-      </p>
-    </aside>
-    <main class="lms-content">
-      <span class="badge badge-brand mb-2" style="display:inline-flex;">Module 1: Python Basics</span>
-      <h1 id="s17-heading" class="h3">Introduction to Python Programming</h1>
-      <p>Python is a high-level, interpreted programming language known for its readability and versatility. Created by Guido van Rossum and first released in 1991, Python has become one of the most popular programming languages in the world.</p>
-      <p>In this module, you will learn the fundamental building blocks of Python programming, including variables, data types, basic operators, and how to write your first Python script.</p>
-      <p>Python uses indentation to define code blocks, making the code visually clean and easy to read. Unlike many other programming languages, Python does not use curly braces or semicolons to delimit statements.</p>
-      <div class="code-block mt-3">
-<span class="cm"># Your first Python program</span>
-<span class="kw">name</span> = <span class="str">"Sally"</span>
-<span class="fn">print</span>(<span class="str">"Hello, "</span> + <span class="kw">name</span> + <span class="str">"! Welcome to Python."</span>)
+  </div>
+  <div class="zb-breadcrumb"><a href="#">My library</a> &gt; <a href="#">E 010: Foundations of Programming (Python) home</a> &gt; 1.1: Welcome to Foundations of Programming</div>
+  <div class="zb-info-banner">
+    <div class="zb-info-banner-icon"><span class="material-icons-outlined">lightbulb</span></div>
+    <div class="zb-info-banner-text"><strong>What is a zyBook?</strong><br>New to zyBooks? Check out a short video to learn how zyBooks uses concise writing, interactive activities, and research-backed approaches to help students learn.</div>
+    <button class="zb-btn-watch">Watch now</button>
+  </div>
+  <div class="zb-body" style="display:flex; flex-direction:column; overflow-y:auto;">
+    <div style="flex:1;">
+      <span class="zb-badge-instructor"><span class="material-icons-outlined" aria-hidden="true">person</span> Instructor created</span>
+      <h1 id="s17-heading">1.1 Welcome to Foundations of Programming</h1>
+      <div class="zb-wgu-bar"></div>
+      <span class="zb-wgu-label">WGU School of Technology</span>
+      <h2>Overview</h2>
+      <p>Welcome to Foundations of Programming Python! This course will introduce you to core programming principles using the Python programming language. You will learn how to write, troubleshoot, and debug basic Python scripts by working with programming elements, including variables, loops, conditional statements, and data structures.</p>
+      <h2>Competencies</h2>
+      <p>This course provides guidance to help you demonstrate the following competencies:</p>
+      <div class="zb-competency-row">
+        <ul>
+          <li><strong>Identifies Python Programming Constructs</strong><br>The learner identifies basic Python programming constructs to create simple functions.</li>
+          <li><strong>Executes Python Code</strong><br>The learner executes Python code in different development environments.</li>
+          <li><strong>Manipulates Data Structures</strong><br>The learner manipulates data structures to effectively store, retrieve, and process data.</li>
+          <li><strong>Creates Functional Programs</strong><br>The learner creates functional programs by writing and debugging code.</li>
+        </ul>
+        <a href="#" class="zb-coach-cta" onclick="goToScreen(14); return false;" aria-label="Launch Coding Coach for Python practice">
+          <span class="material-icons-outlined" aria-hidden="true">rocket_launch</span>
+          <span class="zb-coach-cta-title">Coding Coach</span>
+          <span class="zb-coach-cta-sub">Python Foundations</span>
+          <span class="zb-coach-cta-desc">AI-powered practice aligned to these competencies</span>
+        </a>
       </div>
-      <p class="mt-3">The example above demonstrates variable assignment and string concatenation, two concepts you will master in this module.</p>
-      <div class="textbook-placeholder">
-        <span class="material-icons-outlined" style="font-size:32px; margin-bottom:8px; display:block;">auto_stories</span>
-        Additional course content continues below...<br>
-        <span style="font-size:12px;">(This is a mock textbook page for storyboard purposes)</span>
+      <h2>Prerequisites</h2>
+      <p>This course has no prerequisites.</p>
+      <h2>Instructor Assistance</h2>
+      <p>As you prepare to demonstrate competency in this subject, remember that instructors can help you reach your educational goals. Instructors are able to share tips on approaches, tools, and skills that can help you apply the content you are studying.</p>
+      <h2>On-the-Job at TechSource Solutions</h2>
+      <p>Throughout this course, you will take on the role of an IT Support Technician for TechSource Solutions, where you will learn new skills and complete Python programming tasks.</p>
+      <div class="zb-section-footer">
+        <span class="zb-opt-out"><span class="material-icons-outlined" style="font-size:14px;">verified_user</span> Opt-Out Signal Honored</span>
+        <a href="#">Feedback?</a>
       </div>
-    </main>
+    </div>
   </div>
 </section>
 
@@ -2810,7 +2933,7 @@ Test it with: [<span class="num">85</span>, <span class="num">42</span>, <span c
     <span class="flow-id">SC-MVP-01</span>
     <span class="flow-desc">Basic &mdash; First launch, diagnostic, first task</span>
     <nav class="flow-nav" aria-label="Basic flow screens">
-      <button class="step-btn active" onclick="goToScreen(1)" aria-label="Screen 01: LMS Page">01</button>
+      <button class="step-btn active" onclick="goToScreen(1)" aria-label="Screen 01: zyBooks Page">01</button>
       <button class="step-btn" onclick="goToScreen(2)" aria-label="Screen 02: Welcome">02</button>
       <button class="step-btn" onclick="goToScreen(3)" aria-label="Screen 03: Diagnostic Q1">03</button>
       <button class="step-btn" onclick="goToScreen(18)" aria-label="Screen 04: Diagnostic Q2">04</button>
@@ -2823,7 +2946,7 @@ Test it with: [<span class="num">85</span>, <span class="num">42</span>, <span c
     <span class="flow-id">SC-MVP-02</span>
     <span class="flow-desc">Advanced &mdash; Progressive coaching, targeted feedback</span>
     <nav class="flow-nav" aria-label="Advanced flow screens">
-      <button class="step-btn" onclick="goToScreen(15)" aria-label="Screen 01: LMS Page">01</button>
+      <button class="step-btn" onclick="goToScreen(15)" aria-label="Screen 01: zyBooks Page">01</button>
       <button class="step-btn" onclick="goToScreen(25)" aria-label="Screen 02: Welcome">02</button>
       <button class="step-btn" onclick="goToScreen(26)" aria-label="Screen 03: Diagnostic Q1">03</button>
       <button class="step-btn" onclick="goToScreen(27)" aria-label="Screen 04: Diagnostic Q2">04</button>
@@ -2839,7 +2962,7 @@ Test it with: [<span class="num">85</span>, <span class="num">42</span>, <span c
     <span class="flow-id">SC-MVP-03</span>
     <span class="flow-desc">Professional &mdash; Fast-track, verification task</span>
     <nav class="flow-nav" aria-label="Professional flow screens">
-      <button class="step-btn" onclick="goToScreen(16)" aria-label="Screen 01: LMS Page">01</button>
+      <button class="step-btn" onclick="goToScreen(16)" aria-label="Screen 01: zyBooks Page">01</button>
       <button class="step-btn" onclick="goToScreen(28)" aria-label="Screen 02: Welcome">02</button>
       <button class="step-btn" onclick="goToScreen(29)" aria-label="Screen 03: Diagnostic Q1">03</button>
       <button class="step-btn" onclick="goToScreen(30)" aria-label="Screen 04: Diagnostic Q2">04</button>
@@ -2853,7 +2976,7 @@ Test it with: [<span class="num">85</span>, <span class="num">42</span>, <span c
     <span class="flow-id">SC-MVP-04</span>
     <span class="flow-desc">Returning &mdash; Resume after multi-week break</span>
     <nav class="flow-nav" aria-label="Returning flow screens">
-      <button class="step-btn" onclick="goToScreen(17)" aria-label="Screen 01: LMS Page">01</button>
+      <button class="step-btn" onclick="goToScreen(17)" aria-label="Screen 01: zyBooks Page">01</button>
       <button class="step-btn" onclick="goToScreen(14)" aria-label="Screen 02: Returning Learner">02</button>
       <button class="step-btn" onclick="goToScreen(33)" aria-label="Screen 03: Re-Assessment Q1">03</button>
       <button class="step-btn" onclick="goToScreen(34)" aria-label="Screen 04: Re-Assessment Q2">04</button>

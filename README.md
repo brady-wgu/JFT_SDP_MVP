@@ -87,7 +87,8 @@ All padding, margin, and gap values follow an **8-point grid** (multiples of 8px
 ## Features
 
 - **34 interactive screens** across 4 self-contained scenario flows
-- **Dark mode toggle** (moon/sun icon in navbar) with localStorage persistence
+- **zyBooks landing page** — every scenario starts from a realistic zyBooks course page with "Coding Coach" CTA button positioned next to the Competencies section
+- **Dark mode toggle** (moon/sun icon in header) with localStorage persistence
 - **Light-mode-aware code blocks** — white background with SDP palette syntax highlighting in light mode, dark theme in dark mode
 - **Official WGU Corporation logos** embedded as base64 PNG
 - **Keyboard navigation** (arrow keys between screens)
@@ -116,7 +117,7 @@ Download the HTML files and the `screenshots/` / `screenshots_dark/` directories
 ### Navigation (Interactive Storyboard)
 - Use the **admin bar** at the bottom to jump between scenarios and screens
 - Use **arrow keys** (left/right) to step through screens sequentially
-- Click interactive elements (sidebar links, CTAs, Submit buttons) to follow the scenario flow
+- Click interactive elements (Coding Coach CTA on zyBooks page, Submit buttons) to follow the scenario flow
 - Toggle **dark mode** with the moon/sun icon in the upper-right corner
 
 ---
@@ -125,6 +126,7 @@ Download the HTML files and the `screenshots/` / `screenshots_dark/` directories
 
 Changes applied since v3.0 (30 Mar 2026):
 
+- **zyBooks landing page** — replaced mock WGU Student Portal LMS page (Screen 01) across all four scenarios with a realistic zyBooks course page; "Coding Coach" CTA button placed next to the Competencies section as the new entry point
 - **Design system audit** — 271 fixes across index.html and presentation.html covering WCAG 2.2 AA compliance, FY26 color palette alignment, typography scale enforcement, and 8-point spacing grid
 - **FY26 palette reconciliation** — `--pgn-*` tokens updated from SDP Figma values to FY26 authoritative values (`#001730`, `#0070F0`, `#46B1EF`)
 - **Light-mode code blocks** — white background with SDP palette syntax highlighting; dark mode retains `#0d1117` theme
