@@ -128,7 +128,7 @@ Changes applied since v3.0 (30 Mar 2026):
 
 - **zyBooks landing page** — replaced mock WGU Student Portal LMS page (Screen 01) across all four scenarios with a realistic zyBooks course page; "Coding Coach" CTA button placed next to the Competencies section as the new entry point
 - **Sequential screen numbering** — renumbered all 34 screens sequentially (01–08 SC-MVP-01, 09–19 SC-MVP-02, 20–28 SC-MVP-03, 29–34 SC-MVP-04); admin bar now displays true screen numbers instead of restarting at 01 per scenario
-- **Presentation text sync** — fully aligned presentation.html narrative text, Notes for JFT, and Document Control with the v1.2 Scenario Catalog (07 Apr 2026), including expanded LRPS descriptions per WGU LRPS team review
+- **Presentation text sync** — fully aligned presentation.html and presentation_dark.html narrative text, Notes for JFT, and Document Control with the v1.2 Scenario Catalog (07 Apr 2026), including expanded LRPS descriptions per WGU LRPS team review
 - **Design system audit** — 271 fixes across index.html and presentation.html covering WCAG 2.2 AA compliance, FY26 color palette alignment, typography scale enforcement, and 8-point spacing grid
 - **FY26 palette reconciliation** — `--pgn-*` tokens updated from SDP Figma values to FY26 authoritative values (`#001730`, `#0070F0`, `#46B1EF`)
 - **Light-mode code blocks** — white background with SDP palette syntax highlighting; dark mode retains `#0d1117` theme
@@ -136,7 +136,7 @@ Changes applied since v3.0 (30 Mar 2026):
 - **Heading focus outline fix** — suppressed `:focus-visible` outline on headings after programmatic focus
 - **Dark mode presentation** — added `presentation_dark.html` with all 34 dark-theme screenshots
 - **WCAG improvements** — skip navigation links, `<main>` landmark, contentinfo footer, heading hierarchy fixes, table scope attributes, aria-labels, focus indicators, responsive breakpoints, touch target sizing, contrast ratio fixes
-- **Screenshot recapture** — all 68 screenshots (34 light + 34 dark) recaptured at 1440x900
+- **Screenshot recapture** — all 68 screenshots (34 light + 34 dark) recaptured at 1440×900 with sequential filenames matching new screen IDs
 
 ---
 
