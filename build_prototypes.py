@@ -1,43 +1,33 @@
-"""Generate the persona screenshot click-through prototypes from per-persona flow specs.
+"""Generate the persona click-through demo pages from per-persona flow specs.
 
 Each persona folder (student/, instructor/, tenant_admin/, super_admin/) holds:
-    flow.json            — the wiring spec (screens, labels, hotspots) — hand-authored
+    flow.json            — the wiring spec (screens, labels, hotspots)
     screenshots/         — screen-NN.png full-page captures of the LIVE SkillProof app
-    screenshots_dark/    — optional dark-theme set (enables the theme toggle when complete)
+
+flow.json is WRITTEN BY skillproof-qa-tools/demo-capture.js, not by hand. That script
+forces one uniform viewport for every capture and measures each hotspot's box off the
+live DOM, so a hotspot cannot drift from the screenshot it sits on. Hand-editing
+flow.json re-introduces exactly the drift it exists to prevent — re-run the capture
+instead.
 
 This script reads each flow.json and emits a fully-static <persona>/index.html: one
-`<section class="screen">` per screen containing the screenshot plus transparent,
-percentage-positioned `<button class="hotspot">` overlays that call goToScreen(). The
-screenshots carry all of the app's own chrome (navbar, footer), so the prototype adds
-none of its own — only a collapsible demo "meta-bar" for navigating between screens.
+`<section class="screen">` per screen holding the screenshot plus transparent,
+percentage-positioned `<button class="hotspot">` overlays that call goToScreen().
 
-Hotspot coordinates are PERCENTAGES of each screenshot (produced by capture-screen.js in
-skillproof-qa-tools/), so they are resolution/DPR-independent and track the image at any
-render width. GitHub Pages stays build-free: this runs at dev time and commits static HTML,
-exactly like capture_screens.py.
+THE FRAME. Every screen renders inside an identical fixed-size "app window"
+(flow.json's `frame`, default 1440x900) that scrolls INTERNALLY. This is the point of
+the whole page: the captures vary in height (a dashboard is 900px, an analytics rollup
+is 6000px), and letting that variance reach the viewer is what made the 12 AUG 2026
+first attempt feel broken — every click jumped to a different page shape. Uniform outer
+frame + internal scroll keeps all the content and still feels like one running app.
+
+Screenshots carry all of the app's own chrome (navbar, footer), so the page adds none
+of its own — only a demo meta-bar for navigating screens and switching personas.
+GitHub Pages stays build-free: this runs at dev time and commits static HTML.
 
 Usage:
     python build_prototypes.py                 # build the 4 default personas
     python build_prototypes.py student         # build only named persona folder(s)
-    python build_prototypes.py ../scratch/foo  # build an arbitrary dir holding flow.json
-
-flow.json schema:
-    {
-      "persona": "student",
-      "title": "SkillProof — Coding Coach (Student)",
-      "metabarLabel": "SkillProof Project Link Page · Student",
-      "v": 1,                       # cache-bust version appended to every screenshot src
-      "hasDark": false,             # only honoured if a full screenshots_dark set exists
-      "screens": [
-        { "n": 1, "file": "screen-01.png", "label": "Coding Coach landing", "docW": 1344,
-          "wire": [
-            { "label": "Begin Diagnostic", "goto": 2,
-              "pct": { "left": 11.61, "top": 47.84, "width": 14.84, "height": 4.49 } }
-          ] }
-      ]
-    }
-Each wire entry needs a "pct" box and either a "goto" (target screen number) or an
-"action" (a JS call such as "toggleTheme()"). Screens are rendered in list order.
 """
 import json
 import os
@@ -47,7 +37,14 @@ import html
 REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_PERSONAS = ["student", "instructor", "tenant_admin", "super_admin"]
 
-# --- page template (token-replaced; tokens are %%NAME%% to avoid brace escaping) ---
+# Persona switcher targets. A demo replacement has to let one person walk all four
+# roles without logging into four accounts, so every page links to every other.
+PERSONA_NAV = [
+    ("student", "Student", "person"),
+    ("instructor", "Instructor", "school"),
+    ("tenant_admin", "School Admin", "admin_panel_settings"),
+    ("super_admin", "Super Admin", "verified_user"),
+]
 
 PAGE = r"""<!DOCTYPE html>
 <html lang="en" data-theme="light">
@@ -55,8 +52,6 @@ PAGE = r"""<!DOCTYPE html>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
   <title>%%TITLE%%</title>
   <link rel="icon" type="image/png" href="../assets/wgu-favicon.png">
   <link rel="stylesheet" href="https://brady-wgu.github.io/brady-design-system/fonts/aptos.css">
@@ -71,33 +66,49 @@ PAGE = r"""<!DOCTYPE html>
       --backdrop: #55657a;
       --text-dim: rgba(255,255,255,0.72);
       --font-body: 'Aptos', Arial, sans-serif;
+      --frame-w: %%FRAME_W%%px;
+      --frame-h: %%FRAME_H%%px;
+      --bar-h: 96px;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
     body {
       font-family: var(--font-body);
       background: var(--backdrop);
-      padding-bottom: 148px; /* room for the expanded meta-bar */
+      min-height: 100vh;
     }
-    body.metabar-collapsed { padding-bottom: 46px; }
+    body.metabar-collapsed { --bar-h: 42px; }
     :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
     .visually-hidden {
       position: absolute; width: 1px; height: 1px;
       overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
     }
 
-    /* --- screens --- */
+    /* --- the app window ------------------------------------------------
+       stage centres the frame; .shot IS the fixed window and owns the only
+       scrollbar the viewer should ever see. */
+    .stage {
+      display: flex; align-items: flex-start; justify-content: center;
+      padding: 18px 18px calc(var(--bar-h) + 18px);
+    }
     .screen { display: none; }
     .screen.active { display: block; }
     .shot {
       position: relative;
-      width: 100%;
-      max-width: var(--shot-css-w, 1344px);
-      margin: 0 auto;
+      width: min(var(--frame-w), 100%);
+      height: min(var(--frame-h), calc(100vh - var(--bar-h) - 36px));
+      overflow-y: auto;
+      overflow-x: hidden;
       background: #fff;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+      border-radius: 10px;
+      box-shadow: 0 12px 44px rgba(0,0,0,0.32);
+      scroll-behavior: smooth;
+      /* iOS: keep the inner scroll from chaining to the page */
+      overscroll-behavior: contain;
     }
-    .shot > img { display: block; width: 100%; height: auto; }
+    /* inner is exactly the image box, so hotspot percentages track the image */
+    .shot-inner { position: relative; width: 100%; }
+    .shot-inner > img { display: block; width: 100%; height: auto; }
 
     /* --- hotspots --- */
     .hotspot {
@@ -124,13 +135,22 @@ PAGE = r"""<!DOCTYPE html>
       box-shadow: 0 -6px 24px rgba(0,0,0,0.28);
     }
     .meta-bar-header {
-      display: flex; align-items: center; gap: 12px;
-      padding: 9px 16px; font-size: 13px;
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 14px; font-size: 13px; flex-wrap: wrap;
     }
-    .meta-id { font-weight: 700; letter-spacing: 0.01em; }
-    .meta-bar-header .sep { color: var(--text-dim); }
-    .meta-link { color: #8fc4ff; text-decoration: none; font-weight: 600; }
-    .meta-link:hover { text-decoration: underline; }
+    .meta-id { font-weight: 700; }
+    .meta-bar-header .spacer { margin-left: auto; }
+    .persona-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      color: var(--text-dim); text-decoration: none;
+      border: 1px solid var(--pill-border); border-radius: 999px;
+      padding: 3px 10px; font-size: 12px; font-weight: 600;
+    }
+    .persona-link:hover { color: #fff; background: var(--nav-bg-2); }
+    .persona-link[aria-current="page"] {
+      background: var(--accent); color: #fff; border-color: var(--accent);
+    }
+    .persona-link .material-icons-outlined { font-size: 15px; }
     .meta-btn {
       display: inline-flex; align-items: center; justify-content: center;
       background: transparent; color: #fff; border: 1px solid var(--pill-border);
@@ -140,13 +160,13 @@ PAGE = r"""<!DOCTYPE html>
     .meta-btn .material-icons-outlined { font-size: 18px; }
     .flow-nav {
       display: flex; flex-wrap: wrap; gap: 6px;
-      padding: 0 16px 12px;
-      max-height: 96px; overflow-y: auto;
+      padding: 0 14px 10px;
+      max-height: 54px; overflow-y: auto;
     }
     .step-btn {
       background: var(--pill-bg); color: var(--text-dim);
       border: 1px solid var(--pill-border); border-radius: 999px;
-      padding: 4px 11px; font-size: 12px; font-family: var(--font-body);
+      padding: 3px 10px; font-size: 12px; font-family: var(--font-body);
       cursor: pointer; white-space: nowrap;
     }
     .step-btn:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
@@ -156,19 +176,23 @@ PAGE = r"""<!DOCTYPE html>
 </head>
 <body>
 
+<div class="stage">
 %%SCREENS%%
+</div>
 
-  <nav class="meta-bar" aria-label="Storyboard navigation">
+  <nav class="meta-bar" aria-label="Demo navigation">
     <div class="meta-bar-header">
       <span class="meta-id">%%METABAR_LABEL%%</span>
-      <span class="sep" style="margin-left:auto;"></span>
-      <a href="../" class="meta-link">&larr; Storyboard Index</a>
+      <span class="visually-hidden">Switch role:</span>
+%%PERSONA_LINKS%%
+      <span class="spacer"></span>
+      <a href="../" class="persona-link">&larr; Index</a>
       <button class="meta-btn" type="button" onclick="toggleReveal()" aria-pressed="false"
               title="Highlight the clickable areas on this screen" aria-label="Highlight clickable areas">
         <span class="material-icons-outlined">ads_click</span>
-      </button>%%THEME_BTN%%
+      </button>
       <button class="meta-btn meta-bar-toggle" type="button" onclick="toggleMetaBar()"
-              aria-expanded="true" aria-label="Hide/show the navigation bar" title="Hide/show this navigation bar">
+              aria-expanded="true" aria-label="Hide or show the navigation bar" title="Hide/show this navigation bar">
         <span class="material-icons-outlined">expand_more</span>
       </button>
     </div>
@@ -192,6 +216,10 @@ PAGE = r"""<!DOCTYPE html>
       var t = document.getElementById('screen-' + n);
       if (!t) return;
       t.classList.add('active');
+      // Reset the frame's internal scroll: arriving on a screen should show its top,
+      // the same as a real navigation would.
+      var box = t.querySelector('.shot');
+      if (box) box.scrollTop = 0;
       window.scrollTo(0, 0);
       var h = t.querySelector('.screen-heading');
       if (h) { h.focus({ preventScroll: true }); }
@@ -203,6 +231,7 @@ PAGE = r"""<!DOCTYPE html>
     });
 
     document.addEventListener('keydown', function (e) {
+      if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
       var a = document.querySelector('.screen.active'); if (!a) return;
       var m = a.id.match(/^screen-(\d+)$/); if (!m) return;
       var n = parseInt(m[1], 10);
@@ -230,7 +259,7 @@ PAGE = r"""<!DOCTYPE html>
       var b = document.querySelector('.meta-btn[onclick="toggleReveal()"]');
       if (b) b.setAttribute('aria-pressed', String(on));
     };
-%%THEME_JS%%
+
     var p = new URLSearchParams(location.search);
     var d = parseInt(p.get('screen'), 10);
     if (d >= 1 && d <= TOTAL) goToScreen(d);
@@ -238,33 +267,6 @@ PAGE = r"""<!DOCTYPE html>
   </script>
 </body>
 </html>
-"""
-
-THEME_BTN = r"""
-      <button class="meta-btn" type="button" onclick="toggleTheme()"
-              title="Toggle light / dark screenshots" aria-label="Toggle light or dark theme">
-        <span class="material-icons-outlined">dark_mode</span>
-      </button>"""
-
-THEME_JS = r"""
-    function swapShotTheme(theme) {
-      document.querySelectorAll('.shot > img').forEach(function (img) {
-        img.setAttribute('src', img.getAttribute('src').replace(/screenshots(_dark)?\//, theme === 'dark' ? 'screenshots_dark/' : 'screenshots/'));
-      });
-    }
-    window.toggleTheme = function () {
-      var dark = document.documentElement.getAttribute('data-theme') === 'dark';
-      var next = dark ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      swapShotTheme(next);
-      localStorage.setItem('skillproof-theme', next);
-    };
-    (function () {
-      if (localStorage.getItem('skillproof-theme') === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        swapShotTheme('dark');
-      }
-    })();
 """
 
 
@@ -275,33 +277,33 @@ def esc(s):
 def render_hotspot(w):
     pct = w["pct"]
     style = "left:{left}%;top:{top}%;width:{width}%;height:{height}%;".format(**pct)
-    if "action" in w and w["action"]:
+    if w.get("action"):
         onclick = w["action"] if w["action"].strip().endswith(")") else w["action"] + "()"
     else:
         onclick = "goToScreen({})".format(int(w["goto"]))
     label = esc(w.get("label", "Navigate"))
-    return ('    <button class="hotspot" style="{style}" aria-label="{label}" '
+    return ('        <button class="hotspot" style="{style}" aria-label="{label}" '
             'onclick="{onclick}"></button>').format(style=style, label=label, onclick=onclick)
 
 
-def render_screen(scr, persona, version, has_dark):
+def render_screen(scr, persona, version):
     n = int(scr["n"])
     label = scr.get("label", "Screen {}".format(n))
-    docw = scr.get("docW")
-    shot_w = "--shot-css-w:{}px;".format(int(docw)) if docw else ""
     src = "screenshots/{}?v={}".format(scr["file"], version)
-    alt = esc("{} screen {}: {}".format(persona, n, label))
+    alt = esc("{}: {}".format(persona.replace("_", " ").title(), label))
     hotspots = "\n".join(render_hotspot(w) for w in scr.get("wire", []))
     active = " active" if n == 1 else ""
     return (
         '  <section class="screen{active}" id="screen-{n}" aria-labelledby="s{n}-heading">\n'
         '    <h2 id="s{n}-heading" class="screen-heading visually-hidden" tabindex="-1">Screen {n} — {label}</h2>\n'
-        '    <div class="shot" style="{shot_w}">\n'
-        '      <img src="{src}" alt="{alt}">\n'
+        '    <div class="shot">\n'
+        '      <div class="shot-inner">\n'
+        '        <img src="{src}" alt="{alt}">\n'
         '{hotspots}\n'
+        '      </div>\n'
         '    </div>\n'
         '  </section>'
-    ).format(active=active, n=n, label=esc(label), shot_w=shot_w, src=esc(src), alt=alt, hotspots=hotspots)
+    ).format(active=active, n=n, label=esc(label), src=esc(src), alt=alt, hotspots=hotspots)
 
 
 def render_step_btn(scr):
@@ -313,11 +315,15 @@ def render_step_btn(scr):
             ).format(cls=cls, n=n, cur=cur, label=label)
 
 
-def full_dark_set_exists(persona_dir, screens):
-    dark_dir = os.path.join(persona_dir, "screenshots_dark")
-    if not os.path.isdir(dark_dir):
-        return False
-    return all(os.path.isfile(os.path.join(dark_dir, s["file"])) for s in screens)
+def render_persona_links(current):
+    out = []
+    for slug, name, icon in PERSONA_NAV:
+        cur = ' aria-current="page"' if slug == current else ''
+        out.append(
+            '      <a class="persona-link" href="../{slug}/"{cur}>'
+            '<span class="material-icons-outlined">{icon}</span>{name}</a>'.format(
+                slug=slug, cur=cur, icon=icon, name=esc(name)))
+    return "\n".join(out)
 
 
 def build(persona_dir):
@@ -333,27 +339,47 @@ def build(persona_dir):
     screens = flow["screens"]
     version = flow.get("v", 1)
     total = len(screens)
+    frame = flow.get("frame") or {"width": 1440, "height": 900}
 
-    has_dark = bool(flow.get("hasDark")) and full_dark_set_exists(persona_dir, screens)
-    if flow.get("hasDark") and not has_dark:
-        print("  note: hasDark requested but the dark set is incomplete → theme toggle omitted")
+    # Every screenshot must be the frame width. A mismatch means the capture and the
+    # frame disagree, which is the defect that made the first attempt feel broken, so
+    # refuse to build rather than emit a page that jumps size.
+    shots_dir = os.path.join(persona_dir, "screenshots")
+    bad = []
+    for s in screens:
+        p = os.path.join(shots_dir, s["file"])
+        if not os.path.isfile(p):
+            bad.append("{} (missing)".format(s["file"]))
+            continue
+        with open(p, "rb") as fh:
+            head = fh.read(24)
+        w = int.from_bytes(head[16:20], "big")
+        if w != int(frame["width"]):
+            bad.append("{} is {}px, frame is {}px".format(s["file"], w, frame["width"]))
+    if bad:
+        print("  ABORT {}: {}".format(persona, "; ".join(bad)))
+        return False
 
-    screens_html = "\n".join(render_screen(s, persona, version, has_dark) for s in screens)
+    hotspot_count = sum(len(s.get("wire", [])) for s in screens)
+    screens_html = "\n".join(render_screen(s, persona, version) for s in screens)
     steps_html = "\n".join(render_step_btn(s) for s in screens)
 
     page = (PAGE
             .replace("%%TITLE%%", esc(flow.get("title", "SkillProof — " + persona)))
-            .replace("%%METABAR_LABEL%%", esc(flow.get("metabarLabel", "SkillProof Project Link Page")))
+            .replace("%%METABAR_LABEL%%", esc(flow.get("metabarLabel", "SkillProof Demo")))
             .replace("%%SCREENS%%", screens_html)
             .replace("%%STEP_BTNS%%", steps_html)
-            .replace("%%TOTAL%%", str(total))
-            .replace("%%THEME_BTN%%", THEME_BTN if has_dark else "")
-            .replace("%%THEME_JS%%", THEME_JS if has_dark else ""))
+            .replace("%%PERSONA_LINKS%%", render_persona_links(persona))
+            .replace("%%FRAME_W%%", str(int(frame["width"])))
+            .replace("%%FRAME_H%%", str(int(frame["height"])))
+            .replace("%%TOTAL%%", str(total)))
 
     out_path = os.path.join(persona_dir, "index.html")
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(page)
-    print("  built {}  ({} screens, dark={})".format(os.path.relpath(out_path, REPO_ROOT), total, has_dark))
+    print("  built {}  ({} screens, {} hotspots, frame {}x{})".format(
+        os.path.relpath(out_path, REPO_ROOT), total, hotspot_count,
+        frame["width"], frame["height"]))
     return True
 
 
@@ -362,9 +388,11 @@ def main():
     dirs = []
     for t in targets:
         dirs.append(t if os.path.isabs(t) or os.sep in t or "/" in t else os.path.join(REPO_ROOT, t))
-    print("Building {} prototype(s)...".format(len(dirs)))
+    print("Building {} demo page(s)...".format(len(dirs)))
     built = sum(1 for d in dirs if build(d))
     print("Done -- {} page(s) generated.".format(built))
+    if built != len(dirs):
+        sys.exit(1)
 
 
 if __name__ == "__main__":

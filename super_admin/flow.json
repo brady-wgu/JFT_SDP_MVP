@@ -1,58 +1,141 @@
 {
   "persona": "super_admin",
   "title": "SkillProof — Super Admin",
-  "metabarLabel": "SkillProof Project Link Page · Super Admin",
-  "v": 2,
+  "metabarLabel": "SkillProof Demo · Super Admin",
+  "v": 4,
   "hasDark": false,
+  "frame": {
+    "width": 1440,
+    "height": 900
+  },
   "screens": [
     {
       "n": 1,
       "file": "screen-01.png",
       "label": "Dashboard",
-      "docW": 745,
-      "wire": []
+      "docW": 1440,
+      "wire": [
+        {
+          "label": "Open Access Control",
+          "goto": 3,
+          "pct": {
+            "left": 8.61,
+            "top": 18.3,
+            "width": 10,
+            "height": 1.55
+          }
+        },
+        {
+          "label": "Open School Management",
+          "goto": 4,
+          "pct": {
+            "left": 19.16,
+            "top": 18.3,
+            "width": 7.04,
+            "height": 1.55
+          }
+        },
+        {
+          "label": "Open Analytics & Reporting",
+          "goto": 2,
+          "pct": {
+            "left": 26.76,
+            "top": 18.3,
+            "width": 7.71,
+            "height": 1.55
+          }
+        }
+      ]
     },
     {
       "n": 2,
       "file": "screen-02.png",
       "label": "Analytics & Reporting",
-      "docW": 1329,
-      "wire": []
+      "docW": 1440,
+      "wire": [
+        {
+          "label": "Back to Dashboard",
+          "goto": 1,
+          "pct": {
+            "left": 8.61,
+            "top": 3.24,
+            "width": 10.58,
+            "height": 0.63
+          }
+        }
+      ]
     },
     {
       "n": 3,
       "file": "screen-03.png",
       "label": "Access Control",
-      "docW": 1329,
-      "wire": []
+      "docW": 1440,
+      "wire": [
+        {
+          "label": "Back to Dashboard",
+          "goto": 1,
+          "pct": {
+            "left": 8.61,
+            "top": 3.66,
+            "width": 10.58,
+            "height": 0.72
+          }
+        }
+      ]
     },
     {
       "n": 4,
       "file": "screen-04.png",
-      "label": "School Management",
-      "docW": 1329,
-      "wire": []
+      "label": "School Management & Branding",
+      "docW": 1440,
+      "wire": [
+        {
+          "label": "Back to Dashboard",
+          "goto": 1,
+          "pct": {
+            "left": 8.61,
+            "top": 6.29,
+            "width": 10.58,
+            "height": 1.23
+          }
+        }
+      ]
     },
     {
       "n": 5,
       "file": "screen-05.png",
       "label": "Course Detail",
-      "docW": 1344,
-      "wire": []
+      "docW": 1440,
+      "wire": [
+        {
+          "label": "Back to Analytics",
+          "goto": 2,
+          "pct": {
+            "left": 9.44,
+            "top": 7.98,
+            "width": 9.48,
+            "height": 1.69
+          }
+        }
+      ]
     },
     {
       "n": 6,
       "file": "screen-06.png",
-      "label": "Per-School Settings (Logos)",
-      "docW": 1329,
-      "wire": []
-    },
-    {
-      "n": 7,
-      "file": "screen-07.png",
-      "label": "Export menu",
-      "docW": 1344,
-      "wire": []
+      "label": "Help & Support",
+      "docW": 1440,
+      "wire": [
+        {
+          "label": "Back to Dashboard",
+          "goto": 1,
+          "pct": {
+            "left": 20.99,
+            "top": 83.04,
+            "width": 6.11,
+            "height": 3.29
+          }
+        }
+      ]
     }
   ]
 }

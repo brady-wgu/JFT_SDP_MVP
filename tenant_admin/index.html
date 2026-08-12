@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
   <title>SkillProof — School Admin</title>
   <link rel="icon" type="image/png" href="../assets/wgu-favicon.png">
   <link rel="stylesheet" href="https://brady-wgu.github.io/brady-design-system/fonts/aptos.css">
@@ -20,33 +18,49 @@
       --backdrop: #55657a;
       --text-dim: rgba(255,255,255,0.72);
       --font-body: 'Aptos', Arial, sans-serif;
+      --frame-w: 1440px;
+      --frame-h: 900px;
+      --bar-h: 96px;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
     body {
       font-family: var(--font-body);
       background: var(--backdrop);
-      padding-bottom: 148px; /* room for the expanded meta-bar */
+      min-height: 100vh;
     }
-    body.metabar-collapsed { padding-bottom: 46px; }
+    body.metabar-collapsed { --bar-h: 42px; }
     :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
     .visually-hidden {
       position: absolute; width: 1px; height: 1px;
       overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
     }
 
-    /* --- screens --- */
+    /* --- the app window ------------------------------------------------
+       stage centres the frame; .shot IS the fixed window and owns the only
+       scrollbar the viewer should ever see. */
+    .stage {
+      display: flex; align-items: flex-start; justify-content: center;
+      padding: 18px 18px calc(var(--bar-h) + 18px);
+    }
     .screen { display: none; }
     .screen.active { display: block; }
     .shot {
       position: relative;
-      width: 100%;
-      max-width: var(--shot-css-w, 1344px);
-      margin: 0 auto;
+      width: min(var(--frame-w), 100%);
+      height: min(var(--frame-h), calc(100vh - var(--bar-h) - 36px));
+      overflow-y: auto;
+      overflow-x: hidden;
       background: #fff;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+      border-radius: 10px;
+      box-shadow: 0 12px 44px rgba(0,0,0,0.32);
+      scroll-behavior: smooth;
+      /* iOS: keep the inner scroll from chaining to the page */
+      overscroll-behavior: contain;
     }
-    .shot > img { display: block; width: 100%; height: auto; }
+    /* inner is exactly the image box, so hotspot percentages track the image */
+    .shot-inner { position: relative; width: 100%; }
+    .shot-inner > img { display: block; width: 100%; height: auto; }
 
     /* --- hotspots --- */
     .hotspot {
@@ -73,13 +87,22 @@
       box-shadow: 0 -6px 24px rgba(0,0,0,0.28);
     }
     .meta-bar-header {
-      display: flex; align-items: center; gap: 12px;
-      padding: 9px 16px; font-size: 13px;
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 14px; font-size: 13px; flex-wrap: wrap;
     }
-    .meta-id { font-weight: 700; letter-spacing: 0.01em; }
-    .meta-bar-header .sep { color: var(--text-dim); }
-    .meta-link { color: #8fc4ff; text-decoration: none; font-weight: 600; }
-    .meta-link:hover { text-decoration: underline; }
+    .meta-id { font-weight: 700; }
+    .meta-bar-header .spacer { margin-left: auto; }
+    .persona-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      color: var(--text-dim); text-decoration: none;
+      border: 1px solid var(--pill-border); border-radius: 999px;
+      padding: 3px 10px; font-size: 12px; font-weight: 600;
+    }
+    .persona-link:hover { color: #fff; background: var(--nav-bg-2); }
+    .persona-link[aria-current="page"] {
+      background: var(--accent); color: #fff; border-color: var(--accent);
+    }
+    .persona-link .material-icons-outlined { font-size: 15px; }
     .meta-btn {
       display: inline-flex; align-items: center; justify-content: center;
       background: transparent; color: #fff; border: 1px solid var(--pill-border);
@@ -89,13 +112,13 @@
     .meta-btn .material-icons-outlined { font-size: 18px; }
     .flow-nav {
       display: flex; flex-wrap: wrap; gap: 6px;
-      padding: 0 16px 12px;
-      max-height: 96px; overflow-y: auto;
+      padding: 0 14px 10px;
+      max-height: 54px; overflow-y: auto;
     }
     .step-btn {
       background: var(--pill-bg); color: var(--text-dim);
       border: 1px solid var(--pill-border); border-radius: 999px;
-      padding: 4px 11px; font-size: 12px; font-family: var(--font-body);
+      padding: 3px 10px; font-size: 12px; font-family: var(--font-body);
       cursor: pointer; white-space: nowrap;
     }
     .step-btn:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
@@ -105,116 +128,117 @@
 </head>
 <body>
 
+<div class="stage">
   <section class="screen active" id="screen-1" aria-labelledby="s1-heading">
     <h2 id="s1-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 1 — Dashboard</h2>
-    <div class="shot" style="--shot-css-w:745px;">
-      <img src="screenshots/screen-01.png?v=3" alt="tenant_admin screen 1: Dashboard">
-
+    <div class="shot">
+      <div class="shot-inner">
+        <img src="screenshots/screen-01.png?v=4" alt="Tenant Admin: Dashboard">
+        <button class="hotspot" style="left:39.49%;top:36.95%;width:8.26%;height:3.78%;" aria-label="Open Analytics &amp; Reporting" onclick="goToScreen(5)"></button>
+      </div>
     </div>
   </section>
   <section class="screen" id="screen-2" aria-labelledby="s2-heading">
     <h2 id="s2-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 2 — Course Detail — Python for IT Automation</h2>
-    <div class="shot" style="--shot-css-w:1329px;">
-      <img src="screenshots/screen-02.png?v=3" alt="tenant_admin screen 2: Course Detail — Python for IT Automation">
-
+    <div class="shot">
+      <div class="shot-inner">
+        <img src="screenshots/screen-02.png?v=4" alt="Tenant Admin: Course Detail — Python for IT Automation">
+        <button class="hotspot" style="left:28.19%;top:11.14%;width:8.27%;height:0.43%;" aria-label="Open a skill heatmap" onclick="goToScreen(3)"></button>
+        <button class="hotspot" style="left:9.44%;top:2.03%;width:10.94%;height:0.43%;" aria-label="Back to Dashboard" onclick="goToScreen(1)"></button>
+      </div>
     </div>
   </section>
   <section class="screen" id="screen-3" aria-labelledby="s3-heading">
-    <h2 id="s3-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 3 — Analytics &amp; Reporting</h2>
-    <div class="shot" style="--shot-css-w:1329px;">
-      <img src="screenshots/screen-03.png?v=3" alt="tenant_admin screen 3: Analytics &amp; Reporting">
-
+    <h2 id="s3-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 3 — Skill Heatmap</h2>
+    <div class="shot">
+      <div class="shot-inner">
+        <img src="screenshots/screen-03.png?v=4" alt="Tenant Admin: Skill Heatmap">
+        <button class="hotspot" style="left:12.01%;top:49.91%;width:6.67%;height:2.69%;" aria-label="Open a learner profile" onclick="goToScreen(4)"></button>
+        <button class="hotspot" style="left:9.44%;top:83.35%;width:13.01%;height:3.07%;" aria-label="Back to Course view" onclick="goToScreen(2)"></button>
+      </div>
     </div>
   </section>
   <section class="screen" id="screen-4" aria-labelledby="s4-heading">
-    <h2 id="s4-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 4 — Help &amp; Support</h2>
-    <div class="shot" style="--shot-css-w:1329px;">
-      <img src="screenshots/screen-04.png?v=3" alt="tenant_admin screen 4: Help &amp; Support">
-
+    <h2 id="s4-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 4 — Learner Profile</h2>
+    <div class="shot">
+      <div class="shot-inner">
+        <img src="screenshots/screen-04.png?v=4" alt="Tenant Admin: Learner Profile">
+        <button class="hotspot" style="left:9.44%;top:81.83%;width:11.67%;height:3.35%;" aria-label="Back to Heatmap" onclick="goToScreen(3)"></button>
+      </div>
     </div>
   </section>
   <section class="screen" id="screen-5" aria-labelledby="s5-heading">
-    <h2 id="s5-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 5 — New Skill wizard — Step 1: Course &amp; Details</h2>
-    <div class="shot" style="--shot-css-w:1329px;">
-      <img src="screenshots/screen-05.png?v=3" alt="tenant_admin screen 5: New Skill wizard — Step 1: Course &amp; Details">
-
+    <h2 id="s5-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 5 — Analytics &amp; Reporting</h2>
+    <div class="shot">
+      <div class="shot-inner">
+        <img src="screenshots/screen-05.png?v=4" alt="Tenant Admin: Analytics &amp; Reporting">
+        <button class="hotspot" style="left:9.44%;top:7.04%;width:10.94%;height:1.49%;" aria-label="Back to Dashboard" onclick="goToScreen(1)"></button>
+      </div>
     </div>
   </section>
   <section class="screen" id="screen-6" aria-labelledby="s6-heading">
-    <h2 id="s6-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 6 — New Skill wizard — Step 2: Topics</h2>
-    <div class="shot" style="--shot-css-w:1329px;">
-      <img src="screenshots/screen-06.png?v=3" alt="tenant_admin screen 6: New Skill wizard — Step 2: Topics">
-
+    <h2 id="s6-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 6 — New Skill wizard — Step 1: Skill Details</h2>
+    <div class="shot">
+      <div class="shot-inner">
+        <img src="screenshots/screen-06.png?v=4" alt="Tenant Admin: New Skill wizard — Step 1: Skill Details">
+        <button class="hotspot" style="left:9.44%;top:11.05%;width:10.94%;height:2.34%;" aria-label="Back to Dashboard" onclick="goToScreen(1)"></button>
+      </div>
     </div>
   </section>
   <section class="screen" id="screen-7" aria-labelledby="s7-heading">
-    <h2 id="s7-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 7 — New Skill wizard — Step 3: Model &amp; Prompt</h2>
-    <div class="shot" style="--shot-css-w:1329px;">
-      <img src="screenshots/screen-07.png?v=3" alt="tenant_admin screen 7: New Skill wizard — Step 3: Model &amp; Prompt">
+    <h2 id="s7-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 7 — Tenant Settings</h2>
+    <div class="shot">
+      <div class="shot-inner">
+        <img src="screenshots/screen-07.png?v=4" alt="Tenant Admin: Tenant Settings">
 
+      </div>
     </div>
   </section>
   <section class="screen" id="screen-8" aria-labelledby="s8-heading">
-    <h2 id="s8-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 8 — Learner Profile</h2>
-    <div class="shot" style="--shot-css-w:1329px;">
-      <img src="screenshots/screen-08.png?v=3" alt="tenant_admin screen 8: Learner Profile">
-
+    <h2 id="s8-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 8 — Help &amp; Support</h2>
+    <div class="shot">
+      <div class="shot-inner">
+        <img src="screenshots/screen-08.png?v=4" alt="Tenant Admin: Help &amp; Support">
+        <button class="hotspot" style="left:20.99%;top:83.04%;width:6.11%;height:3.29%;" aria-label="Back to Dashboard" onclick="goToScreen(1)"></button>
+      </div>
     </div>
   </section>
-  <section class="screen" id="screen-9" aria-labelledby="s9-heading">
-    <h2 id="s9-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 9 — Tenant Settings</h2>
-    <div class="shot" style="--shot-css-w:1329px;">
-      <img src="screenshots/screen-09.png?v=3" alt="tenant_admin screen 9: Tenant Settings">
+</div>
 
-    </div>
-  </section>
-  <section class="screen" id="screen-10" aria-labelledby="s10-heading">
-    <h2 id="s10-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 10 — Export menu</h2>
-    <div class="shot" style="--shot-css-w:1329px;">
-      <img src="screenshots/screen-10.png?v=3" alt="tenant_admin screen 10: Export menu">
-
-    </div>
-  </section>
-  <section class="screen" id="screen-11" aria-labelledby="s11-heading">
-    <h2 id="s11-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 11 — School Switcher</h2>
-    <div class="shot" style="--shot-css-w:1329px;">
-      <img src="screenshots/screen-11.png?v=3" alt="tenant_admin screen 11: School Switcher">
-
-    </div>
-  </section>
-
-  <nav class="meta-bar" aria-label="Storyboard navigation">
+  <nav class="meta-bar" aria-label="Demo navigation">
     <div class="meta-bar-header">
-      <span class="meta-id">SkillProof Project Link Page · School Admin</span>
-      <span class="sep" style="margin-left:auto;"></span>
-      <a href="../" class="meta-link">&larr; Storyboard Index</a>
+      <span class="meta-id">SkillProof Demo · School Admin</span>
+      <span class="visually-hidden">Switch role:</span>
+      <a class="persona-link" href="../student/"><span class="material-icons-outlined">person</span>Student</a>
+      <a class="persona-link" href="../instructor/"><span class="material-icons-outlined">school</span>Instructor</a>
+      <a class="persona-link" href="../tenant_admin/" aria-current="page"><span class="material-icons-outlined">admin_panel_settings</span>School Admin</a>
+      <a class="persona-link" href="../super_admin/"><span class="material-icons-outlined">verified_user</span>Super Admin</a>
+      <span class="spacer"></span>
+      <a href="../" class="persona-link">&larr; Index</a>
       <button class="meta-btn" type="button" onclick="toggleReveal()" aria-pressed="false"
               title="Highlight the clickable areas on this screen" aria-label="Highlight clickable areas">
         <span class="material-icons-outlined">ads_click</span>
       </button>
       <button class="meta-btn meta-bar-toggle" type="button" onclick="toggleMetaBar()"
-              aria-expanded="true" aria-label="Hide/show the navigation bar" title="Hide/show this navigation bar">
+              aria-expanded="true" aria-label="Hide or show the navigation bar" title="Hide/show this navigation bar">
         <span class="material-icons-outlined">expand_more</span>
       </button>
     </div>
     <div class="flow-nav" role="tablist" aria-label="Screen jump buttons">
       <button class="step-btn active" data-goto="1" role="tab" aria-current="step">01 Dashboard</button>
       <button class="step-btn" data-goto="2" role="tab" aria-current="false">02 Course Detail — Python for IT Automation</button>
-      <button class="step-btn" data-goto="3" role="tab" aria-current="false">03 Analytics &amp; Reporting</button>
-      <button class="step-btn" data-goto="4" role="tab" aria-current="false">04 Help &amp; Support</button>
-      <button class="step-btn" data-goto="5" role="tab" aria-current="false">05 New Skill wizard — Step 1: Course &amp; Details</button>
-      <button class="step-btn" data-goto="6" role="tab" aria-current="false">06 New Skill wizard — Step 2: Topics</button>
-      <button class="step-btn" data-goto="7" role="tab" aria-current="false">07 New Skill wizard — Step 3: Model &amp; Prompt</button>
-      <button class="step-btn" data-goto="8" role="tab" aria-current="false">08 Learner Profile</button>
-      <button class="step-btn" data-goto="9" role="tab" aria-current="false">09 Tenant Settings</button>
-      <button class="step-btn" data-goto="10" role="tab" aria-current="false">10 Export menu</button>
-      <button class="step-btn" data-goto="11" role="tab" aria-current="false">11 School Switcher</button>
+      <button class="step-btn" data-goto="3" role="tab" aria-current="false">03 Skill Heatmap</button>
+      <button class="step-btn" data-goto="4" role="tab" aria-current="false">04 Learner Profile</button>
+      <button class="step-btn" data-goto="5" role="tab" aria-current="false">05 Analytics &amp; Reporting</button>
+      <button class="step-btn" data-goto="6" role="tab" aria-current="false">06 New Skill wizard — Step 1: Skill Details</button>
+      <button class="step-btn" data-goto="7" role="tab" aria-current="false">07 Tenant Settings</button>
+      <button class="step-btn" data-goto="8" role="tab" aria-current="false">08 Help &amp; Support</button>
     </div>
   </nav>
 
   <script>
   (function () {
-    var TOTAL = 11;
+    var TOTAL = 8;
 
     window.goToScreen = function (n) {
       if (n < 1 || n > TOTAL) return;
@@ -227,6 +251,10 @@
       var t = document.getElementById('screen-' + n);
       if (!t) return;
       t.classList.add('active');
+      // Reset the frame's internal scroll: arriving on a screen should show its top,
+      // the same as a real navigation would.
+      var box = t.querySelector('.shot');
+      if (box) box.scrollTop = 0;
       window.scrollTo(0, 0);
       var h = t.querySelector('.screen-heading');
       if (h) { h.focus({ preventScroll: true }); }
@@ -238,6 +266,7 @@
     });
 
     document.addEventListener('keydown', function (e) {
+      if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
       var a = document.querySelector('.screen.active'); if (!a) return;
       var m = a.id.match(/^screen-(\d+)$/); if (!m) return;
       var n = parseInt(m[1], 10);

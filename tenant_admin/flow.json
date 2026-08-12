@@ -1,86 +1,166 @@
 {
   "persona": "tenant_admin",
   "title": "SkillProof — School Admin",
-  "metabarLabel": "SkillProof Project Link Page · School Admin",
-  "v": 3,
+  "metabarLabel": "SkillProof Demo · School Admin",
+  "v": 4,
   "hasDark": false,
+  "frame": {
+    "width": 1440,
+    "height": 900
+  },
   "screens": [
     {
       "n": 1,
       "file": "screen-01.png",
       "label": "Dashboard",
-      "docW": 745,
-      "wire": []
+      "docW": 1440,
+      "wire": [
+        {
+          "label": "Open Analytics & Reporting",
+          "goto": 5,
+          "pct": {
+            "left": 39.49,
+            "top": 36.95,
+            "width": 8.26,
+            "height": 3.78
+          }
+        }
+      ]
     },
     {
       "n": 2,
       "file": "screen-02.png",
       "label": "Course Detail — Python for IT Automation",
-      "docW": 1329,
-      "wire": []
+      "docW": 1440,
+      "wire": [
+        {
+          "label": "Open a skill heatmap",
+          "goto": 3,
+          "pct": {
+            "left": 28.19,
+            "top": 11.14,
+            "width": 8.27,
+            "height": 0.43
+          }
+        },
+        {
+          "label": "Back to Dashboard",
+          "goto": 1,
+          "pct": {
+            "left": 9.44,
+            "top": 2.03,
+            "width": 10.94,
+            "height": 0.43
+          }
+        }
+      ]
     },
     {
       "n": 3,
       "file": "screen-03.png",
-      "label": "Analytics & Reporting",
-      "docW": 1329,
-      "wire": []
+      "label": "Skill Heatmap",
+      "docW": 1440,
+      "wire": [
+        {
+          "label": "Open a learner profile",
+          "goto": 4,
+          "pct": {
+            "left": 12.01,
+            "top": 49.91,
+            "width": 6.67,
+            "height": 2.69
+          }
+        },
+        {
+          "label": "Back to Course view",
+          "goto": 2,
+          "pct": {
+            "left": 9.44,
+            "top": 83.35,
+            "width": 13.01,
+            "height": 3.07
+          }
+        }
+      ]
     },
     {
       "n": 4,
       "file": "screen-04.png",
-      "label": "Help & Support",
-      "docW": 1329,
-      "wire": []
+      "label": "Learner Profile",
+      "docW": 1440,
+      "wire": [
+        {
+          "label": "Back to Heatmap",
+          "goto": 3,
+          "pct": {
+            "left": 9.44,
+            "top": 81.83,
+            "width": 11.67,
+            "height": 3.35
+          }
+        }
+      ]
     },
     {
       "n": 5,
       "file": "screen-05.png",
-      "label": "New Skill wizard — Step 1: Course & Details",
-      "docW": 1329,
-      "wire": []
+      "label": "Analytics & Reporting",
+      "docW": 1440,
+      "wire": [
+        {
+          "label": "Back to Dashboard",
+          "goto": 1,
+          "pct": {
+            "left": 9.44,
+            "top": 7.04,
+            "width": 10.94,
+            "height": 1.49
+          }
+        }
+      ]
     },
     {
       "n": 6,
       "file": "screen-06.png",
-      "label": "New Skill wizard — Step 2: Topics",
-      "docW": 1329,
-      "wire": []
+      "label": "New Skill wizard — Step 1: Skill Details",
+      "docW": 1440,
+      "wire": [
+        {
+          "label": "Back to Dashboard",
+          "goto": 1,
+          "pct": {
+            "left": 9.44,
+            "top": 11.05,
+            "width": 10.94,
+            "height": 2.34
+          }
+        }
+      ]
     },
     {
       "n": 7,
       "file": "screen-07.png",
-      "label": "New Skill wizard — Step 3: Model & Prompt",
-      "docW": 1329,
+      "label": "Tenant Settings",
+      "docW": 1440,
       "wire": []
     },
     {
       "n": 8,
       "file": "screen-08.png",
-      "label": "Learner Profile",
-      "docW": 1329,
-      "wire": []
-    },
-    {
-      "n": 9,
-      "file": "screen-09.png",
-      "label": "Tenant Settings",
-      "docW": 1329,
-      "wire": []
-    },
-    {
-      "n": 10,
-      "file": "screen-10.png",
-      "label": "Export menu",
-      "docW": 1329,
-      "wire": []
-    },
-    {
-      "n": 11,
-      "file": "screen-11.png",
-      "label": "School Switcher",
-      "docW": 1329,
-      "wire": []
+      "label": "Help & Support",
+      "docW": 1440,
+      "wire": [
+        {
+          "label": "Back to Dashboard",
+          "goto": 1,
+          "pct": {
+            "left": 20.99,
+            "top": 83.04,
+            "width": 6.11,
+            "height": 3.29
+          }
+        }
+      ]
     }
   ]
 }

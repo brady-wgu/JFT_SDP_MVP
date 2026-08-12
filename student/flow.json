@@ -1,37 +1,85 @@
 {
   "persona": "student",
-  "title": "SkillProof — Student (Coding Coach · Python Foundations)",
-  "metabarLabel": "SkillProof Project Link Page · Student",
-  "v": 2,
+  "title": "SkillProof — Student",
+  "metabarLabel": "SkillProof Demo · Student",
+  "v": 3,
   "hasDark": false,
+  "frame": {
+    "width": 1440,
+    "height": 900
+  },
   "screens": [
     {
       "n": 1,
       "file": "screen-01.png",
       "label": "Coding Coach landing",
-      "docW": 745,
-      "wire": []
+      "docW": 1440,
+      "wire": [
+        {
+          "label": "Begin the diagnostic",
+          "goto": 2,
+          "pct": {
+            "left": 10.56,
+            "top": 47.82,
+            "width": 13.62,
+            "height": 4.67
+          }
+        }
+      ]
     },
     {
       "n": 2,
       "file": "screen-02.png",
       "label": "Diagnostic Results",
-      "docW": 745,
-      "wire": []
+      "docW": 1440,
+      "wire": [
+        {
+          "label": "View your Progress Map",
+          "goto": 3,
+          "pct": {
+            "left": 38.89,
+            "top": 56.61,
+            "width": 22.22,
+            "height": 5.08
+          }
+        }
+      ]
     },
     {
       "n": 3,
       "file": "screen-03.png",
       "label": "Progress Map",
-      "docW": 745,
-      "wire": []
+      "docW": 1440,
+      "wire": [
+        {
+          "label": "Start a coaching session",
+          "goto": 4,
+          "pct": {
+            "left": 13.89,
+            "top": 74.37,
+            "width": 11.28,
+            "height": 4.08
+          }
+        }
+      ]
     },
     {
       "n": 4,
       "file": "screen-04.png",
       "label": "Help & Support",
-      "docW": 745,
-      "wire": []
+      "docW": 1440,
+      "wire": [
+        {
+          "label": "Back to the course",
+          "goto": 1,
+          "pct": {
+            "left": 20.99,
+            "top": 82.55,
+            "width": 6.11,
+            "height": 3.27
+          }
+        }
+      ]
     }
   ]
 }
