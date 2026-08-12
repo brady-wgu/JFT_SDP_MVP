@@ -107,32 +107,51 @@
 
   <section class="screen active" id="screen-1" aria-labelledby="s1-heading">
     <h2 id="s1-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 1 — Dashboard</h2>
-    <div class="shot" style="--shot-css-w:1329px;">
-      <img src="screenshots/screen-01.png?v=1" alt="super_admin screen 1: Dashboard">
-    <button class="hotspot" style="left:5.72%;top:16.79%;width:10.83%;height:1.42%;" aria-label="Access Control" onclick="goToScreen(3)"></button>
-    <button class="hotspot" style="left:17.15%;top:16.79%;width:7.62%;height:1.42%;" aria-label="Schools" onclick="goToScreen(4)"></button>
-    <button class="hotspot" style="left:25.38%;top:16.79%;width:8.36%;height:1.42%;" aria-label="Analytics" onclick="goToScreen(2)"></button>
+    <div class="shot" style="--shot-css-w:745px;">
+      <img src="screenshots/screen-01.png?v=2" alt="super_admin screen 1: Dashboard">
+
     </div>
   </section>
   <section class="screen" id="screen-2" aria-labelledby="s2-heading">
-    <h2 id="s2-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 2 — Analytics</h2>
+    <h2 id="s2-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 2 — Analytics &amp; Reporting</h2>
     <div class="shot" style="--shot-css-w:1329px;">
-      <img src="screenshots/screen-02.png?v=1" alt="super_admin screen 2: Analytics">
-    <button class="hotspot" style="left:5.72%;top:1.99%;width:11.46%;height:0.39%;" aria-label="Dashboard" onclick="goToScreen(1)"></button>
+      <img src="screenshots/screen-02.png?v=2" alt="super_admin screen 2: Analytics &amp; Reporting">
+
     </div>
   </section>
   <section class="screen" id="screen-3" aria-labelledby="s3-heading">
     <h2 id="s3-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 3 — Access Control</h2>
     <div class="shot" style="--shot-css-w:1329px;">
-      <img src="screenshots/screen-03.png?v=1" alt="super_admin screen 3: Access Control">
-    <button class="hotspot" style="left:5.72%;top:3.68%;width:11.46%;height:0.72%;" aria-label="Dashboard" onclick="goToScreen(1)"></button>
+      <img src="screenshots/screen-03.png?v=2" alt="super_admin screen 3: Access Control">
+
     </div>
   </section>
   <section class="screen" id="screen-4" aria-labelledby="s4-heading">
     <h2 id="s4-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 4 — School Management</h2>
     <div class="shot" style="--shot-css-w:1329px;">
-      <img src="screenshots/screen-04.png?v=1" alt="super_admin screen 4: School Management">
-    <button class="hotspot" style="left:5.72%;top:6.34%;width:11.46%;height:1.24%;" aria-label="Dashboard" onclick="goToScreen(1)"></button>
+      <img src="screenshots/screen-04.png?v=2" alt="super_admin screen 4: School Management">
+
+    </div>
+  </section>
+  <section class="screen" id="screen-5" aria-labelledby="s5-heading">
+    <h2 id="s5-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 5 — Course Detail</h2>
+    <div class="shot" style="--shot-css-w:1344px;">
+      <img src="screenshots/screen-05.png?v=2" alt="super_admin screen 5: Course Detail">
+
+    </div>
+  </section>
+  <section class="screen" id="screen-6" aria-labelledby="s6-heading">
+    <h2 id="s6-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 6 — Per-School Settings (Logos)</h2>
+    <div class="shot" style="--shot-css-w:1329px;">
+      <img src="screenshots/screen-06.png?v=2" alt="super_admin screen 6: Per-School Settings (Logos)">
+
+    </div>
+  </section>
+  <section class="screen" id="screen-7" aria-labelledby="s7-heading">
+    <h2 id="s7-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 7 — Export menu</h2>
+    <div class="shot" style="--shot-css-w:1344px;">
+      <img src="screenshots/screen-07.png?v=2" alt="super_admin screen 7: Export menu">
+
     </div>
   </section>
 
@@ -152,15 +171,18 @@
     </div>
     <div class="flow-nav" role="tablist" aria-label="Screen jump buttons">
       <button class="step-btn active" data-goto="1" role="tab" aria-current="step">01 Dashboard</button>
-      <button class="step-btn" data-goto="2" role="tab" aria-current="false">02 Analytics</button>
+      <button class="step-btn" data-goto="2" role="tab" aria-current="false">02 Analytics &amp; Reporting</button>
       <button class="step-btn" data-goto="3" role="tab" aria-current="false">03 Access Control</button>
       <button class="step-btn" data-goto="4" role="tab" aria-current="false">04 School Management</button>
+      <button class="step-btn" data-goto="5" role="tab" aria-current="false">05 Course Detail</button>
+      <button class="step-btn" data-goto="6" role="tab" aria-current="false">06 Per-School Settings (Logos)</button>
+      <button class="step-btn" data-goto="7" role="tab" aria-current="false">07 Export menu</button>
     </div>
   </nav>
 
   <script>
   (function () {
-    var TOTAL = 4;
+    var TOTAL = 7;
 
     window.goToScreen = function (n) {
       if (n < 1 || n > TOTAL) return;

@@ -2,56 +2,57 @@
   "persona": "instructor",
   "title": "SkillProof — Instructor",
   "metabarLabel": "SkillProof Project Link Page · Instructor",
-  "v": 1,
+  "v": 2,
   "hasDark": false,
   "screens": [
     {
       "n": 1,
       "file": "screen-01.png",
       "label": "Dashboard",
-      "docW": 1329,
-      "wire": [
-        { "label": "Algebra 101", "goto": 2, "pct": { "left": 8.5, "top": 32.05, "width": 10.8, "height": 0.94 } },
-        { "label": "Foundations of Programming", "goto": 4, "pct": { "left": 53.05, "top": 32.05, "width": 10.8, "height": 0.94 } },
-        { "label": "Learner Profile", "goto": 5, "pct": { "left": 85.75, "top": 46.53, "width": 7.48, "height": 1.13 } }
-      ]
+      "docW": 745,
+      "wire": []
     },
     {
       "n": 2,
       "file": "screen-02.png",
-      "label": "Algebra 101",
-      "docW": 1329,
-      "wire": [
-        { "label": "Dashboard", "goto": 1, "pct": { "left": 6.62, "top": 7.4, "width": 10.15, "height": 1.56 } },
-        { "label": "Skill Heatmap", "goto": 3, "pct": { "left": 8.65, "top": 40.12, "width": 11.71, "height": 2.44 } }
-      ]
+      "label": "Course Detail — Foundations of Programming",
+      "docW": 745,
+      "wire": []
     },
     {
       "n": 3,
       "file": "screen-03.png",
       "label": "Skill Heatmap",
       "docW": 1329,
-      "wire": [
-        { "label": "Dashboard", "goto": 1, "pct": { "left": 6.62, "top": 9.77, "width": 10.15, "height": 2.07 } }
-      ]
+      "wire": []
     },
     {
       "n": 4,
       "file": "screen-04.png",
-      "label": "Foundations of Programming",
+      "label": "Learner Profile",
       "docW": 1329,
-      "wire": [
-        { "label": "Dashboard", "goto": 1, "pct": { "left": 6.62, "top": 3.13, "width": 10.15, "height": 0.66 } }
-      ]
+      "wire": []
     },
     {
       "n": 5,
       "file": "screen-05.png",
-      "label": "Learner Profile",
+      "label": "Staging Skills list",
+      "docW": 1344,
+      "wire": []
+    },
+    {
+      "n": 6,
+      "file": "screen-06.png",
+      "label": "Skill Preview",
       "docW": 1329,
-      "wire": [
-        { "label": "Dashboard", "goto": 1, "pct": { "left": 6.62, "top": 4.9, "width": 10.15, "height": 1.04 } }
-      ]
+      "wire": []
+    },
+    {
+      "n": 7,
+      "file": "screen-07.png",
+      "label": "Header",
+      "docW": 1344,
+      "wire": []
     }
   ]
 }

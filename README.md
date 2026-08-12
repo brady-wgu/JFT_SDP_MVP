@@ -6,7 +6,7 @@
 
 [![Live Demo](https://img.shields.io/badge/Live-GitHub_Pages-0070F0?style=for-the-badge&logo=github)](https://brady-wgu.github.io/SkillProof/)
 [![Version](https://img.shields.io/badge/Version-4.167-46B1EF?style=for-the-badge)](CHANGELOG.md)
-[![Live Screens](https://img.shields.io/badge/Live_Walkthrough_Screens-17-001730?style=for-the-badge)]()
+[![Live Screens](https://img.shields.io/badge/Live_Walkthrough_Screens-29-001730?style=for-the-badge)]()
 [![Personas](https://img.shields.io/badge/Personas-4-FBAE40?style=for-the-badge)]()
 
 ![Portal selector landing](assets/landing/light.png)
@@ -48,7 +48,7 @@ Each persona has its own **secret LRPS deep link** in production and authenticat
 | **Super Admin walkthrough** | [`/super_admin/`](https://brady-wgu.github.io/SkillProof/super_admin/) | Live-app screenshots: Dashboard → Analytics → Access Control → School Management. **4 screens.** Archived mockup: [`_archive/super_admin/`](_archive/super_admin/) (11 screens). |
 | **Help & Resources** (shared) | [`/help/`](https://brady-wgu.github.io/SkillProof/help/) | Shared self-service support, documentation, and video training surface. Linked from every admin portal navbar. Closes Appendix A §16.4 #9.14 (self-service portal) and #9.15 (video training). |
 
-**Live-app walkthroughs: 17 screens · 4 personas** (Student 4 · Instructor 5 · School Admin 4 · Super Admin 4), plus the LRPS Landing root and the shared Help surface. *(The archived mockups in `_archive/` hold the prior 46-screen hand-built set.)*
+**Live-app walkthroughs: 29 screens · 4 personas** (Student 4 · Instructor 7 · School Admin 11 · Super Admin 7), plus the LRPS Landing root and the shared Help surface. *(The archived mockups in `_archive/` hold the prior 46-screen hand-built set.)*
 
 ---
 

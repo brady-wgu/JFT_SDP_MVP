@@ -2,46 +2,57 @@
   "persona": "super_admin",
   "title": "SkillProof — Super Admin",
   "metabarLabel": "SkillProof Project Link Page · Super Admin",
-  "v": 1,
+  "v": 2,
   "hasDark": false,
   "screens": [
     {
       "n": 1,
       "file": "screen-01.png",
       "label": "Dashboard",
-      "docW": 1329,
-      "wire": [
-        { "label": "Access Control", "goto": 3, "pct": { "left": 5.72, "top": 16.79, "width": 10.83, "height": 1.42 } },
-        { "label": "Schools", "goto": 4, "pct": { "left": 17.15, "top": 16.79, "width": 7.62, "height": 1.42 } },
-        { "label": "Analytics", "goto": 2, "pct": { "left": 25.38, "top": 16.79, "width": 8.36, "height": 1.42 } }
-      ]
+      "docW": 745,
+      "wire": []
     },
     {
       "n": 2,
       "file": "screen-02.png",
-      "label": "Analytics",
+      "label": "Analytics & Reporting",
       "docW": 1329,
-      "wire": [
-        { "label": "Dashboard", "goto": 1, "pct": { "left": 5.72, "top": 1.99, "width": 11.46, "height": 0.39 } }
-      ]
+      "wire": []
     },
     {
       "n": 3,
       "file": "screen-03.png",
       "label": "Access Control",
       "docW": 1329,
-      "wire": [
-        { "label": "Dashboard", "goto": 1, "pct": { "left": 5.72, "top": 3.68, "width": 11.46, "height": 0.72 } }
-      ]
+      "wire": []
     },
     {
       "n": 4,
       "file": "screen-04.png",
       "label": "School Management",
       "docW": 1329,
-      "wire": [
-        { "label": "Dashboard", "goto": 1, "pct": { "left": 5.72, "top": 6.34, "width": 11.46, "height": 1.24 } }
-      ]
+      "wire": []
+    },
+    {
+      "n": 5,
+      "file": "screen-05.png",
+      "label": "Course Detail",
+      "docW": 1344,
+      "wire": []
+    },
+    {
+      "n": 6,
+      "file": "screen-06.png",
+      "label": "Per-School Settings (Logos)",
+      "docW": 1329,
+      "wire": []
+    },
+    {
+      "n": 7,
+      "file": "screen-07.png",
+      "label": "Export menu",
+      "docW": 1344,
+      "wire": []
     }
   ]
 }
