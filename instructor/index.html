@@ -1,1921 +1,230 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <title>SkillProof — Instructor Dashboard — Storyboard v4.121</title>
+  <title>SkillProof — Instructor</title>
   <link rel="icon" type="image/png" href="../assets/wgu-favicon.png">
-  <link rel="stylesheet" href="../assets/table-controls.css?v=13">
-  <script defer src="../assets/table-controls.js?v=13"></script>
-
-  <!--
-    MEDIUM-FIDELITY SAMPLE — NOT A PIXEL-PERFECT SPECIFICATION
-    Instructor Dashboard storyboard for the SkillProof v1.3 additional scenarios.
-    Persona: Charlie (Instructor).
-    Scenario: SC-ADD-03 (Instructor Dashboard and At-Risk Intervention).
-
-    Visual style mirrors tenant_admin.html (same design tokens tokens,
-    same WGU FY26 brand chrome, same architectural shell).
-
-    design tokens — Built on Paragon / Open edX
-    In production, install:
-      npm install @openedx/paragon
-      @use "@openedx/paragon/dist/core.min.css";
-      @use "@wgu/skillproof-brand/light.min.css";
-  -->
   <link rel="stylesheet" href="https://brady-wgu.github.io/brady-design-system/fonts/aptos.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-
   <style>
-    /* ================================================================
-       DESIGN TOKENS — design tokens (Sections 3-5)
-       Mirrors tenant_admin.html so portals stay visually aligned.
-       ================================================================ */
     :root {
-      --pgn-color-primary-base: #001730;
-      --pgn-color-brand-base:   #0070F0;
-      --pgn-color-info-base:    #46B1EF;
-      --pgn-color-danger-base:  #C13232;
-      --pgn-color-success-base: #2E7D32;
-      --pgn-color-warning-base: #FBAE40;
-
-      --pgn-color-brand-tint:   #EBF2FF;
-      --pgn-color-info-tint:    #EAF6FD;
-      --pgn-color-primary-tint: #E8EBF0;
-      --pgn-color-success-tint: #E8F5E9;
-      --pgn-color-danger-tint:  #FDEAEA;
-      --pgn-color-warning-tint: #FEF3E2;
-
-      --color-deep-navy:     #001730;
-      --color-ice-blue:      #EEF6F9;
-      --color-bright-blue:   #0070F0;
-      --color-dark-navy:     #002855;
-      --color-sky-blue:      #46B1EF;
-      --color-lime-green:    #97E151;
-      --color-amber:         #FBAE40;
-
-      --code-bg: #0d1117;
-      --code-text: #E6E6E6;
-      --code-keyword: #ff7b72;
-      --code-function: #79c0ff;
-      --code-string: #a5d6ff;
-      --code-comment: #999999;
-      --code-border: #30363d;
-
-      --pgn-color-white:    #FFFFFF;
-      --pgn-color-black:    #000000;
-      --pgn-color-gray-100: #E6E6E6;
-      --pgn-color-gray-200: #CCCCCC;
-      --pgn-color-gray-300: #B3B3B3;
-      --pgn-color-gray-400: #999999;
-      --pgn-color-gray-base:#808080;
-      --pgn-color-gray-600: #666666;
-      --pgn-color-gray-700: #4D4D4D;
-      --pgn-color-gray-800: #333333;
-      --pgn-color-gray-900: #1A1A1A;
-      --pgn-color-bg-base:  #FFFFFF;
-      --pgn-color-bg-light: #F2F2F2;
-
-      --pgn-spacing-1: 8px;
-      --pgn-spacing-2: 16px;
-      --pgn-spacing-3: 24px;
-      --pgn-spacing-4: 32px;
-      --pgn-spacing-5: 40px;
-      --pgn-spacing-6: 48px;
-
-      --pgn-size-border-radius-base: 0.375rem;
-      --pgn-size-border-radius-lg:   0.5rem;
-      --pgn-size-border-radius-sm:   0.25rem;
-      --pgn-size-rounded-pill:       50rem;
-      --pgn-size-container-max-width-lg: 1192px;
-
-      --pgn-font-family-heading: 'Aptos Display', Arial, sans-serif;
-      --pgn-font-family-body: 'Aptos', Arial, sans-serif;
-
-      /* Heatmap color scale */
-      --heat-1: #E03B2F;  /* lowest — strong red */
-      --heat-2: #EC6A52;  /* red-orange */
-      --heat-3: #F28E5E;  /* orange */
-      --heat-4: #F5B26B;  /* light orange */
-      --heat-5: #F3D06E;  /* amber — midpoint */
-      --heat-6: #CFD96B;  /* yellow-green */
-      --heat-7: #A3CE6A;  /* light green */
-      --heat-8: #72C06C;  /* green */
-      --heat-9: #45AE5B;  /* highest — strong green */
-      --heat-text-dark: #000000;  /* black text (light mode); dark mode overrides to #fff below */
+      --nav-bg: #0A2540;
+      --nav-bg-2: #0F2B4A;
+      --accent: #0070F0;
+      --pill-bg: #13294d;
+      --pill-border: rgba(255,255,255,0.14);
+      --backdrop: #55657a;
+      --text-dim: rgba(255,255,255,0.72);
+      --font-body: 'Aptos', Arial, sans-serif;
     }
-
-    /* ================================================================
-       DARK MODE OVERRIDES
-       ================================================================ */
-    [data-theme="dark"] {
-      --pgn-color-bg-base: #0D1A2E;
-      --pgn-color-bg-light: #0F2240;
-      --pgn-color-white: #0D1A2E;
-      --pgn-color-gray-900: #E6E6E6;
-      --pgn-color-gray-800: #CCCCCC;
-      --pgn-color-gray-700: #B3B3B3;
-      --pgn-color-gray-600: #999999;
-      --pgn-color-gray-base: #808080;
-      --pgn-color-gray-400: #666666;
-      --pgn-color-gray-300: #4D4D4D;
-      --pgn-color-gray-200: #333333;
-      --pgn-color-gray-100: #1A2A45;
-      --pgn-color-primary-tint: #0D2240;
-      --pgn-color-brand-tint: #001E3E;
-      --pgn-color-info-tint: #002E4A;
-      --pgn-color-success-tint: #0A2E1A;
-      --pgn-color-danger-tint: #3A1A1A;
-      --pgn-color-warning-tint: #3A2A0A;
-      --color-deep-navy: #000D1A;
-      --color-ice-blue: #0D2240;
-
-      /* Dark heatmap: invert tints to dark hues with bright text */
-      --heat-1: #4F1B1B;
-      --heat-2: #6F2424;
-      --heat-3: #4F3814;
-      --heat-4: #6F501A;
-      --heat-5: #6F5A1F;
-      --heat-6: #1F4F2A;
-      --heat-7: #266830;
-      --heat-8: #2E7D32;
-      --heat-9: #2E9E5B;
-      --heat-text-dark: #FFFFFF;
-    }
-    [data-theme="dark"] body { background: var(--pgn-color-bg-light); color: var(--pgn-color-gray-700); }
-    [data-theme="dark"] .pgn__card,
-    [data-theme="dark"] .pgn__card-featured,
-    [data-theme="dark"] .ai-prompt-card,
-    [data-theme="dark"] .preview-card,
-    [data-theme="dark"] .row-card,
-    [data-theme="dark"] .stepper-card,
-    [data-theme="dark"] .feedback-panel,
-    [data-theme="dark"] .api-card,
-    [data-theme="dark"] .ticket-card,
-    [data-theme="dark"] .chat-card,
-    [data-theme="dark"] .heatmap-card {
-      background: #0D2240;
-      border-color: #1A2A45;
-    }
-    [data-theme="dark"] .row-card.recommended { background: #001E3E; border-color: var(--pgn-color-brand-base); }
-    [data-theme="dark"] .row-card.at-risk { background: #3A1A1A; border-color: var(--pgn-color-danger-base); }
-    [data-theme="dark"] .alert-info    { background: #002E4A; border-color: #003355; color: var(--pgn-color-info-base); }
-    [data-theme="dark"] .alert-warning { background: #3A2A0A; border-color: #4F3814; color: var(--color-amber); }
-    [data-theme="dark"] .alert-danger  { background: #3A1A1A; border-color: #4F2424; color: #E08A8A; }
-    [data-theme="dark"] .alert-success { background: #0A2E1A; border-color: #145025; color: #6FBA86; }
-    [data-theme="dark"] .feedback-panel.success { background: #0A2E1A; border-color: var(--pgn-color-success-base); }
-    [data-theme="dark"] .feedback-panel.warning { background: #3A2A0A; border-color: var(--color-amber); }
-    /* .floating-actions is now an in-flow block — no dark-mode override needed (v4.95). */
-
-    /* Logo swap — WGU brand rule: white on dark, full-color-reverse on light */
-    [data-theme="dark"] .logo-light { display: none !important; }
-    [data-theme="dark"] .logo-dark { display: inline-block !important; }
-    .logo-dark { display: none; }
-    .logo-light { display: inline-block; }
-
-    /* ================================================================
-       RESET & BASE
-       ================================================================ */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
     body {
-      font-family: var(--pgn-font-family-body);
-      font-size: 16px; line-height: 1.5;
-      color: var(--pgn-color-gray-700);
-      background: var(--pgn-color-bg-light);
-      min-height: 100vh;
-      padding-bottom: 220px;
+      font-family: var(--font-body);
+      background: var(--backdrop);
+      padding-bottom: 148px; /* room for the expanded meta-bar */
     }
-    :focus-visible { outline: 3px solid var(--pgn-color-brand-base); outline-offset: 2px; }
-    /* Headings inherit the standard :focus-visible outline above (WCAG 2.2 AA §2.4.7).
-       The capture pipeline injects its own outline-suppression for screenshots. */
-    a { color: var(--pgn-color-brand-base); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    img { max-width: 100%; }
-
-    /* ================================================================
-       TYPOGRAPHY (SkillProof 4)
-       ================================================================ */
-    .h1, h1 { font-family: var(--pgn-font-family-heading); font-size: 40px; line-height: 1.2; font-weight: 700; color: var(--pgn-color-gray-900); }
-    .h2, h2 { font-family: var(--pgn-font-family-heading); font-size: 32px; line-height: 1.25; font-weight: 700; color: var(--pgn-color-gray-900); }
-    .h3, h3 { font-family: var(--pgn-font-family-heading); font-size: 28px; line-height: 1.3; font-weight: 700; color: var(--pgn-color-gray-900); }
-    .h4, h4 { font-family: var(--pgn-font-family-heading); font-size: 24px; line-height: 1.35; font-weight: 700; color: var(--pgn-color-gray-900); }
-    .h5, h5 { font-family: var(--pgn-font-family-heading); font-size: 20px; line-height: 1.4; font-weight: 700; color: var(--pgn-color-gray-900); }
-    p { color: var(--pgn-color-gray-700); }
-    .text-muted     { color: var(--pgn-color-gray-600) !important; }
-    .text-secondary { color: var(--pgn-color-gray-base) !important; }
-    .text-success   { color: var(--pgn-color-success-base); }
-    .text-danger    { color: var(--pgn-color-danger-base); }
-    .text-warning   { color: #8A5A00; }
-    .text-strong    { color: var(--pgn-color-gray-900); font-weight: 700; }
-    .small  { font-size: 14px; }
-    .micro  { font-size: 12px; }
-
-    .eyebrow {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-family: var(--pgn-font-family-body);
-      font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--pgn-color-brand-base);
-      margin-bottom: var(--pgn-spacing-1);
-    }
-    .eyebrow .material-icons-outlined { font-size: 16px; }
-
-    /* ================================================================
-       LAYOUT
-       ================================================================ */
-    .container {
-      max-width: var(--pgn-size-container-max-width-lg);
-      width: 100%; margin: 0 auto;
-      padding-left: var(--pgn-spacing-4); padding-right: var(--pgn-spacing-4);
-    }
-    .container-narrow {
-      max-width: 820px;
-      width: 100%; margin: 0 auto;
-      padding-left: var(--pgn-spacing-4); padding-right: var(--pgn-spacing-4);
-    }
-    .row { display: flex; flex-wrap: wrap; gap: var(--pgn-spacing-3); }
-    .col-4 { flex: 0 0 calc(33.333% - 16px); min-width: 0; }
-    .col-6 { flex: 0 0 calc(50% - 12px); min-width: 0; }
-    .col-8 { flex: 0 0 calc(66.666% - 12px); min-width: 0; }
-    .col-12 { flex: 0 0 100%; }
-    .stack-1 > * + * { margin-top: var(--pgn-spacing-1); }
-    .stack-2 > * + * { margin-top: var(--pgn-spacing-2); }
-    .stack-3 > * + * { margin-top: var(--pgn-spacing-3); }
-
-    /* ================================================================
-       NAVBAR
-       ================================================================ */
-    .navbar {
-      height: 64px; display: flex; align-items: center; justify-content: space-between;
-      padding: 0 var(--pgn-spacing-4);
-    }
-    .navbar-dark { background: var(--color-deep-navy); }
-    .navbar-brand {
-      display: flex; align-items: center; gap: var(--pgn-spacing-1);
-      text-decoration: none; color: #fff;
-    }
-    .navbar-brand-logo { height: 40px; width: auto; }
-    /* v4.84: school logos have a stacked WGU + School name layout; bump to 64px so 'School of X' text reads */
-    .navbar-brand-logo[data-school-logo] { height: 64px; }
-    .navbar-right { display: flex; align-items: center; gap: var(--pgn-spacing-2); }
-    .navbar-chip {
-      background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.92);
-      font-size: 14px; padding: 8px 16px; border-radius: var(--pgn-size-rounded-pill);
-      border: 1px solid rgba(255,255,255,0.2);
-    }
-    .navbar-user { display: flex; align-items: center; gap: var(--pgn-spacing-1); color: rgba(255,255,255,0.92); font-size: 14px; }
-    .avatar {
-      width: 32px; height: 32px; border-radius: 50%;
-      background: var(--pgn-color-info-base);
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--pgn-font-family-heading);
-      font-size: 14px; font-weight: 700; color: #fff;
-    }
-    .btn-theme-toggle {
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.2);
-      color: #FFFFFF;
-      width: 36px; height: 36px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; transition: background 150ms; padding: 0;
-    }
-    .btn-theme-toggle:hover { background: rgba(255,255,255,0.2); }
-    .btn-theme-toggle .material-icons-outlined { font-size: 20px; }
-    [data-theme="dark"] .theme-icon-light { display: none !important; }
-    [data-theme="dark"] .theme-icon-dark { display: inline !important; }
-
-    /* ================================================================
-       BREADCRUMB
-       ================================================================ */
-    .pgn__breadcrumb {
-      display: flex; align-items: center; gap: var(--pgn-spacing-1);
-      font-size: 14px; color: var(--pgn-color-gray-600);
-      list-style: none; padding: 0; margin-bottom: var(--pgn-spacing-3);
-      flex-wrap: wrap;
-    }
-    .pgn__breadcrumb a { color: var(--pgn-color-brand-base); text-decoration: none; }
-    .pgn__breadcrumb a:hover { text-decoration: underline; }
-    .pgn__breadcrumb .material-icons-outlined { font-size: 16px; color: var(--pgn-color-gray-400); }
-
-    /* ================================================================
-       BUTTONS
-       ================================================================ */
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center;
-      gap: var(--pgn-spacing-1); border-radius: var(--pgn-size-border-radius-base);
-      font-family: var(--pgn-font-family-body); font-size: 16px; font-weight: 700; line-height: 1;
-      cursor: pointer; border: 2px solid transparent;
-      transition: background 150ms, color 150ms, border-color 150ms;
-      text-decoration: none; white-space: nowrap;
-    }
-    .btn-lg { height: 48px; padding: 0 var(--pgn-spacing-3); font-size: 16px; }
-    .btn-md, .btn:not(.btn-lg):not(.btn-sm) { height: 44px; padding: 0 var(--pgn-spacing-3); }
-    .btn-sm { height: 36px; padding: 0 var(--pgn-spacing-2); font-size: 14px; }
-    .btn-primary { background: var(--pgn-color-brand-base); color: #fff; border-color: var(--pgn-color-brand-base); }
-    .btn-primary:hover:not(:disabled) { background: #005CC8; border-color: #005CC8; }
-    .btn-primary:disabled { background: #80B8F8; border-color: #80B8F8; cursor: not-allowed; }
-    .btn-outline-primary { background: transparent; color: var(--pgn-color-brand-base); border-color: var(--pgn-color-brand-base); }
-    .btn-outline-primary:hover { background: var(--pgn-color-brand-tint); }
-    .btn-tertiary { background: transparent; color: var(--pgn-color-brand-base); border-color: transparent; }
-    .btn-tertiary:hover { background: var(--pgn-color-brand-tint); }
-    .btn-danger { background: var(--pgn-color-danger-base); color: #fff; border-color: var(--pgn-color-danger-base); }
-    .btn-icon { width: 36px; height: 36px; padding: 0; }
-    .btn .material-icons-outlined { font-size: 20px; }
-
-    /* ================================================================
-       CARDS
-       ================================================================ */
-    .pgn__card {
-      background: var(--pgn-color-white); border-radius: var(--pgn-size-border-radius-lg);
-      border: 1px solid var(--pgn-color-gray-100);
-      box-shadow: 0 0.0625rem 0.125rem rgba(0,0,0,0.06), 0 0.0625rem 0.25rem rgba(0,0,0,0.06);
-    }
-    .pgn__card-section { padding: var(--pgn-spacing-3); }
-    .pgn__card-section-lg { padding: var(--pgn-spacing-4); }
-    .pgn__card-featured { border-left: 4px solid var(--pgn-color-brand-base); }
-
-    /* ================================================================
-       BADGES
-       ================================================================ */
-    .badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 4px 10px; border-radius: var(--pgn-size-border-radius-sm);
-      font-size: 12px; font-weight: 700; line-height: 1.4;
-    }
-    .badge-brand   { background: var(--pgn-color-brand-tint); color: var(--pgn-color-brand-base); }
-    .badge-info    { background: var(--pgn-color-info-tint); color: var(--color-dark-navy); }
-    .badge-success { background: #72C06C; color: #000; }
-    .badge-danger { background: #EC6A52; color: #000; }
-    .badge-warning { background: #F3D06E; color: #000; }
-    .badge-gray    { background: var(--pgn-color-bg-light); color: var(--pgn-color-gray-600); }
-    .badge-lg      { padding: 8px 16px; font-size: 14px; }  /* sanctioned emphasis size (8-pt grid) */
-
-    /* ================================================================
-       ALERTS
-       ================================================================ */
-    .alert {
-      padding: var(--pgn-spacing-2) var(--pgn-spacing-3);
-      border-radius: var(--pgn-size-border-radius-base);
-      border: 1px solid transparent;
-      display: flex; gap: var(--pgn-spacing-2); align-items: flex-start;
-    }
-    .alert .material-icons-outlined { flex-shrink: 0; }
-    .alert-success { background: var(--pgn-color-success-tint); border-color: var(--pgn-color-success-base); color: #1B5E20; }
-    .alert-info    { background: var(--pgn-color-info-tint); border-color: var(--pgn-color-info-base); color: var(--color-dark-navy); }
-    .alert-warning { background: var(--pgn-color-warning-tint); border-color: var(--pgn-color-warning-base); color: #8A5A00; }
-    .alert-danger  { background: var(--pgn-color-danger-tint); border-color: var(--pgn-color-danger-base); color: #8A1E1E; }
-
-    /* ================================================================
-       NUMBERED LIST ROWS
-       ================================================================ */
-    .row-list { display: flex; flex-direction: column; gap: var(--pgn-spacing-1); }
-    .row-card {
-      background: var(--pgn-color-white);
-      border: 1px solid var(--pgn-color-gray-100);
-      border-radius: var(--pgn-size-border-radius-lg);
-      padding: var(--pgn-spacing-2) var(--pgn-spacing-3);
-      display: flex; align-items: center; gap: var(--pgn-spacing-2);
-    }
-    .row-card.recommended {
-      background: var(--color-ice-blue);
-      border-color: var(--pgn-color-brand-base);
-    }
-    .row-card.at-risk {
-      background: var(--pgn-color-danger-tint);
-      border-color: var(--pgn-color-danger-base);
-    }
-    .row-card.flagged {
-      background: var(--pgn-color-warning-tint);
-      border-color: var(--pgn-color-warning-base);
-    }
-    .row-num {
-      width: 32px; height: 32px; border-radius: 50%;
-      background: transparent;
-      border: 1.5px solid var(--pgn-color-gray-300);
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--pgn-font-family-heading);
-      font-size: 14px; font-weight: 700; color: var(--pgn-color-gray-700);
-      flex-shrink: 0;
-    }
-    .row-card.recommended .row-num,
-    .row-num.active {
-      background: var(--pgn-color-brand-base);
-      border-color: var(--pgn-color-brand-base);
-      color: #fff;
-    }
-    .row-card.at-risk .row-num {
-      background: var(--pgn-color-danger-base);
-      border-color: var(--pgn-color-danger-base);
-      color: #fff;
-    }
-    .row-content { flex: 1; min-width: 0; }
-    .row-title { font-size: 16px; font-weight: 700; color: var(--pgn-color-gray-900); }
-    .row-sub { font-size: 13px; color: var(--pgn-color-gray-600); margin-top: 2px; }
-    .row-actions { display: flex; align-items: center; gap: var(--pgn-spacing-1); flex-shrink: 0; }
-
-    .status-legend {
-      display: flex; gap: var(--pgn-spacing-2);
-      font-size: 13px; color: var(--pgn-color-gray-600);
-      flex-wrap: wrap;
-    }
-    .status-legend-item { display: inline-flex; align-items: center; gap: 6px; }
-    .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-    .dot.green { background: #45AE5B; }
-    .dot.amber { background: #F3D06E; }
-    .dot.red { background: #E03B2F; }
-    .dot.blue    { background: var(--pgn-color-brand-base); }
-    .dot.gray    { background: var(--pgn-color-gray-300); }
-
-    /* ================================================================
-       DATA TABLE
-       ================================================================ */
-    .pgn__data-table {
-      width: 100%; border-collapse: collapse;
-      background: var(--pgn-color-white);
-      border-radius: var(--pgn-size-border-radius-lg);
-      overflow: hidden;
-      border: 1px solid var(--pgn-color-gray-100);
-    }
-    .pgn__data-table th, .pgn__data-table td {
-      padding: 12px var(--pgn-spacing-2); text-align: left;
-      border-bottom: 1px solid var(--pgn-color-gray-100);
-      font-size: 14px;
-    }
-    .pgn__data-table th {
-      background: var(--pgn-color-bg-light);
-      font-family: var(--pgn-font-family-heading); font-size: 12px; font-weight: 700;
-      letter-spacing: 0.04em; text-transform: uppercase; color: var(--pgn-color-gray-700);
-    }
-    .pgn__data-table tr:last-child td { border-bottom: none; }
-    .pgn__data-table tr:hover td { background: var(--pgn-color-bg-light); }
-    .pgn__data-table .num-col { text-align: right; font-variant-numeric: tabular-nums; }
-
-    /* ================================================================
-       CHAT THREAD (transcripts)
-       ================================================================ */
-    .chat-card {
-      background: var(--pgn-color-white);
-      border: 1px solid var(--pgn-color-gray-100);
-      border-radius: var(--pgn-size-border-radius-lg);
-      padding: var(--pgn-spacing-3);
-      box-shadow: 0 0.0625rem 0.125rem rgba(0,0,0,0.06);
-    }
-    .chat-thread { display: flex; flex-direction: column; gap: var(--pgn-spacing-3); }
-    .chat-row { display: flex; gap: var(--pgn-spacing-2); align-items: flex-start; }
-    .chat-row.them { flex-direction: row-reverse; }
-    .chat-bubble {
-      flex: 1; max-width: 80%;
-      background: var(--pgn-color-bg-light);
-      border-radius: var(--pgn-size-border-radius-lg);
-      padding: var(--pgn-spacing-2);
-    }
-    .chat-row.them .chat-bubble { background: var(--pgn-color-info-tint); }
-    .chat-meta {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 13px; color: var(--pgn-color-gray-600); margin-bottom: 4px;
-    }
-    .chat-meta strong { color: var(--pgn-color-gray-900); }
-    .chat-row.them .chat-meta { justify-content: flex-end; }
-    .chat-text { font-size: 14px; color: var(--pgn-color-gray-900); line-height: 1.5; }
-    .chat-avatar {
-      width: 32px; height: 32px; border-radius: 50%;
-      background: var(--pgn-color-info-base); color: #fff;
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--pgn-font-family-heading); font-size: 13px; font-weight: 700;
-      flex-shrink: 0;
-    }
-    .chat-avatar.ai { background: var(--pgn-color-success-base); }
-
-    /* ================================================================
-       FEEDBACK PANEL
-       ================================================================ */
-    .feedback-panel {
-      background: var(--pgn-color-success-tint);
-      border: 1px solid var(--pgn-color-success-base);
-      border-left: 4px solid var(--pgn-color-success-base);
-      border-radius: var(--pgn-size-border-radius-lg);
-      padding: var(--pgn-spacing-3) var(--pgn-spacing-4);
-    }
-    .feedback-panel.warning {
-      background: var(--pgn-color-warning-tint);
-      border-color: var(--pgn-color-warning-base);
-      border-left-color: var(--pgn-color-warning-base);
-    }
-    .feedback-panel.danger {
-      background: var(--pgn-color-danger-tint);
-      border-color: var(--pgn-color-danger-base);
-      border-left-color: var(--pgn-color-danger-base);
-    }
-    .feedback-label {
-      display: flex; align-items: center; gap: 6px;
-      font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-      color: #1B5E20;
-      margin-bottom: var(--pgn-spacing-1);
-    }
-    .feedback-panel.warning .feedback-label { color: #8A5A00; }
-    .feedback-panel.danger .feedback-label { color: #8A1E1E; }
-
-    /* ================================================================
-       SPINNER
-       ================================================================ */
-    .spinner {
-      width: 24px; height: 24px; border: 3px solid var(--pgn-color-gray-100);
-      border-top-color: var(--pgn-color-brand-base);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      display: inline-block;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ================================================================
-       UTILITIES
-       ================================================================ */
-    .d-flex { display: flex; }
-    .align-items-center { align-items: center; }
-    .align-items-start { align-items: flex-start; }
-    .justify-content-between { justify-content: space-between; }
-    .justify-content-center { justify-content: center; }
-    .gap-1 { gap: var(--pgn-spacing-1); }
-    .gap-2 { gap: var(--pgn-spacing-2); }
-    .gap-3 { gap: var(--pgn-spacing-3); }
-    .mt-1 { margin-top: var(--pgn-spacing-1); }
-    .mt-2 { margin-top: var(--pgn-spacing-2); }
-    .mt-3 { margin-top: var(--pgn-spacing-3); }
-    .mt-4 { margin-top: var(--pgn-spacing-4); }
-    .mb-1 { margin-bottom: var(--pgn-spacing-1); }
-    .mb-2 { margin-bottom: var(--pgn-spacing-2); }
-    .mb-3 { margin-bottom: var(--pgn-spacing-3); }
-    .mb-4 { margin-bottom: var(--pgn-spacing-4); }
-    .text-center { text-align: center; }
-    .w-100 { width: 100%; }
-
-    /* ================================================================
-       PAGE BOTTOM ACTIONS — in-flow, right-aligned, just above footer
-       (v4.95: replaced position:fixed overlay with accessible in-flow block)
-       ================================================================ */
-    .floating-actions {
-      display: flex; gap: var(--pgn-spacing-2);
-      justify-content: flex-end;
-      margin-top: var(--pgn-spacing-5);
-      padding: var(--pgn-spacing-3) 0;
+    body.metabar-collapsed { padding-bottom: 46px; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+    .visually-hidden {
+      position: absolute; width: 1px; height: 1px;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
     }
 
-    /* ================================================================
-       SCREEN SYSTEM
-       ================================================================ */
-    .screen { display: none; min-height: calc(100vh - 64px); flex-direction: column; }
-    .screen.active { display: flex; }
-    .screen-main { flex: 1; padding: var(--pgn-spacing-5) 0; }
-    .screen-main.centered { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: calc(100vh - 64px - 220px); }
-
-    /* ================================================================
-       SECTION CARD (instructor sections list, screen 2)
-       ================================================================ */
-    .section-card {
-      background: var(--pgn-color-white);
-      border: 1px solid var(--pgn-color-gray-100);
-      border-radius: var(--pgn-size-border-radius-lg);
-      padding: var(--pgn-spacing-3);
-      box-shadow: 0 0.0625rem 0.125rem rgba(0,0,0,0.06);
-      cursor: pointer; transition: border-color 150ms;
-    }
-    .section-card:hover { border-color: var(--pgn-color-brand-base); }
-    .section-card.recommended { border-left: 4px solid var(--pgn-color-brand-base); }
-    .section-stat { display: flex; flex-direction: column; gap: 2px; }
-    .section-stat-num { font-family: var(--pgn-font-family-heading); font-size: 24px; font-weight: 700; color: var(--pgn-color-gray-900); line-height: 1; }
-    .section-stat-num.warning { color: #8A5A00; }
-    .section-stat-num.danger { color: var(--pgn-color-danger-base); }
-    .section-stat-label { font-size: 11px; color: var(--pgn-color-gray-600); text-transform: uppercase; letter-spacing: 0.04em; }
-
-    /* ================================================================
-       HEATMAP (SC-ADD-03 Data Visualization)
-       ================================================================ */
-    .heatmap-card {
-      background: var(--pgn-color-white);
-      border: 1px solid var(--pgn-color-gray-100);
-      border-radius: var(--pgn-size-border-radius-lg);
-      padding: var(--pgn-spacing-3);
-      box-shadow: 0 0.0625rem 0.125rem rgba(0,0,0,0.06);
-      overflow-x: auto;
-    }
-    .heatmap-grid {
-      display: grid;
-      /* v4.102: expanded to 13 columns to match the canonical Python Skill Topic taxonomy.
-         Designed to scale up to ~20 columns per Brady's expected Topic-count ceiling. */
-      grid-template-columns: 160px repeat(13, minmax(108px, 1fr));
-      gap: 2px;
-      min-width: 1580px;
-    }
-
-    /* v4.103: heatmap horizontal-scroll discoverability cues:
-       1) right-edge fade gradient signals more content beyond the viewport
-       2) high-contrast brand-blue scrollbar so the affordance is visible
-       3) "Scroll horizontally" hint text below the heatmap card */
-    .heatmap-scroll-container {
+    /* --- screens --- */
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .shot {
       position: relative;
+      width: 100%;
+      max-width: var(--shot-css-w, 1344px);
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.25);
     }
-    .heatmap-scroll-container::after {
-      content: '';
+    .shot > img { display: block; width: 100%; height: auto; }
+
+    /* --- hotspots --- */
+    .hotspot {
       position: absolute;
-      top: 0;
-      bottom: 18px; /* leave room for the scrollbar */
-      right: 0;
-      width: 56px;
-      background: linear-gradient(to left, var(--pgn-color-bg-base) 15%, rgba(255,255,255,0));
-      pointer-events: none;
-      z-index: 2;
-      transition: opacity 0.2s ease;
-    }
-    .heatmap-scroll-container.at-end::after {
-      opacity: 0;
-    }
-    [data-theme="dark"] .heatmap-scroll-container::after {
-      background: linear-gradient(to left, var(--pgn-color-bg-base) 15%, rgba(13,26,46,0));
-    }
-    .heatmap-card {
-      /* v4.103: force a visible, branded scrollbar so the scroll affordance is obvious */
-      scrollbar-color: var(--pgn-color-brand-base) var(--pgn-color-gray-100);
-      scrollbar-width: auto;
-    }
-    .heatmap-card::-webkit-scrollbar {
-      height: 12px;
-    }
-    .heatmap-card::-webkit-scrollbar-track {
-      background: var(--pgn-color-gray-100);
-      border-radius: 6px;
-    }
-    .heatmap-card::-webkit-scrollbar-thumb {
-      background: var(--pgn-color-brand-base);
-      border-radius: 6px;
-      border: 2px solid var(--pgn-color-gray-100);
-    }
-    .heatmap-card::-webkit-scrollbar-thumb:hover {
-      background: var(--pgn-color-primary-base);
-    }
-    .heatmap-scroll-hint {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      margin-top: 8px;
-      padding: 6px 12px;
-      font-size: 12px;
-      color: var(--pgn-color-brand-base);
-      background: var(--pgn-color-brand-tint);
-      border-radius: var(--pgn-size-border-radius-sm);
-      font-style: italic;
-      transition: opacity 0.2s ease;
-    }
-    .heatmap-scroll-container.at-end .heatmap-scroll-hint {
-      opacity: 0.5;
-    }
-    .heatmap-corner {
+      margin: 0; padding: 0; border: 0;
       background: transparent;
-      padding: 8px;
-      font-size: 12px; font-weight: 700; color: var(--pgn-color-gray-600);
-      text-transform: uppercase; letter-spacing: 0.04em;
-      display: flex; align-items: end;
-    }
-    .heatmap-col-label {
-      background: var(--pgn-color-bg-light);
-      padding: 8px 10px;
-      font-size: 12px; font-weight: 700; color: var(--pgn-color-gray-700);
-      letter-spacing: 0.02em;
-      border-radius: var(--pgn-size-border-radius-sm) var(--pgn-size-border-radius-sm) 0 0;
-      text-align: center; line-height: 1.3;
-    }
-    .heatmap-row-label {
-      background: var(--pgn-color-bg-light);
-      padding: 6px 10px;
-      font-size: 13px; color: var(--pgn-color-gray-900);
-      display: flex; align-items: center; gap: 6px;
-      border-radius: var(--pgn-size-border-radius-sm);
-    }
-    /* v4.97: Sally Whitman row tinting removed - heatmap cell colors carry the at-risk cue */
-    .heatmap-row-label .dot { flex-shrink: 0; }
-    .heatmap-row-label[onclick] { cursor: pointer; }
-    .heatmap-row-label[onclick]:hover { background: var(--pgn-color-gray-100); }
-    .heatmap-cell {
-      padding: 10px;
-      text-align: center;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--heat-text-dark);
-      border-radius: var(--pgn-size-border-radius-sm);
-      font-variant-numeric: tabular-nums;
-    }
-    .heatmap-cell.h1 { background: var(--heat-1); }
-    .heatmap-cell.h2 { background: var(--heat-2); }
-    .heatmap-cell.h3 { background: var(--heat-3); }
-    .heatmap-cell.h4 { background: var(--heat-4); }
-    .heatmap-cell.h5 { background: var(--heat-5); }
-    .heatmap-cell.h6 { background: var(--heat-6); }
-    .heatmap-cell.h7 { background: var(--heat-7); }
-    .heatmap-cell.h8 { background: var(--heat-8); }
-    .heatmap-cell.h9 { background: var(--heat-9); }
-    .heatmap-cell.empty { background: transparent; color: var(--pgn-color-gray-400); font-weight: 400; }
-
-    .heatmap-legend {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 12px; color: var(--pgn-color-gray-600);
-      margin-top: var(--pgn-spacing-2);
-      flex-wrap: wrap;
-    }
-    .heatmap-legend-scale { display: flex; gap: 0; }
-    .heatmap-legend-scale .swatch {
-      width: 24px; height: 16px;
-    }
-    .heatmap-legend-scale .swatch:first-child { border-top-left-radius: 3px; border-bottom-left-radius: 3px; }
-    .heatmap-legend-scale .swatch:last-child { border-top-right-radius: 3px; border-bottom-right-radius: 3px; }
-
-    /* Score pill */
-    .score-pill {
-      display: inline-flex; align-items: center; justify-content: center;
-      min-width: 48px; height: 24px; padding: 0 8px;
-      border-radius: var(--pgn-size-rounded-pill);
-      font-family: var(--pgn-font-family-body); font-size: 12px; font-weight: 700;
-      font-variant-numeric: tabular-nums;
-    }
-    .score-pill.low { background: var(--heat-2); color: var(--heat-text-dark); }
-    .score-pill.med { background: var(--heat-5); color: var(--heat-text-dark); }
-    .score-pill.high { background: var(--heat-8); color: var(--heat-text-dark); }
-
-    /* Filter chips */
-    .chip-filter {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 6px 12px; height: 32px;
-      border: 1px solid var(--pgn-color-gray-200);
-      background: var(--pgn-color-white);
-      border-radius: var(--pgn-size-rounded-pill);
-      font-family: var(--pgn-font-family-body); font-size: 13px; font-weight: 700;
-      color: var(--pgn-color-gray-700);
       cursor: pointer;
-      transition: background 150ms, border-color 150ms;
+      border-radius: 6px;
+      transition: background 120ms, box-shadow 120ms;
     }
-    .chip-filter:hover { background: var(--pgn-color-bg-light); }
-    .chip-filter.active {
-      background: var(--pgn-color-brand-base);
-      border-color: var(--pgn-color-brand-base);
-      color: #fff;
+    .hotspot:hover,
+    body.reveal-hotspots .hotspot {
+      background: rgba(0,112,240,0.20);
+      box-shadow: 0 0 0 2px rgba(0,112,240,0.65) inset;
     }
-    .chip-filter.active.danger {
-      background: var(--pgn-color-danger-base);
-      border-color: var(--pgn-color-danger-base);
-    }
+    .hotspot:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
-    /* ================================================================
-       META BAR (storyboard demo nav)
-       ================================================================ */
+    /* --- demo meta-bar --- */
     .meta-bar {
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
-      background: var(--color-deep-navy); color: #fff;
-      font-size: 12px; padding: 8px var(--pgn-spacing-4) 16px;
-      display: flex; flex-direction: column; gap: 8px;
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+      background: var(--nav-bg);
+      color: #fff;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 -6px 24px rgba(0,0,0,0.28);
     }
     .meta-bar-header {
-      display: flex; align-items: center; gap: var(--pgn-spacing-2);
-      padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; gap: 12px;
+      padding: 9px 16px; font-size: 13px;
     }
-    .meta-bar .meta-id { color: var(--pgn-color-info-base); font-weight: 700; }
-    .meta-bar-flows {
-      display: grid; grid-template-columns: auto auto auto;
-      gap: 8px 16px; align-items: center; justify-content: start;
-    }
-    .meta-bar-toggle {
-      margin-left: auto; flex-shrink: 0;
-      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
-      color: #fff; width: 26px; height: 26px; border-radius: 50%;
-      display: inline-flex; align-items: center; justify-content: center;
-      cursor: pointer; padding: 0;
-      transition: background 150ms;
-    }
-    .meta-bar-toggle:hover { background: rgba(255,255,255,0.22); }
-    .meta-bar-toggle .material-icons-outlined { font-size: 18px; display: block; transition: transform 150ms; }
-    .meta-bar.metabar-collapsed .meta-bar-flows,
-    .meta-bar.metabar-collapsed .flow-nav { display: none; }
-    .meta-bar.metabar-collapsed .meta-bar-header { padding-bottom: 0; border-bottom: none; }
-    .meta-bar.metabar-collapsed .meta-bar-toggle .material-icons-outlined { transform: rotate(180deg); }
-    body.metabar-collapsed { padding-bottom: 40px; }
-    .flow-id { font-size: 12px; font-weight: 700; color: var(--pgn-color-info-base); white-space: nowrap; }
-    .flow-desc { font-size: 12px; color: rgba(255,255,255,0.78); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .flow-nav { display: flex; gap: 8px; flex-wrap: wrap; }
-    .step-btn {
-      background: transparent; border: 1px solid rgba(255,255,255,0.25);
-      color: rgba(255,255,255,0.78); font-size: 12px; font-family: var(--pgn-font-family-body);
-      padding: 8px; border-radius: var(--pgn-size-rounded-pill);
-      cursor: pointer; transition: all 100ms; white-space: nowrap;
-      min-width: 32px; min-height: 32px; text-align: center;
-    }
-    .step-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
-    .step-btn.active { background: var(--pgn-color-info-base); border-color: var(--pgn-color-info-base); color: #fff; font-weight: 700; }
-    .meta-link { color: var(--pgn-color-info-base); text-decoration: none; }
+    .meta-id { font-weight: 700; letter-spacing: 0.01em; }
+    .meta-bar-header .sep { color: var(--text-dim); }
+    .meta-link { color: #8fc4ff; text-decoration: none; font-weight: 600; }
     .meta-link:hover { text-decoration: underline; }
-
-    .skip-nav {
-      position: absolute; left: -9999px; top: auto;
-      width: 1px; height: 1px; overflow: hidden;
-      z-index: 9999; padding: 8px 16px;
-      background: var(--pgn-color-brand-base); color: #fff;
-      font-size: 16px; font-weight: 700; text-decoration: none;
+    .meta-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: transparent; color: #fff; border: 1px solid var(--pill-border);
+      border-radius: 6px; cursor: pointer; padding: 4px; line-height: 1;
     }
-    .skip-nav:focus { position: fixed; left: 0; top: 0; width: auto; height: auto; }
-    .sr-only {
-      position: absolute; width: 1px; height: 1px;
-      padding: 0; margin: -1px; overflow: hidden;
-      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    .meta-btn:hover { background: var(--nav-bg-2); }
+    .meta-btn .material-icons-outlined { font-size: 18px; }
+    .flow-nav {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      padding: 0 16px 12px;
+      max-height: 96px; overflow-y: auto;
     }
-
-    /* ================================================================
-       v4.62 — LIGHT-MODE NAVBAR THEME (header bar light in light mode,
-       dark navy only in dark mode). Cascade-overrides earlier rules.
-       ================================================================ */
-    .navbar,
-    .navbar-dark {
-      background: var(--pgn-color-white);
-      color: var(--color-deep-navy);
-      border-bottom: 1px solid var(--color-deep-navy);
+    .step-btn {
+      background: var(--pill-bg); color: var(--text-dim);
+      border: 1px solid var(--pill-border); border-radius: 999px;
+      padding: 4px 11px; font-size: 12px; font-family: var(--font-body);
+      cursor: pointer; white-space: nowrap;
     }
-    .navbar-brand,
-    .navbar-brand-text,
-    .navbar-user {
-      color: var(--color-deep-navy);
-    }
-    .navbar-chip {
-      background: transparent;
-      color: var(--color-deep-navy);
-      border: 1px solid var(--color-deep-navy);
-    }
-    .avatar {
-      background: var(--color-deep-navy);
-      color: #fff;
-    }
-    .btn-theme-toggle {
-      background: var(--pgn-color-bg-light);
-      border: 1px solid var(--pgn-color-gray-200);
-      color: var(--color-deep-navy);
-    }
-    .btn-theme-toggle:hover { background: var(--pgn-color-gray-100); }
-    /* v4.70: ensure light-mode navbar icons (help, theme toggle) render crisply against the white navbar */
-    .btn-theme-toggle .material-icons-outlined {
-      color: var(--color-deep-navy);
-      font-weight: 500;
-    }
-    [data-theme="dark"] .btn-theme-toggle .material-icons-outlined {
-      color: #fff;
-    }
-    /* v4.83: dark-mode footer theming — overrides hardcoded inline footer styles */
-    [data-theme="dark"] footer[role="contentinfo"] {
-      background: var(--color-deep-navy) !important;
-      border-top-color: rgba(255,255,255,0.1) !important;
-    }
-    [data-theme="dark"] footer[role="contentinfo"] > div {
-      border-bottom-color: rgba(255,255,255,0.1) !important;
-    }
-    [data-theme="dark"] footer[role="contentinfo"] a {
-      color: #fff !important;
-    }
-    [data-theme="dark"] footer[role="contentinfo"] span {
-      color: rgba(255,255,255,0.7) !important;
-    }
-    /* student/ uses a <span class="navbar-brand-logo">WGU</span> text mark;
-       :not(img) targets only the span so img logos are unaffected. */
-    .navbar-brand-logo:not(img) {
-      background: var(--color-deep-navy) !important;
-      color: #fff !important;
-    }
-
-    [data-theme="dark"] .navbar,
-    [data-theme="dark"] .navbar-dark {
-      background: var(--color-deep-navy);
-      color: #fff;
-      border-bottom: none;
-    }
-    [data-theme="dark"] .navbar-brand,
-    [data-theme="dark"] .navbar-brand-text,
-    [data-theme="dark"] .navbar-user {
-      color: #fff;
-    }
-    [data-theme="dark"] .navbar-chip {
-      background: rgba(255,255,255,0.12);
-      color: rgba(255,255,255,0.92);
-      border-color: rgba(255,255,255,0.2);
-    }
-    [data-theme="dark"] .avatar {
-      background: var(--pgn-color-info-base);
-      color: #fff;
-    }
-    [data-theme="dark"] .btn-theme-toggle {
-      background: rgba(255,255,255,0.12);
-      border-color: rgba(255,255,255,0.2);
-      color: #fff;
-    }
-    [data-theme="dark"] .btn-theme-toggle:hover { background: rgba(255,255,255,0.2); }
-    [data-theme="dark"] .navbar-brand-logo:not(img) {
-      background: #fff !important;
-      color: var(--color-deep-navy) !important;
-    }
+    .step-btn:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
+    .step-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .meta-bar.metabar-collapsed .flow-nav { display: none; }
   </style>
 </head>
 <body>
 
-<a href="#screen-1" class="skip-nav">Skip to main content</a>
-
-<!-- ================================================================
-     SC-ADD-03 — INSTRUCTOR DASHBOARD AND AT-RISK INTERVENTION
-     ================================================================ -->
-
-<!-- Screen 1 (SSO landing) REMOVED in v4.85 — informational only, not in JFT scope -->
-
-<!-- Screen 1: Instructor Dashboard home (Course list with Skills inline) ============== -->
-<section class="screen active" id="screen-1" aria-labelledby="s1-heading">
-  <header class="navbar navbar-dark" role="banner">
-    <a href="#" class="navbar-brand" onclick="goToScreen(1); return false;"><img class="navbar-brand-logo logo-light" data-school-logo="light" src="../assets/school-tech-light.png" alt="School of Technology"><img class="navbar-brand-logo logo-dark" data-school-logo="dark" src="../assets/school-tech-dark.png" alt="School of Technology"></a>
-    <div class="navbar-right">
-      <button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button>
-      <a href="../help/index.html#submit-request" class="btn-theme-toggle" aria-label="Help and Support" title="Help &amp; Support"><span class="material-icons-outlined">help_outline</span></a>
-      <span class="navbar-chip">Instructor Dashboard</span>
-      <div class="navbar-user"><div class="avatar" aria-hidden="true">C</div><span>Charlie</span></div>
+  <section class="screen active" id="screen-1" aria-labelledby="s1-heading">
+    <h2 id="s1-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 1 — Dashboard</h2>
+    <div class="shot" style="--shot-css-w:1329px;">
+      <img src="screenshots/screen-01.png?v=1" alt="instructor screen 1: Dashboard">
+    <button class="hotspot" style="left:8.5%;top:32.05%;width:10.8%;height:0.94%;" aria-label="Algebra 101" onclick="goToScreen(2)"></button>
+    <button class="hotspot" style="left:53.05%;top:32.05%;width:10.8%;height:0.94%;" aria-label="Foundations of Programming" onclick="goToScreen(4)"></button>
+    <button class="hotspot" style="left:85.75%;top:46.53%;width:7.48%;height:1.13%;" aria-label="Learner Profile" onclick="goToScreen(5)"></button>
     </div>
-  </header>
-  <main class="screen-main" id="main-1">
-    <div class="container">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <div>
-          <h1 id="s1-heading">Instructor Dashboard</h1>
-          <p class="mt-1">Engagement and Skill analytics for the courses you teach.</p>
-        </div>
-        <div class="status-legend">
-          <span class="status-legend-item"><span class="dot green"></span>On track</span>
-          <span class="status-legend-item"><span class="dot amber"></span>Watch list</span>
-          <span class="status-legend-item"><span class="dot red"></span>At risk</span>
-        </div>
-      </div>
-
-      <!-- Courses section: 2-col grid, filter + search + sort row -->
-      <span class="eyebrow"><span class="material-icons-outlined">school</span>Courses you teach</span>
-      <h2 class="h4 mb-2">3 Courses · 6 Skills · 68 learners</h2>
-
-      <div class="d-flex gap-2 align-items-center mb-3" style="flex-wrap:wrap;">
-        <span class="text-muted small d-flex align-items-center" style="margin-right:4px;">Filter:</span>
-        <button class="chip-filter active" data-filter-course="all" onclick="filterCourses('all')">All Courses (3)</button>
-        <button class="chip-filter danger" data-filter-course="at-risk" onclick="filterCourses('at-risk')"><span class="material-icons-outlined" style="font-size:14px;">priority_high</span>At risk (1)</button>
-        <button class="chip-filter" data-filter-course="watch" onclick="filterCourses('watch')">Watch list (1)</button>
-        <button class="chip-filter" data-filter-course="on-track" onclick="filterCourses('on-track')">On track (1)</button>
-        <span style="margin-left:auto;" class="d-flex align-items-center gap-2">
-          <span class="d-flex align-items-center" style="position:relative;">
-            <span class="material-icons-outlined" style="position:absolute; left:8px; top:50%; transform:translateY(-50%); font-size:16px; color:var(--pgn-color-gray-500); pointer-events:none;">search</span>
-            <input type="search" id="course-search" placeholder="Search code or name..." oninput="searchCourses(this.value)" aria-label="Search courses by code or name" style="padding: 4px 8px 4px 28px; border: 1px solid var(--pgn-color-gray-200); border-radius: 6px; font-size: 13px; background: var(--pgn-color-white); color: var(--pgn-color-gray-700); width: 200px;" />
-          </span>
-          <span class="text-muted small">Sort:</span>
-          <select onchange="sortCourses(this.value)" style="padding: 4px 8px; border: 1px solid var(--pgn-color-gray-200); border-radius: 6px; font-size: 13px; background: var(--pgn-color-white); color: var(--pgn-color-gray-700);">
-            <option value="code">Course code</option>
-            <option value="learners">Most active learners</option>
-            <option value="score">Highest avg score</option>
-            <option value="recent">Recently active</option>
-          </select>
-        </span>
-      </div>
-
-      <div class="row mb-3" id="courses-grid">
-        <!-- E010 -->
-        <div class="col-6 mb-3" data-course-cat="at-risk" data-course-code="E010" data-course-name="Foundations of Programming (Python)" data-course-learners="28" data-course-score="0.76" data-course-activity="2026-05-14T14:46:00">
-          <div class="section-card" onclick="goToScreen(2)" style="cursor:pointer; height:100%;" role="button" tabindex="0" aria-label="Open E010 Course details">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-              <div>
-                <span class="eyebrow"><span class="material-icons-outlined">school</span>Course</span>
-                <h3 class="h5 mb-1">E010 · Foundations of Programming (Python)</h3>
-                <p class="small text-muted mb-0">28 active learners · last activity 14 min ago</p>
-              </div>
-              <a href="#" onclick="event.stopPropagation(); goToScreen(3); return false;" class="badge badge-warning" style="text-decoration:none;" title="View the 4 at-risk learners"><span class="material-icons-outlined" style="font-size:14px;">priority_high</span>4 at risk</a>
-            </div>
-            <div class="d-flex gap-3 mb-2" style="flex-wrap:wrap;">
-              <div class="section-stat"><div class="section-stat-num">28</div><div class="section-stat-label">Learners</div></div>
-              <div class="section-stat"><div class="section-stat-num">0.76</div><div class="section-stat-label">Avg score</div></div>
-              <div class="section-stat"><div class="section-stat-num danger">4</div><div class="section-stat-label">At risk</div></div>
-              <div class="section-stat"><div class="section-stat-num">412</div><div class="section-stat-label">Sessions/wk</div></div>
-            </div>
-            <div style="border-top: 1px solid var(--pgn-color-gray-200); padding-top: 10px;">
-              <div class="micro text-muted mb-2"><strong>SKILLS IN THIS COURSE</strong></div>
-              <button class="btn btn-outline-primary mb-2" style="width:100%; text-align:left; padding: 8px 16px;" onclick="event.stopPropagation(); goToScreen(3);">
-                <div class="d-flex justify-content-between align-items-center" style="width:100%;">
-                  <span><span class="text-strong">Python Skill</span> <span class="micro text-muted">· 0.76 · 4 at risk</span></span>
-                  <span class="material-icons-outlined" style="font-size:18px;">grid_view</span>
-                </div>
-              </button>
-              <button class="btn btn-outline-primary" style="width:100%; text-align:left; padding: 8px 16px;" onclick="event.stopPropagation(); goToScreen(3);">
-                <div class="d-flex justify-content-between align-items-center" style="width:100%;">
-                  <span><span class="text-strong">Git &amp; Version Control Skill</span> <span class="micro text-muted">· 0.68 · 0 at risk</span></span>
-                  <span class="material-icons-outlined" style="font-size:18px;">grid_view</span>
-                </div>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- E075 -->
-        <div class="col-6 mb-3" data-course-cat="watch" data-course-code="E075" data-course-name="Intermediate Python &amp; Libraries" data-course-learners="22" data-course-score="0.82" data-course-activity="2026-05-04T00:00:00">
-          <div class="section-card" onclick="goToScreen(2)" style="cursor:pointer; height:100%;" role="button" tabindex="0" aria-label="Open E075 Course details">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-              <div>
-                <span class="eyebrow"><span class="material-icons-outlined">school</span>Course</span>
-                <h3 class="h5 mb-1">E075 · Intermediate Python &amp; Libraries</h3>
-                <p class="small text-muted mb-0">22 active learners (rolling enrollment)</p>
-              </div>
-              <span class="badge badge-warning"><span class="material-icons-outlined" style="font-size:14px;">visibility</span>1 watch</span>
-            </div>
-            <div class="d-flex gap-3 mb-2" style="flex-wrap:wrap;">
-              <div class="section-stat"><div class="section-stat-num">22</div><div class="section-stat-label">Learners</div></div>
-              <div class="section-stat"><div class="section-stat-num">0.82</div><div class="section-stat-label">Avg score</div></div>
-              <div class="section-stat"><div class="section-stat-num warning">1</div><div class="section-stat-label">Watch</div></div>
-              <div class="section-stat"><div class="section-stat-num">137</div><div class="section-stat-label">Sessions/wk</div></div>
-            </div>
-            <div style="border-top: 1px solid var(--pgn-color-gray-200); padding-top: 10px;">
-              <div class="micro text-muted mb-2"><strong>SKILLS IN THIS COURSE</strong></div>
-              <button class="btn btn-outline-primary mb-2" style="width:100%; text-align:left; padding: 8px 16px;" onclick="event.stopPropagation(); goToScreen(3);">
-                <div class="d-flex justify-content-between align-items-center" style="width:100%;">
-                  <span><span class="text-strong">Python Intermediate Skill</span> <span class="micro text-muted">· 0.85 · 0 at risk</span></span>
-                  <span class="material-icons-outlined" style="font-size:18px;">grid_view</span>
-                </div>
-              </button>
-              <button class="btn btn-outline-primary" style="width:100%; text-align:left; padding: 8px 16px;" onclick="event.stopPropagation(); goToScreen(3);">
-                <div class="d-flex justify-content-between align-items-center" style="width:100%;">
-                  <span><span class="text-strong">Libraries Skill</span> <span class="micro text-muted">· 0.78 · 1 watch</span></span>
-                  <span class="material-icons-outlined" style="font-size:18px;">grid_view</span>
-                </div>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- E135 -->
-        <div class="col-6 mb-3" data-course-cat="on-track" data-course-code="E135" data-course-name="OOP with Python" data-course-learners="18" data-course-score="0.71" data-course-activity="2026-05-14T14:00:00">
-          <div class="section-card" onclick="goToScreen(2)" style="cursor:pointer; height:100%;" role="button" tabindex="0" aria-label="Open E135 Course details">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-              <div>
-                <span class="eyebrow"><span class="material-icons-outlined">school</span>Course</span>
-                <h3 class="h5 mb-1">E135 · OOP with Python</h3>
-                <p class="small text-muted mb-0">Recently launched · 18 active learners</p>
-              </div>
-              <span class="badge badge-success">On track</span>
-            </div>
-            <div class="d-flex gap-3 mb-2" style="flex-wrap:wrap;">
-              <div class="section-stat"><div class="section-stat-num">18</div><div class="section-stat-label">Learners</div></div>
-              <div class="section-stat"><div class="section-stat-num">0.71</div><div class="section-stat-label">Avg score</div></div>
-              <div class="section-stat"><div class="section-stat-num">0</div><div class="section-stat-label">At risk</div></div>
-              <div class="section-stat"><div class="section-stat-num">44</div><div class="section-stat-label">Sessions/wk</div></div>
-            </div>
-            <div style="border-top: 1px solid var(--pgn-color-gray-200); padding-top: 10px;">
-              <div class="micro text-muted mb-2"><strong>SKILLS IN THIS COURSE</strong></div>
-              <button class="btn btn-outline-primary mb-2" style="width:100%; text-align:left; padding: 8px 16px;" onclick="event.stopPropagation(); goToScreen(3);">
-                <div class="d-flex justify-content-between align-items-center" style="width:100%;">
-                  <span><span class="text-strong">OOP Skill</span> <span class="micro text-muted">· 0.73 · 0 at risk</span></span>
-                  <span class="material-icons-outlined" style="font-size:18px;">grid_view</span>
-                </div>
-              </button>
-              <button class="btn btn-outline-primary" style="width:100%; text-align:left; padding: 8px 16px;" onclick="event.stopPropagation(); goToScreen(3);">
-                <div class="d-flex justify-content-between align-items-center" style="width:100%;">
-                  <span><span class="text-strong">Design Patterns Skill</span> <span class="micro text-muted">· 0.69 · 0 at risk</span></span>
-                  <span class="material-icons-outlined" style="font-size:18px;">grid_view</span>
-                </div>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <script>
-        /* v4.119: Instructor S1 Course filter+search+sort (ports TA pattern) */
-        (function() {
-          function applyCourseFilters() {
-            var activeChip = document.querySelector('#screen-1 .chip-filter[data-filter-course].active');
-            var filter = activeChip ? activeChip.getAttribute('data-filter-course') : 'all';
-            var searchInput = document.getElementById('course-search');
-            var query = searchInput ? searchInput.value.trim().toLowerCase() : '';
-            document.querySelectorAll('#courses-grid > [data-course-cat]').forEach(function(card) {
-              var cats = (card.getAttribute('data-course-cat') || '').split(/\s+/).filter(Boolean);
-              var catMatch = (filter === 'all' || cats.indexOf(filter) !== -1);
-              var code = (card.getAttribute('data-course-code') || '').toLowerCase();
-              var name = (card.getAttribute('data-course-name') || '').toLowerCase();
-              var searchMatch = !query || code.indexOf(query) !== -1 || name.indexOf(query) !== -1;
-              card.style.display = (catMatch && searchMatch) ? '' : 'none';
-            });
-          }
-          window.filterCourses = function(filter) {
-            document.querySelectorAll('#screen-1 .chip-filter[data-filter-course]').forEach(function(c) {
-              c.classList.remove('active');
-            });
-            var activeChip = document.querySelector('#screen-1 .chip-filter[data-filter-course="' + filter + '"]');
-            if (activeChip) activeChip.classList.add('active');
-            applyCourseFilters();
-          };
-          window.searchCourses = function(query) { applyCourseFilters(); };
-          window.sortCourses = function(sortBy) {
-            var grid = document.getElementById('courses-grid');
-            if (!grid) return;
-            var cards = Array.from(grid.querySelectorAll('[data-course-cat]'));
-            cards.sort(function(a, b) {
-              var av, bv;
-              switch (sortBy) {
-                case 'code':     av = a.dataset.courseCode;             bv = b.dataset.courseCode;             return av < bv ? -1 : (av > bv ? 1 : 0);
-                case 'learners': return parseInt(b.dataset.courseLearners, 10) - parseInt(a.dataset.courseLearners, 10);
-                case 'score':    return parseFloat(b.dataset.courseScore || 0) - parseFloat(a.dataset.courseScore || 0);
-                case 'recent':   av = b.dataset.courseActivity || ''; bv = a.dataset.courseActivity || ''; return av < bv ? -1 : (av > bv ? 1 : 0);
-                default: return 0;
-              }
-            });
-            cards.forEach(function(card) { grid.appendChild(card); });
-          };
-        })();
-      </script>
-
-      <!-- Cross-Course at-risk roster -->
-      <div class="mb-3">
-        <div class="d-flex justify-content-between align-items-end mb-2">
-          <div>
-            <span class="eyebrow"><span class="material-icons-outlined">people</span>Across all your Courses</span>
-            <h2 class="h4 mb-0">Learners needing attention</h2>
-          </div>
-        </div>
-
-        <div class="d-flex gap-2 mt-2 mb-2" style="flex-wrap:wrap;">
-          <span class="text-muted small d-flex align-items-center" style="margin-right:4px;">Filter:</span>
-          <button class="chip-filter" data-filter-status="all" onclick="filterAtRiskRoster('all')">All (68)</button>
-          <button class="chip-filter" data-filter-status="mastery" onclick="filterAtRiskRoster('mastery')">Mastery (7)</button>
-          <button class="chip-filter" data-filter-status="on-track" onclick="filterAtRiskRoster('on-track')">On track (56)</button>
-          <button class="chip-filter" data-filter-status="watch" onclick="filterAtRiskRoster('watch')">Watch list (1)</button>
-          <button class="chip-filter active danger" data-filter-status="at-risk" onclick="filterAtRiskRoster('at-risk')"><span class="material-icons-outlined" style="font-size:14px;">priority_high</span>At risk (4)</button>
-        </div>
-
-        <div class="pgn__card">
-          <div class="pgn__card-section" style="padding: 0;">
-            <table class="pgn__data-table" style="margin:0;">
-              <thead>
-                <tr>
-                  <th>Learner</th>
-                  <th>Course</th>
-                  <th>Status</th>
-                  <th>Last active</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="cursor:pointer;" data-row-status="at-risk" onclick="goToScreen(4)">
-                  <td>Sally Whitman</td>
-                  <td>E010</td>
-                  <td><span class="badge badge-danger">At risk</span></td>
-                  <td class="small text-muted">06 May 2026</td>
-                  <td><button class="btn btn-outline-primary btn-sm" onclick="event.stopPropagation(); goToScreen(4);">View profile</button></td>
-                </tr>
-                <tr style="cursor:pointer;" data-row-status="at-risk" onclick="goToScreen(4)">
-                  <td>Brandon Fisher</td>
-                  <td>E010</td>
-                  <td><span class="badge badge-danger">At risk</span></td>
-                  <td class="small text-muted">04 May 2026</td>
-                  <td><button class="btn btn-outline-primary btn-sm" onclick="event.stopPropagation(); goToScreen(4);">View profile</button></td>
-                </tr>
-                <tr style="cursor:pointer;" data-row-status="at-risk" onclick="goToScreen(4)">
-                  <td>Carla Soto</td>
-                  <td>E010</td>
-                  <td><span class="badge badge-danger">At risk</span></td>
-                  <td class="small text-muted">02 May 2026</td>
-                  <td><button class="btn btn-outline-primary btn-sm" onclick="event.stopPropagation(); goToScreen(4);">View profile</button></td>
-                </tr>
-                <tr style="cursor:pointer;" data-row-status="at-risk" onclick="goToScreen(4)">
-                  <td>Hannah Diaz</td>
-                  <td>E010</td>
-                  <td><span class="badge badge-danger">At risk</span></td>
-                  <td class="small text-muted">06 May 2026</td>
-                  <td><button class="btn btn-outline-primary btn-sm" onclick="event.stopPropagation(); goToScreen(4);">View profile</button></td>
-                </tr>
-                <tr class="no-matches-row" style="display:none;"><td colspan="5" class="small text-muted" style="padding: 16px; text-align: center;">No learners match this filter — open the Skill heatmap for the full roster.</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+  </section>
+  <section class="screen" id="screen-2" aria-labelledby="s2-heading">
+    <h2 id="s2-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 2 — Algebra 101</h2>
+    <div class="shot" style="--shot-css-w:1329px;">
+      <img src="screenshots/screen-02.png?v=1" alt="instructor screen 2: Algebra 101">
+    <button class="hotspot" style="left:6.62%;top:7.4%;width:10.15%;height:1.56%;" aria-label="Dashboard" onclick="goToScreen(1)"></button>
+    <button class="hotspot" style="left:8.65%;top:40.12%;width:11.71%;height:2.44%;" aria-label="Skill Heatmap" onclick="goToScreen(3)"></button>
     </div>
-  </main>
-</section>
-
-<!-- Screen 2: Course view (Skills in selected Course) ================== -->
-<section class="screen" id="screen-2" aria-labelledby="s2-heading">
-  <header class="navbar navbar-dark" role="banner">
-    <a href="#" class="navbar-brand" onclick="goToScreen(1); return false;"><img class="navbar-brand-logo logo-light" data-school-logo="light" src="../assets/school-tech-light.png" alt="School of Technology"><img class="navbar-brand-logo logo-dark" data-school-logo="dark" src="../assets/school-tech-dark.png" alt="School of Technology"></a>
-    <div class="navbar-right">
-      <button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button>
-      <a href="../help/index.html#submit-request" class="btn-theme-toggle" aria-label="Help and Support" title="Help &amp; Support"><span class="material-icons-outlined">help_outline</span></a>
-      <span class="navbar-chip">Instructor Dashboard</span>
-      <div class="navbar-user"><div class="avatar" aria-hidden="true">C</div><span>Charlie</span></div>
+  </section>
+  <section class="screen" id="screen-3" aria-labelledby="s3-heading">
+    <h2 id="s3-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 3 — Skill Heatmap</h2>
+    <div class="shot" style="--shot-css-w:1329px;">
+      <img src="screenshots/screen-03.png?v=1" alt="instructor screen 3: Skill Heatmap">
+    <button class="hotspot" style="left:6.62%;top:9.77%;width:10.15%;height:2.07%;" aria-label="Dashboard" onclick="goToScreen(1)"></button>
     </div>
-  </header>
-  <main class="screen-main" id="main-2">
-    <div class="container">
-      <nav class="pgn__breadcrumb" aria-label="Breadcrumb">
-        <a href="#" onclick="goToScreen(1); return false;">Instructor Dashboard</a>
-        <span class="material-icons-outlined">chevron_right</span>
-        <span>E010</span>
-      </nav>
-
-      <div class="d-flex justify-content-between align-items-start mb-3">
-        <div>
-          <span class="eyebrow"><span class="material-icons-outlined">school</span>Course detail</span>
-          <h1 id="s2-heading">E010 · Foundations of Programming (Python)</h1>
-          <p class="mt-1">School of Technology · 28 active learners (rolling enrollment) · last activity 14 min ago</p>
-        </div>
-        <a href="#" onclick="goToScreen(3); return false;" class="badge badge-warning badge-lg" style="text-decoration:none;" title="View the 4 at-risk learners"><span class="material-icons-outlined" style="font-size:16px;">priority_high</span>4 learners at risk</a>
-      </div>
-
-
-      <!-- Skills deployed in this Course -->
-      <div class="mb-3">
-        <span class="eyebrow"><span class="material-icons-outlined">smart_toy</span>Skills deployed in E010</span>
-        <h2 class="h4 mb-3">Skills (2 active)</h2>
-
-        <div class="section-card recommended mb-3" onclick="goToScreen(3)" style="cursor:pointer;" role="button" tabindex="0" aria-label="Open Python Skill heatmap">
-          <div class="d-flex justify-content-between align-items-start mb-2">
-            <div>
-              <h3 class="h5 mb-1">Python Skill <span class="badge badge-success" style="vertical-align: middle; margin-left: 8px; font-size: 11px;">Live</span></h3>
-              <p class="small text-muted">AI Coach for Python foundations · 13 Topics · ~32 Learning Objectives</p>
-            </div>
-            <a href="#" onclick="event.stopPropagation(); goToScreen(3); return false;" class="badge badge-warning" style="text-decoration:none;" title="View the 4 at-risk learners on this Skill">4 learners at risk</a>
-          </div>
-          <div class="d-flex gap-3 mt-2" style="flex-wrap:wrap;">
-            <div class="section-stat"><div class="section-stat-num">28</div><div class="section-stat-label">Practicing</div></div>
-            <div class="section-stat"><div class="section-stat-num">0.76</div><div class="section-stat-label">Avg Topic mastery</div></div>
-            <div class="section-stat"><div class="section-stat-num">4</div><div class="section-stat-label">Topics</div></div>
-            <div class="section-stat"><div class="section-stat-num">412</div><div class="section-stat-label">Sessions / week</div></div>
-          </div>
-          <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); goToScreen(3);"><span class="material-icons-outlined">grid_view</span>Open Heatmap</button>
-            <button class="btn btn-tertiary btn-sm" onclick="event.stopPropagation(); goToScreen(3);"><span class="material-icons-outlined">priority_high</span>View at-risk learners</button>
-          </div>
-        </div>
-
-        <div class="section-card" onclick="goToScreen(3)" style="cursor:pointer;" role="button" tabindex="0" aria-label="Open Git & Version Control Skill heatmap">
-          <div class="d-flex justify-content-between align-items-start mb-2">
-            <div>
-              <h3 class="h5 mb-1">Git &amp; Version Control Skill <span class="badge badge-success" style="vertical-align: middle; margin-left: 8px; font-size: 11px;">Live</span></h3>
-              <p class="small text-muted">AI Coach for source control with Git · 3 Topics · ~18 Learning Objectives</p>
-            </div>
-            <span class="badge badge-success">0 at risk</span>
-          </div>
-          <div class="d-flex gap-3 mt-2" style="flex-wrap:wrap;">
-            <div class="section-stat"><div class="section-stat-num">22</div><div class="section-stat-label">Practicing</div></div>
-            <div class="section-stat"><div class="section-stat-num">0.68</div><div class="section-stat-label">Avg Topic mastery</div></div>
-            <div class="section-stat"><div class="section-stat-num">3</div><div class="section-stat-label">Topics</div></div>
-            <div class="section-stat"><div class="section-stat-num">87</div><div class="section-stat-label">Sessions / week</div></div>
-          </div>
-          <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); goToScreen(3);"><span class="material-icons-outlined">grid_view</span>Open Heatmap</button>
-          </div>
-        </div>
-      </div>
-
+  </section>
+  <section class="screen" id="screen-4" aria-labelledby="s4-heading">
+    <h2 id="s4-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 4 — Foundations of Programming</h2>
+    <div class="shot" style="--shot-css-w:1329px;">
+      <img src="screenshots/screen-04.png?v=1" alt="instructor screen 4: Foundations of Programming">
+    <button class="hotspot" style="left:6.62%;top:3.13%;width:10.15%;height:0.66%;" aria-label="Dashboard" onclick="goToScreen(1)"></button>
     </div>
-  </main>
-  <div class="floating-actions">
-    <button class="btn btn-outline-primary" onclick="goToScreen(1)"><span class="material-icons-outlined">arrow_back</span>Back to Dashboard</button>
-  </div>
-</section>
-
-<!-- Screen 3: Data Visualization → Student Heatmap ================== -->
-<section class="screen" id="screen-3" aria-labelledby="s3-heading">
-  <header class="navbar navbar-dark" role="banner">
-    <a href="#" class="navbar-brand" onclick="goToScreen(1); return false;"><img class="navbar-brand-logo logo-light" data-school-logo="light" src="../assets/school-tech-light.png" alt="School of Technology"><img class="navbar-brand-logo logo-dark" data-school-logo="dark" src="../assets/school-tech-dark.png" alt="School of Technology"></a>
-    <div class="navbar-right">
-      <button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button>
-      <a href="../help/index.html#submit-request" class="btn-theme-toggle" aria-label="Help and Support" title="Help &amp; Support"><span class="material-icons-outlined">help_outline</span></a>
-      <span class="navbar-chip">Instructor Dashboard</span>
-      <div class="navbar-user"><div class="avatar" aria-hidden="true">C</div><span>Charlie</span></div>
+  </section>
+  <section class="screen" id="screen-5" aria-labelledby="s5-heading">
+    <h2 id="s5-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 5 — Learner Profile</h2>
+    <div class="shot" style="--shot-css-w:1329px;">
+      <img src="screenshots/screen-05.png?v=1" alt="instructor screen 5: Learner Profile">
+    <button class="hotspot" style="left:6.62%;top:4.9%;width:10.15%;height:1.04%;" aria-label="Dashboard" onclick="goToScreen(1)"></button>
     </div>
-  </header>
-  <main class="screen-main" id="main-3">
-    <div class="container">
-      <nav class="pgn__breadcrumb" aria-label="Breadcrumb">
-        <a href="#" onclick="goToScreen(1); return false;">Instructor Dashboard</a>
-        <span class="material-icons-outlined">chevron_right</span>
-        <a href="#" onclick="goToScreen(2); return false;">E010</a>
-        <span class="material-icons-outlined">chevron_right</span>
-        <a href="#" onclick="return false;" title="Python Skill in E010">Python Skill</a>
-        <span class="material-icons-outlined">chevron_right</span>
-        <span>Heatmap</span>
-      </nav>
+  </section>
 
-      <div class="mb-3">
-        <span class="eyebrow"><span class="material-icons-outlined">smart_toy</span>Python Skill · Heatmap</span>
-        <h1 id="s3-heading">Python Skill — Topic mastery</h1>
-        <p class="mt-1">AI-scored Topic mastery (0.00–1.00) per learner. Updates after each coaching session.</p>
-      </div>
-
-
-      <div class="d-flex gap-2 mb-3" style="flex-wrap:wrap;">
-        <span class="text-muted small d-flex align-items-center" style="margin-right:4px;">Filter:</span>
-        <button class="chip-filter active" data-filter-status="all" onclick="filterHeatmap('all')">All (28)</button>
-        <button class="chip-filter" data-filter-status="mastery" onclick="filterHeatmap('mastery')">Mastery (7)</button>
-        <button class="chip-filter" data-filter-status="on-track" onclick="filterHeatmap('on-track')">On track (17)</button>
-        <button class="chip-filter" data-filter-status="watch" onclick="filterHeatmap('watch')">Watch list (1)</button>
-        <button class="chip-filter danger" data-filter-status="at-risk" onclick="filterHeatmap('at-risk')"><span class="material-icons-outlined" style="font-size:14px;">priority_high</span>At risk (4)</button>
-      </div>
-
-      <div class="heatmap-scroll-container">
-      <div class="heatmap-card">
-        <div class="heatmap-grid">
-          <!-- Header row: 1 corner + 13 Topic columns (canonical taxonomy) -->
-          <div class="heatmap-corner">Learner ↓ · Topic →</div>
-          <div class="heatmap-col-label">Basic Syntax<br>&amp; Data Types</div>
-          <div class="heatmap-col-label">Control Flow<br>&amp; Logic</div>
-          <div class="heatmap-col-label">Functions &amp;<br>Modular Programming</div>
-          <div class="heatmap-col-label">Data Structures:<br>Lists, Tuples, Sets, Dicts</div>
-          <div class="heatmap-col-label">Working with<br>Files &amp; I/O</div>
-          <div class="heatmap-col-label">Error Handling<br>&amp; Debugging</div>
-          <div class="heatmap-col-label">Object-Oriented<br>Programming (OOP)</div>
-          <div class="heatmap-col-label">Python Libraries<br>&amp; Modules</div>
-          <div class="heatmap-col-label">Advanced<br>Data Handling</div>
-          <div class="heatmap-col-label">Regular Expressions<br>&amp; String Manipulation</div>
-          <div class="heatmap-col-label">Working with<br>Databases</div>
-          <div class="heatmap-col-label">Introduction<br>to Automation</div>
-          <div class="heatmap-col-label">Introduction to<br>Machine Learning</div>
-
-          <!-- Mastery rows (4) -->
-          <div class="heatmap-row-label">Aaron Jackson</div>
-          <div class="heatmap-cell h9">0.98</div><div class="heatmap-cell h8">0.92</div><div class="heatmap-cell h9">0.95</div><div class="heatmap-cell h9">0.96</div><div class="heatmap-cell h8">0.90</div><div class="heatmap-cell h8">0.93</div><div class="heatmap-cell h9">0.96</div><div class="heatmap-cell h9">0.95</div><div class="heatmap-cell h8">0.91</div><div class="heatmap-cell h8">0.93</div><div class="heatmap-cell h8">0.92</div><div class="heatmap-cell h9">0.95</div><div class="heatmap-cell h8">0.90</div>
-
-          <div class="heatmap-row-label">Kayla Lewis</div>
-          <div class="heatmap-cell h9">0.95</div><div class="heatmap-cell h8">0.90</div><div class="heatmap-cell h8">0.92</div><div class="heatmap-cell h9">0.96</div><div class="heatmap-cell h8">0.92</div><div class="heatmap-cell h8">0.94</div><div class="heatmap-cell h8">0.92</div><div class="heatmap-cell h8">0.90</div><div class="heatmap-cell h8">0.91</div><div class="heatmap-cell h8">0.89</div><div class="heatmap-cell h8">0.93</div><div class="heatmap-cell h8">0.92</div><div class="heatmap-cell h8">0.90</div>
-
-          <div class="heatmap-row-label">Marcus King</div>
-          <div class="heatmap-cell h8">0.91</div><div class="heatmap-cell h8">0.88</div><div class="heatmap-cell h8">0.90</div><div class="heatmap-cell h8">0.94</div><div class="heatmap-cell h8">0.89</div><div class="heatmap-cell h8">0.91</div><div class="heatmap-cell h8">0.88</div><div class="heatmap-cell h8">0.90</div><div class="heatmap-cell h8">0.87</div><div class="heatmap-cell h8">0.88</div><div class="heatmap-cell h8">0.91</div><div class="heatmap-cell h8">0.89</div><div class="heatmap-cell h8">0.87</div>
-
-          <div class="heatmap-row-label">Diana Wells</div>
-          <div class="heatmap-cell h8">0.89</div><div class="heatmap-cell h8">0.85</div><div class="heatmap-cell h8">0.87</div><div class="heatmap-cell h8">0.90</div><div class="heatmap-cell h8">0.86</div><div class="heatmap-cell h8">0.88</div><div class="heatmap-cell h8">0.86</div><div class="heatmap-cell h8">0.88</div><div class="heatmap-cell h8">0.85</div><div class="heatmap-cell h8">0.86</div><div class="heatmap-cell h8">0.88</div><div class="heatmap-cell h8">0.86</div><div class="heatmap-cell h7">0.84</div>
-
-          <!-- On-track rows (6) -->
-          <div class="heatmap-row-label">Priya Anand</div>
-          <div class="heatmap-cell h7">0.82</div><div class="heatmap-cell h7">0.78</div><div class="heatmap-cell h7">0.80</div><div class="heatmap-cell h7">0.76</div><div class="heatmap-cell h7">0.79</div><div class="heatmap-cell h7">0.80</div><div class="heatmap-cell h7">0.78</div><div class="heatmap-cell h7">0.75</div><div class="heatmap-cell h7">0.77</div><div class="heatmap-cell h7">0.76</div><div class="heatmap-cell h7">0.78</div><div class="heatmap-cell h7">0.75</div><div class="heatmap-cell h6">0.73</div>
-
-          <div class="heatmap-row-label">Jamal Thompson</div>
-          <div class="heatmap-cell h7">0.81</div><div class="heatmap-cell h7">0.77</div><div class="heatmap-cell h7">0.78</div><div class="heatmap-cell h7">0.82</div><div class="heatmap-cell h7">0.77</div><div class="heatmap-cell h7">0.79</div><div class="heatmap-cell h7">0.80</div><div class="heatmap-cell h7">0.76</div><div class="heatmap-cell h7">0.78</div><div class="heatmap-cell h7">0.75</div><div class="heatmap-cell h7">0.77</div><div class="heatmap-cell h7">0.76</div><div class="heatmap-cell h6">0.74</div>
-
-          <div class="heatmap-row-label">Rosa Martinez</div>
-          <div class="heatmap-cell h7">0.78</div><div class="heatmap-cell h6">0.73</div><div class="heatmap-cell h7">0.75</div><div class="heatmap-cell h7">0.82</div><div class="heatmap-cell h6">0.72</div><div class="heatmap-cell h6">0.74</div><div class="heatmap-cell h7">0.76</div><div class="heatmap-cell h6">0.71</div><div class="heatmap-cell h6">0.73</div><div class="heatmap-cell h6">0.70</div><div class="heatmap-cell h6">0.72</div><div class="heatmap-cell h6">0.71</div><div class="heatmap-cell h5">0.69</div>
-
-          <div class="heatmap-row-label">Evan Garcia</div>
-          <div class="heatmap-cell h7">0.76</div><div class="heatmap-cell h6">0.71</div><div class="heatmap-cell h6">0.74</div><div class="heatmap-cell h6">0.70</div><div class="heatmap-cell h6">0.72</div><div class="heatmap-cell h6">0.73</div><div class="heatmap-cell h7">0.78</div><div class="heatmap-cell h5">0.69</div><div class="heatmap-cell h6">0.71</div><div class="heatmap-cell h5">0.68</div><div class="heatmap-cell h6">0.70</div><div class="heatmap-cell h5">0.69</div><div class="heatmap-cell h5">0.67</div>
-
-          <div class="heatmap-row-label">Nadia Brooks</div>
-          <div class="heatmap-cell h6">0.71</div><div class="heatmap-cell h5">0.67</div><div class="heatmap-cell h7">0.76</div><div class="heatmap-cell h6">0.70</div><div class="heatmap-cell h5">0.68</div><div class="heatmap-cell h6">0.70</div><div class="heatmap-cell h7">0.75</div><div class="heatmap-cell h5">0.66</div><div class="heatmap-cell h5">0.69</div><div class="heatmap-cell h5">0.65</div><div class="heatmap-cell h5">0.68</div><div class="heatmap-cell h5">0.66</div><div class="heatmap-cell h5">0.64</div>
-
-          <div class="heatmap-row-label">Liam O'Brien</div>
-          <div class="heatmap-cell h6">0.70</div><div class="heatmap-cell h5">0.66</div><div class="heatmap-cell h6">0.71</div><div class="heatmap-cell h7">0.76</div><div class="heatmap-cell h5">0.67</div><div class="heatmap-cell h5">0.69</div><div class="heatmap-cell h5">0.68</div><div class="heatmap-cell h5">0.65</div><div class="heatmap-cell h5">0.67</div><div class="heatmap-cell h5">0.64</div><div class="heatmap-cell h5">0.66</div><div class="heatmap-cell h5">0.65</div><div class="heatmap-cell h5">0.63</div>
-
-          <!-- Watch row (1) -->
-          <div class="heatmap-row-label">Tina Vasquez</div>
-          <div class="heatmap-cell h5">0.62</div><div class="heatmap-cell h4">0.58</div><div class="heatmap-cell h5">0.68</div><div class="heatmap-cell h5">0.60</div><div class="heatmap-cell h4">0.59</div><div class="heatmap-cell h5">0.61</div><div class="heatmap-cell h5">0.64</div><div class="heatmap-cell h4">0.56</div><div class="heatmap-cell h4">0.58</div><div class="heatmap-cell h4">0.55</div><div class="heatmap-cell h4">0.57</div><div class="heatmap-cell h4">0.56</div><div class="heatmap-cell h3">0.54</div>
-
-          <!-- At-risk rows (4) -->
-          <div class="heatmap-row-label">Sally Whitman</div>
-          <div class="heatmap-cell h5">0.62</div><div class="heatmap-cell h2">0.28</div><div class="heatmap-cell h3">0.44</div><div class="heatmap-cell h2">0.22</div><div class="heatmap-cell h2">0.38</div><div class="heatmap-cell h2">0.33</div><div class="heatmap-cell h3">0.41</div><div class="heatmap-cell h2">0.25</div><div class="heatmap-cell h1">0.18</div><div class="heatmap-cell h2">0.22</div><div class="heatmap-cell h2">0.30</div><div class="heatmap-cell h1">0.19</div><div class="heatmap-cell h1">0.15</div>
-
-          <div class="heatmap-row-label">Brandon Fisher</div>
-          <div class="heatmap-cell h3">0.44</div><div class="heatmap-cell h2">0.36</div><div class="heatmap-cell h3">0.40</div><div class="heatmap-cell h3">0.52</div><div class="heatmap-cell h2">0.38</div><div class="heatmap-cell h2">0.35</div><div class="heatmap-cell h3">0.46</div><div class="heatmap-cell h2">0.33</div><div class="heatmap-cell h2">0.28</div><div class="heatmap-cell h2">0.30</div><div class="heatmap-cell h2">0.35</div><div class="heatmap-cell h2">0.25</div><div class="heatmap-cell h2">0.22</div>
-
-          <div class="heatmap-row-label">Carla Soto</div>
-          <div class="heatmap-cell h3">0.52</div><div class="heatmap-cell h2">0.38</div><div class="heatmap-cell h3">0.40</div><div class="heatmap-cell h2">0.38</div><div class="heatmap-cell h3">0.40</div><div class="heatmap-cell h2">0.38</div><div class="heatmap-cell h3">0.50</div><div class="heatmap-cell h2">0.35</div><div class="heatmap-cell h2">0.32</div><div class="heatmap-cell h2">0.30</div><div class="heatmap-cell h2">0.38</div><div class="heatmap-cell h2">0.28</div><div class="heatmap-cell h2">0.25</div>
-
-          <div class="heatmap-row-label">Hannah Diaz</div>
-          <div class="heatmap-cell h2">0.35</div><div class="heatmap-cell h2">0.32</div><div class="heatmap-cell h3">0.52</div><div class="heatmap-cell h3">0.42</div><div class="heatmap-cell h2">0.30</div><div class="heatmap-cell h2">0.36</div><div class="heatmap-cell h3">0.40</div><div class="heatmap-cell h2">0.28</div><div class="heatmap-cell h2">0.25</div><div class="heatmap-cell h2">0.30</div><div class="heatmap-cell h2">0.32</div><div class="heatmap-cell h2">0.22</div><div class="heatmap-cell h2">0.20</div>
-        </div>
-
-        <div class="heatmap-legend mt-3">
-          <span>Score:</span>
-          <div class="heatmap-legend-scale">
-            <span class="swatch" style="background: var(--heat-1);"></span>
-            <span class="swatch" style="background: var(--heat-2);"></span>
-            <span class="swatch" style="background: var(--heat-3);"></span>
-            <span class="swatch" style="background: var(--heat-4);"></span>
-            <span class="swatch" style="background: var(--heat-5);"></span>
-            <span class="swatch" style="background: var(--heat-6);"></span>
-            <span class="swatch" style="background: var(--heat-7);"></span>
-            <span class="swatch" style="background: var(--heat-8);"></span>
-            <span class="swatch" style="background: var(--heat-9);"></span>
-          </div>
-          <span>0.00</span>
-          <span style="margin-left:auto;">0.25</span>
-          <span style="margin-left:48px;">0.50</span>
-          <span style="margin-left:48px;">0.75</span>
-          <span style="margin-left:48px;">1.00</span>
-          <span class="text-muted" style="margin-left: var(--pgn-spacing-3);">Showing 15 of 28 learners — scroll for full roster.</span>
-        </div>
-      </div>
-      <div class="heatmap-scroll-hint" role="note">
-        <span class="material-icons-outlined" style="font-size:14px;">swap_horiz</span>
-        Scroll horizontally to see all 13 Topics — try the scrollbar below, shift + mouse wheel, or trackpad swipe
-      </div>
-      </div><!-- /.heatmap-scroll-container -->
-
+  <nav class="meta-bar" aria-label="Storyboard navigation">
+    <div class="meta-bar-header">
+      <span class="meta-id">SkillProof Project Link Page · Instructor</span>
+      <span class="sep" style="margin-left:auto;"></span>
+      <a href="../" class="meta-link">&larr; Storyboard Index</a>
+      <button class="meta-btn" type="button" onclick="toggleReveal()" aria-pressed="false"
+              title="Highlight the clickable areas on this screen" aria-label="Highlight clickable areas">
+        <span class="material-icons-outlined">ads_click</span>
+      </button>
+      <button class="meta-btn meta-bar-toggle" type="button" onclick="toggleMetaBar()"
+              aria-expanded="true" aria-label="Hide/show the navigation bar" title="Hide/show this navigation bar">
+        <span class="material-icons-outlined">expand_more</span>
+      </button>
     </div>
-  </main>
-  <div class="floating-actions">
-    <button class="btn btn-outline-primary" onclick="goToScreen(2)"><span class="material-icons-outlined">arrow_back</span>Back to Course view</button>
-  </div>
-</section>
-
-<!-- Screen 5: Sally Whitman drill-down profile ============================== -->
-<section class="screen" id="screen-4" aria-labelledby="s4-heading">
-  <header class="navbar navbar-dark" role="banner">
-    <a href="#" class="navbar-brand" onclick="goToScreen(1); return false;"><img class="navbar-brand-logo logo-light" data-school-logo="light" src="../assets/school-tech-light.png" alt="School of Technology"><img class="navbar-brand-logo logo-dark" data-school-logo="dark" src="../assets/school-tech-dark.png" alt="School of Technology"></a>
-    <div class="navbar-right">
-      <button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button>
-      <a href="../help/index.html#submit-request" class="btn-theme-toggle" aria-label="Help and Support" title="Help &amp; Support"><span class="material-icons-outlined">help_outline</span></a>
-      <span class="navbar-chip">Instructor Dashboard</span>
-      <div class="navbar-user"><div class="avatar" aria-hidden="true">C</div><span>Charlie</span></div>
+    <div class="flow-nav" role="tablist" aria-label="Screen jump buttons">
+      <button class="step-btn active" data-goto="1" role="tab" aria-current="step">01 Dashboard</button>
+      <button class="step-btn" data-goto="2" role="tab" aria-current="false">02 Algebra 101</button>
+      <button class="step-btn" data-goto="3" role="tab" aria-current="false">03 Skill Heatmap</button>
+      <button class="step-btn" data-goto="4" role="tab" aria-current="false">04 Foundations of Programming</button>
+      <button class="step-btn" data-goto="5" role="tab" aria-current="false">05 Learner Profile</button>
     </div>
-  </header>
-  <main class="screen-main" id="main-4">
-    <div class="container">
-      <nav class="pgn__breadcrumb" aria-label="Breadcrumb">
-        <a href="#" onclick="goToScreen(1); return false;">Instructor Dashboard</a>
-        <span class="material-icons-outlined">chevron_right</span>
-        <a href="#" onclick="goToScreen(2); return false;">E010</a>
-        <span class="material-icons-outlined">chevron_right</span>
-        <a href="#" onclick="goToScreen(3); return false;">Heatmap</a>
-        <span class="material-icons-outlined">chevron_right</span>
-        <span>Sally Whitman</span>
-      </nav>
+  </nav>
 
-      <div class="d-flex justify-content-between align-items-start mb-3">
-        <div>
-          <span class="eyebrow"><span class="material-icons-outlined">person</span>Learner profile</span>
-          <h1 id="s4-heading">Sally Whitman</h1>
-        </div>
-        <span class="badge badge-danger badge-lg"><span class="material-icons-outlined" style="font-size:16px;">trending_down</span>AI-scored Skill mastery: Low</span>
-      </div>
+  <script>
+  (function () {
+    var TOTAL = 5;
 
+    window.goToScreen = function (n) {
+      if (n < 1 || n > TOTAL) return;
+      document.querySelectorAll('.screen').forEach(function (s) { s.classList.remove('active'); });
+      document.querySelectorAll('.step-btn').forEach(function (b) {
+        var on = (b.getAttribute('data-goto') === String(n));
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-current', on ? 'step' : 'false');
+      });
+      var t = document.getElementById('screen-' + n);
+      if (!t) return;
+      t.classList.add('active');
+      window.scrollTo(0, 0);
+      var h = t.querySelector('.screen-heading');
+      if (h) { h.focus({ preventScroll: true }); }
+      try { history.replaceState(null, '', '?screen=' + n); } catch (e) {}
+    };
 
-      <div class="row mb-3">
-        <div class="col-4">
-          <div class="pgn__card">
-            <div class="pgn__card-section">
-              <span class="eyebrow"><span class="material-icons-outlined">person</span>Profile</span>
-              <table class="pgn__data-table" style="border:none; box-shadow:none;">
-                <tr><th style="width:55%;">Last active</th><td>06 May 2026</td></tr>
-                <tr><th>Sessions</th><td>9</td></tr>
-                <tr><th>Stuck on Topic</th><td><strong>Data Structures: Lists, Tuples, Sets, Dictionaries</strong></td></tr>
-                <tr><th>Diagnostic complete</th><td><span class="badge badge-success">Yes</span></td></tr>
-                <tr><th>Topics mastered</th><td><span class="badge badge-danger">0 of 13</span></td></tr>
-              </table>
-            </div>
-          </div>
-        </div>
-        <div class="col-8">
-          <div class="pgn__card">
-            <div class="pgn__card-section">
-              <span class="eyebrow"><span class="material-icons-outlined">grading</span>Per-Topic scores</span>
-              <h2 class="h5 mb-2">Where the gap is</h2>
+    document.querySelectorAll('.step-btn').forEach(function (b) {
+      b.addEventListener('click', function () { goToScreen(parseInt(b.getAttribute('data-goto'), 10)); });
+    });
 
-              <div class="d-flex gap-2 mb-2" style="flex-wrap:wrap;">
-                <span class="text-muted small d-flex align-items-center" style="margin-right:4px;">Filter:</span>
-                <button class="chip-filter active" data-filter-topic="all" onclick="filterPerTopicTable('all')">All Topics (13)</button>
-                <button class="chip-filter" data-filter-topic="coached" onclick="filterPerTopicTable('coached')">Coached since diagnostic (5)</button>
-                <button class="chip-filter" data-filter-topic="diagnostic-only" onclick="filterPerTopicTable('diagnostic-only')">Diagnostic only (8)</button>
-              </div>
+    document.addEventListener('keydown', function (e) {
+      var a = document.querySelector('.screen.active'); if (!a) return;
+      var m = a.id.match(/^screen-(\d+)$/); if (!m) return;
+      var n = parseInt(m[1], 10);
+      if (e.key === 'ArrowRight' && n < TOTAL) goToScreen(n + 1);
+      if (e.key === 'ArrowLeft'  && n > 1)     goToScreen(n - 1);
+    });
 
-              <table class="pgn__data-table">
-                <thead>
-                  <tr>
-                    <th>Topic</th>
-                    <th class="num-col">Score</th>
-                    <th>Last attempt</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr data-topic-cat="coached"><td>Basic Syntax &amp; Data Types</td><td class="num-col"><span class="score-pill med">0.62</span></td><td>01 May 2026</td></tr>
-                  <tr data-topic-cat="coached"><td>Control Flow &amp; Logic</td><td class="num-col"><span class="score-pill low">0.28</span></td><td>05 May 2026</td></tr>
-                  <tr data-topic-cat="coached"><td>Functions &amp; Modular Programming</td><td class="num-col"><span class="score-pill low">0.44</span></td><td>04 May 2026</td></tr>
-                  <tr data-topic-cat="coached"><td>Data Structures: Lists, Tuples, Sets, Dictionaries</td><td class="num-col"><span class="score-pill low">0.22</span></td><td>06 May 2026</td></tr>
-                  <tr data-topic-cat="diagnostic-only"><td>Working with Files &amp; I/O</td><td class="num-col"><span class="score-pill low">0.38</span></td><td>30 Apr 2026</td></tr>
-                  <tr data-topic-cat="coached"><td>Error Handling &amp; Debugging</td><td class="num-col"><span class="score-pill low">0.33</span></td><td>05 May 2026</td></tr>
-                  <tr data-topic-cat="diagnostic-only"><td>Object-Oriented Programming (OOP)</td><td class="num-col"><span class="score-pill low">0.41</span></td><td>30 Apr 2026</td></tr>
-                  <tr data-topic-cat="diagnostic-only"><td>Python Libraries &amp; Modules</td><td class="num-col"><span class="score-pill low">0.25</span></td><td>30 Apr 2026</td></tr>
-                  <tr data-topic-cat="diagnostic-only"><td>Advanced Data Handling</td><td class="num-col"><span class="score-pill low">0.18</span></td><td>30 Apr 2026</td></tr>
-                  <tr data-topic-cat="diagnostic-only"><td>Regular Expressions &amp; String Manipulation</td><td class="num-col"><span class="score-pill low">0.22</span></td><td>30 Apr 2026</td></tr>
-                  <tr data-topic-cat="diagnostic-only"><td>Working with Databases</td><td class="num-col"><span class="score-pill low">0.30</span></td><td>30 Apr 2026</td></tr>
-                  <tr data-topic-cat="diagnostic-only"><td>Introduction to Automation</td><td class="num-col"><span class="score-pill low">0.19</span></td><td>30 Apr 2026</td></tr>
-                  <tr data-topic-cat="diagnostic-only"><td>Introduction to Machine Learning</td><td class="num-col"><span class="score-pill low">0.15</span></td><td>30 Apr 2026</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </main>
-  <div class="floating-actions">
-  </div>
-</section>
-
-<!-- Screen 6: Access Denied (zero-trust deny path · RBAC doc §4.2 Figure 6) -->
-<section class="screen" id="screen-5" aria-labelledby="s5-heading">
-  <header class="navbar navbar-dark" role="banner">
-    <a href="#" class="navbar-brand" onclick="goToScreen(1); return false;"><img class="navbar-brand-logo logo-light" data-school-logo="light" src="../assets/school-tech-light.png" alt="School of Technology"><img class="navbar-brand-logo logo-dark" data-school-logo="dark" src="../assets/school-tech-dark.png" alt="School of Technology"></a>
-    <div class="navbar-right">
-      <button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode"><span class="material-icons-outlined theme-icon-light">dark_mode</span><span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span></button>
-      <a href="../help/index.html#submit-request" class="btn-theme-toggle" aria-label="Help and Support" title="Help &amp; Support"><span class="material-icons-outlined">help_outline</span></a>
-      <div class="navbar-user"><div class="avatar" aria-hidden="true">C</div><span>Charlie</span></div>
-    </div>
-  </header>
-  <main class="screen-main centered" id="main-5">
-    <div class="container-narrow">
-      <div class="pgn__card pgn__card-featured">
-        <div class="pgn__card-section-lg">
-          <div class="text-center mb-3">
-            <span class="material-icons-outlined" style="font-size:56px; color: var(--pgn-color-danger-base);">block</span>
-          </div>
-          <h1 id="s5-heading" class="h2 text-center mb-3">You don't have access to this page</h1>
-          <table class="pgn__data-table" style="border:none; box-shadow:none; margin-bottom: var(--pgn-spacing-3);">
-            <tr><th style="width:42%;">Signed in as</th><td>Charlie · Instructor · School of Technology</td></tr>
-            <tr><th>This page requires</th><td>School Admin - School of Technology</td></tr>
-          </table>
-          <div class="d-flex gap-2 justify-content-center mb-3" style="flex-wrap:wrap;">
-            <button class="btn btn-primary" onclick="goToScreen(1)"><span class="material-icons-outlined">arrow_back</span>Return to your dashboard</button>
-            <a class="btn btn-outline-primary" href="../" title="Returns you to the WGU LRPS portal where your role-correct deep links are listed."><span class="material-icons-outlined">link</span>Open the correct LRPS link</a>
-          </div>
-          <div class="text-center text-muted small d-flex align-items-center justify-content-center" style="gap:6px;">
-            <span class="material-icons-outlined" style="font-size:14px;">info</span>
-            <span>This access attempt has been recorded in the audit log (evt_b1d5e342 · 18 May 2026).</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
-</section>
-
-
-<!-- ================================================================
-     META BAR — DEMO ONLY
-     ================================================================ -->
-<!-- WGU Footer (production design — mirrors the tenant-21 Branding preview pane) -->
-<footer role="contentinfo" style="background: #F5F7FA; border-top: 1px solid #E4E7EB;">
-  <div style="padding: 20px 28px; border-bottom: 1px solid #E4E7EB; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
-    <img class="logo-light" src="../assets/wgu-corporation-full-color.png" alt="WGU" style="height: 40px; width: auto;"><img class="logo-dark" src="../assets/wgu-corporation-full-color-reverse.png" alt="WGU" style="height: 40px; width: auto;">
-    <a href="https://cm.wgu.edu/t5/WGU-Student-Policy-Handbook/Accommodations-for-Students-with-Disabilities/ta-p/151" target="_blank" rel="noopener" style="font-size: 13px; color: #002855; font-weight: 600; text-decoration: none;">ADA Accommodation</a>
-  </div>
-  <div style="padding: 16px 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
-    <span style="font-size: 12px; color: #4A5A6A;">&copy; 2026 Western Governors University &ndash; WGU. All Rights Reserved.</span>
-    <div style="display: flex; gap: 12px; font-size: 13px; align-items: center;">
-      <a href="https://www.wgu.edu/privacy.html" target="_blank" rel="noopener" style="color: #002855; font-weight: 600; text-decoration: none;">Privacy Policy</a>
-      <span style="color: #C5CDD5;">|</span>
-      <a href="https://cm.wgu.edu/t5/WGU-Student-Policy-Handbook/Terms-of-Use-for-Learning-and-Assessment-Materials/ta-p/77" target="_blank" rel="noopener" style="color: #002855; font-weight: 600; text-decoration: none;">Terms of Service</a>
-      <span style="color: #C5CDD5;">|</span>
-      <a href="https://cm.wgu.edu/t5/WGU-Student-Policy-Handbook/Student-Code-of-Conduct/ta-p/129" target="_blank" rel="noopener" style="color: #002855; font-weight: 600; text-decoration: none;">Honor Code</a>
-    </div>
-  </div>
-</footer>
-
-<div class="meta-bar" role="navigation" aria-label="Storyboard screen navigation">
-  <div class="meta-bar-header">
-    <span><span class="meta-id">SkillProof Project Link Page</span> &middot; Instructor Dashboard</span>
-    <span style="margin-left:auto;"><a href="../" class="meta-link">&larr; Storyboard Index</a></span>
-    <button class="meta-bar-toggle" type="button" onclick="toggleMetaBar()" aria-label="Hide demo bar" aria-expanded="true" title="Hide/show this demo bar">
-      <span class="material-icons-outlined">expand_more</span>
-    </button>
-  </div>
-  <div class="meta-bar-flows">
-    <span class="flow-id">Flow</span>
-    <span class="flow-desc">Instructor Dashboard &amp; At-Risk Intervention</span>
-    <nav class="flow-nav" aria-label="At-risk intervention screens">
-      <button class="step-btn active" onclick="goToScreen(1)" aria-label="Screen 01: Dashboard home">01 Dashboard home</button>
-      <button class="step-btn" onclick="goToScreen(2)" aria-label="Screen 02: Course view (E010)">02 Course view</button>
-      <button class="step-btn" onclick="goToScreen(3)" aria-label="Screen 03: Skill view (Python Skill heatmap)">03 Skill view</button>
-      <button class="step-btn" onclick="goToScreen(4)" aria-label="Screen 04: Sally Whitman profile">04 Sally Whitman profile</button>
-      <button class="step-btn" onclick="goToScreen(5)" aria-label="Screen 05: Access Denied (zero-trust deny path)">05 Access Denied</button>
-    </nav>
-  </div>
-</div>
-
-<script>
-  /* Collapsible demo meta-bar (persisted via localStorage) */
-  (function() {
     var KEY = 'skillproof-metabar-collapsed';
     var bar = document.querySelector('.meta-bar');
-    if (!bar) return;
-    var btn = bar.querySelector('.meta-bar-toggle');
-    function apply(collapsed) {
-      bar.classList.toggle('metabar-collapsed', collapsed);
-      document.body.classList.toggle('metabar-collapsed', collapsed);
-      if (btn) btn.setAttribute('aria-expanded', String(!collapsed));
+    var toggle = bar && bar.querySelector('.meta-bar-toggle');
+    function applyBar(c) {
+      if (!bar) return;
+      bar.classList.toggle('metabar-collapsed', c);
+      document.body.classList.toggle('metabar-collapsed', c);
+      if (toggle) toggle.setAttribute('aria-expanded', String(!c));
     }
-    apply(localStorage.getItem(KEY) === '1');
-    window.toggleMetaBar = function() {
-      var collapsed = !bar.classList.contains('metabar-collapsed');
-      apply(collapsed);
-      localStorage.setItem(KEY, collapsed ? '1' : '0');
+    applyBar(localStorage.getItem(KEY) === '1');
+    window.toggleMetaBar = function () {
+      var c = !bar.classList.contains('metabar-collapsed');
+      applyBar(c); localStorage.setItem(KEY, c ? '1' : '0');
     };
+
+    window.toggleReveal = function () {
+      var on = document.body.classList.toggle('reveal-hotspots');
+      var b = document.querySelector('.meta-btn[onclick="toggleReveal()"]');
+      if (b) b.setAttribute('aria-pressed', String(on));
+    };
+
+    var p = new URLSearchParams(location.search);
+    var d = parseInt(p.get('screen'), 10);
+    if (d >= 1 && d <= TOTAL) goToScreen(d);
   })();
-
-  /* STORYBOARD NAVIGATION */
-  const TOTAL_SCREENS = 5; // v4.121 (26 May 2026): S06 Conversation logs / S07 Session transcript / S08 Audit Trail removed per contract scope confirmation — JFT confirmed conversations are not stored (single Q+A only, not multi-turn). "Capture integrity" terminology removed from Coda lock 23 May 2026. Drill chain stops at S05 Learner profile; S09 Access Denied renumbered to S06.
-
-  function goToScreen(n) {
-    if (n < 1 || n > TOTAL_SCREENS) return;
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.step-btn').forEach(btn => {
-      const onclickAttr = btn.getAttribute('onclick');
-      if (!onclickAttr) return;
-      const match = onclickAttr.match(/goToScreen\((\d+)\)/);
-      if (!match) return;
-      const btnScreen = parseInt(match[1]);
-      const isActive = btnScreen === n;
-      btn.classList.toggle('active', isActive);
-      btn.setAttribute('aria-current', isActive ? 'step' : 'false');
-    });
-    const target = document.getElementById('screen-' + n);
-    if (!target) return;
-    target.classList.add('active');
-    window.scrollTo(0, 0);
-    const heading = target.querySelector('[id^="s' + n + '-heading"]');
-    if (heading) {
-      heading.setAttribute('tabindex', '-1');
-      heading.focus({ preventScroll: true });
-    }
-  }
-
-  // Deep-link support: ?screen=N navigates to screen N on load (used by the
-  // Coda Contract Requirements tracker to deep-link to specific screens).
-  (function() {
-    const params = new URLSearchParams(window.location.search);
-    const n = parseInt(params.get('screen'), 10);
-    if (n >= 1 && n <= TOTAL_SCREENS) goToScreen(n);
-  })();
-
-  document.addEventListener('keydown', function(e) {
-    const active = document.querySelector('.screen.active');
-    if (!active) return;
-    if (['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) return;
-    // Enter/Space activates any role="button" element (e.g. clickable table rows),
-    // matching native button keyboard behavior for accessibility.
-    const rb = document.activeElement;
-    if (rb && rb.getAttribute && rb.getAttribute('role') === 'button' && (e.key === 'Enter' || e.key === ' ')) {
-      e.preventDefault();
-      rb.click();
-      return;
-    }
-    const n = parseInt(active.id.replace('screen-', ''));
-    if (e.key === 'ArrowRight' && n < TOTAL_SCREENS) goToScreen(n + 1);
-    if (e.key === 'ArrowLeft' && n > 1) goToScreen(n - 1);
-  });
-
-  function toggleTheme() {
-    var html = document.documentElement;
-    var isDark = html.getAttribute('data-theme') === 'dark';
-    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-    document.querySelectorAll('.theme-icon-light').forEach(function(el) { el.style.display = isDark ? '' : 'none'; });
-    document.querySelectorAll('.theme-icon-dark').forEach(function(el) { el.style.display = isDark ? 'none' : ''; });
-    localStorage.setItem('skillproof-theme', isDark ? 'light' : 'dark');
-  }
-
-  (function() {
-    var saved = localStorage.getItem('skillproof-theme');
-    if (saved === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      document.querySelectorAll('.theme-icon-light').forEach(function(el) { el.style.display = 'none'; });
-      document.querySelectorAll('.theme-icon-dark').forEach(function(el) { el.style.display = ''; });
-    }
-  })();
-
-  /* ================================================================
-     v4.97 — S3 heatmap hydration: filter wiring, hover tooltips,
-     ARIA grid semantics, clickable row labels.
-     Prototype-level: production build should reify these as proper
-     <table role="grid"> with per-row aria-rowindex.
-     ================================================================ */
-  // Row status by index per screen
-  //   S3: 0-3 mastery · 4-9 on-track · 10 watch · 11-14 at-risk (15 visible)
-  //   S4: all 4 rows at-risk
-  var HEATMAP_ROW_STATUS_BY_SCREEN = {
-    '#screen-3': ['mastery','mastery','mastery','mastery','on-track','on-track','on-track','on-track','on-track','on-track','watch','at-risk','at-risk','at-risk','at-risk'],
-  };
-  var HEATMAP_ARIA_LABEL_BY_SCREEN = {
-    '#screen-3': 'Python Skill Topic mastery heatmap — 15 learners × 13 Topics',
-  };
-
-  function hydrateOneHeatmap(screenSelector) {
-    var grid = document.querySelector(screenSelector + ' .heatmap-grid');
-    if (!grid) return;
-    var HEATMAP_ROW_STATUS = HEATMAP_ROW_STATUS_BY_SCREEN[screenSelector] || [];
-    // ARIA grid semantics
-    grid.setAttribute('role', 'grid');
-    grid.setAttribute('aria-readonly', 'true');
-    grid.setAttribute('aria-label', HEATMAP_ARIA_LABEL_BY_SCREEN[screenSelector] || 'Heatmap');
-    // Column labels (Topics) for tooltips and aria-colindex — replace <br> with space
-    var colLabels = [].slice.call(grid.querySelectorAll('.heatmap-col-label')).map(function(el) {
-      var clone = el.cloneNode(true);
-      clone.querySelectorAll('br').forEach(function(br) { br.replaceWith(' '); });
-      return clone.textContent.replace(/\s+/g, ' ').trim();
-    });
-    var corner = grid.querySelector('.heatmap-corner');
-    if (corner) corner.setAttribute('role', 'columnheader');
-    [].slice.call(grid.querySelectorAll('.heatmap-col-label')).forEach(function(el, i) {
-      el.setAttribute('role', 'columnheader');
-      el.setAttribute('aria-colindex', i + 2);
-    });
-    // Row labels + cells
-    var labels = grid.querySelectorAll('.heatmap-row-label');
-    labels.forEach(function(label, rowIdx) {
-      var status = HEATMAP_ROW_STATUS[rowIdx] || 'on-track';
-      var learnerName = label.textContent.trim();
-      label.dataset.rowStatus = status;
-      label.setAttribute('role', 'rowheader');
-      label.setAttribute('aria-rowindex', rowIdx + 2);
-      label.setAttribute('onclick', 'goToScreen(4)');
-      label.setAttribute('tabindex', '0');
-      label.setAttribute('aria-label', 'View profile for ' + learnerName);
-      label.setAttribute('title', 'View profile for ' + learnerName);
-      // Walk forward 4 cells for this row
-      var node = label.nextElementSibling;
-      var colIdx = 0;
-      while (node && colIdx < 4) {
-        if (node.classList && node.classList.contains('heatmap-cell')) {
-          var score = node.textContent.trim();
-          node.dataset.rowStatus = status;
-          node.setAttribute('role', 'gridcell');
-          node.setAttribute('aria-rowindex', rowIdx + 2);
-          node.setAttribute('aria-colindex', colIdx + 2);
-          node.setAttribute('title', learnerName + ' · ' + colLabels[colIdx] + ' · Score ' + score + ' (of 1.00)');
-          colIdx++;
-        }
-        node = node.nextElementSibling;
-      }
-    });
-  }
-
-  function hydrateHeatmap() {
-    hydrateOneHeatmap('#screen-3');
-  }
-
-    /* v4.116: at-risk roster filter for S1 instructor dashboard.
-     Mirrors S3 filterHeatmap pattern but scoped to the at-risk roster table.
-     Hides rows not matching the selected status; toggles the "no-matches" placeholder. */
-  function filterAtRiskRoster(status) {
-    document.querySelectorAll('#screen-1 .chip-filter[data-filter-status]').forEach(function(chip) {
-      chip.classList.remove('active');
-      if (chip.dataset.filterStatus === 'at-risk') chip.classList.add('danger');
-      else chip.classList.remove('danger');
-    });
-    var activeChip = document.querySelector('#screen-1 .chip-filter[data-filter-status="' + status + '"]');
-    if (activeChip) activeChip.classList.add('active');
-    var visible = 0;
-    document.querySelectorAll('#screen-1 tr[data-row-status]').forEach(function(row) {
-      var shouldShow = (status === 'all' || row.dataset.rowStatus === status);
-      row.style.display = shouldShow ? '' : 'none';
-      if (shouldShow) visible++;
-    });
-    var noMatch = document.querySelector('#screen-1 .no-matches-row');
-    if (noMatch) noMatch.style.display = (visible === 0) ? '' : 'none';
-  }
-
-  function filterHeatmap(status) {
-    var grid = document.querySelector('#screen-3 .heatmap-grid');
-    if (!grid) return;
-    // Update chip active state
-    document.querySelectorAll('#screen-3 .chip-filter').forEach(function(chip) {
-      chip.classList.remove('active');
-      if (chip.dataset.filterStatus === 'at-risk') chip.classList.add('danger');
-      else chip.classList.remove('danger');
-    });
-    var activeChip = document.querySelector('#screen-3 .chip-filter[data-filter-status="' + status + '"]');
-    if (activeChip) activeChip.classList.add('active');
-    // Hide/show rows
-    var visibleCount = 0;
-    grid.querySelectorAll('[data-row-status]').forEach(function(item) {
-      var shouldShow = (status === 'all' || item.dataset.rowStatus === status);
-      item.style.display = shouldShow ? '' : 'none';
-      if (shouldShow && item.classList.contains('heatmap-row-label')) visibleCount++;
-    });
-    // Update the "Showing X of N" footer
-    var footer = document.querySelector('#screen-3 .heatmap-legend .text-muted');
-    if (footer) {
-      var totalsByStatus = { 'all': 28, 'mastery': 7, 'on-track': 17, 'watch': 1, 'at-risk': 4 };
-      var total = totalsByStatus[status] || 28;
-      footer.textContent = 'Showing ' + visibleCount + ' of ' + total + ' learners — scroll for full roster.';
-    }
-  }
-
-  /* v4.116: score normalization is now source-of-truth (0.00-1.00 literals).
-     Removed standardizeScoresTo0to1() per Brady verdict F2:B on 2026-05-23 —
-     strict source alignment. JFT builds verbatim from prototype, so legacy
-     percent + bare-integer score literals were converted in-place. */
-
-  // Run hydration once on initial load (after score standardization so tooltips reflect 0-1)
-  hydrateHeatmap();
-
-  /* v4.103: heatmap scroll-state toggling — when the heatmap-card is scrolled to
-     the right edge, hide the fade gradient + dim the hint (signals "you've seen
-     everything"). Recalculates on scroll, resize, and on screen activation
-     (ResizeObserver catches the transition from display:none → visible). */
-  function setupHeatmapScrollState(screenSelector) {
-    var container = document.querySelector(screenSelector + ' .heatmap-scroll-container');
-    if (!container) return;
-    var card = container.querySelector('.heatmap-card');
-    if (!card) return;
-    function update() {
-      // If the card isn't visible yet (clientWidth === 0), don't draw conclusions
-      if (card.clientWidth === 0) return;
-      var max = card.scrollWidth - card.clientWidth;
-      if (max <= 4) {
-        // no horizontal scroll needed (very wide viewport)
-        container.classList.add('at-end');
-      } else {
-        container.classList.toggle('at-end', card.scrollLeft >= max - 4);
-      }
-    }
-    card.addEventListener('scroll', update);
-    window.addEventListener('resize', update);
-    if (typeof ResizeObserver !== 'undefined') {
-      // Fires when the card transitions from display:none (clientWidth 0) to
-      // visible — i.e., when the user navigates to this screen for the first time.
-      var ro = new ResizeObserver(update);
-      ro.observe(card);
-    }
-    update();
-  }
-  setupHeatmapScrollState('#screen-3');
-
-  /* v4.108: S7 transcript filter — hide/show chat-rows by message type.
-     - "all" shows everything
-     - "ai-feedback" hides learner messages, leaving only AI prompts / feedback / reframes
-     - "miss" shows only feedback bubbles tagged as objective miss
-     Note: AI-only filter strips conversational context — JFT may want a different
-     pattern in production (e.g., scroll-to-next-miss); this is a prototype demo. */
-  /* v4.109: generic chip-filter helper.
-     Each row has a data-{key}-cat attribute; the chip carries data-filter-{key}.
-     This factors out the duplicated logic across filterHeatmap/filterTranscript/
-     filterAuditEvents/etc., though each screen still has its own thin wrapper
-     so the onclick markup stays simple and JFT-readable.
-     v4.112: supports multi-category rows via space-separated values in data-attr.
-     v4.113: optional 5th param rowSelector for screens with multiple tables. */
-  function chipFilterTable(scopeSelector, filterValue, dataAttr, chipAttr, rowSelector) {
-    document.querySelectorAll(scopeSelector + ' .chip-filter').forEach(function(c) {
-      c.classList.remove('active');
-    });
-    var activeChip = document.querySelector(scopeSelector + ' .chip-filter[' + chipAttr + '="' + filterValue + '"]');
-    if (activeChip) activeChip.classList.add('active');
-    document.querySelectorAll(rowSelector || (scopeSelector + ' tbody tr')).forEach(function(row) {
-      var cat = row.getAttribute(dataAttr) || '';
-      var cats = cat.split(/\s+/).filter(Boolean);
-      row.style.display = (filterValue === 'all' || cats.indexOf(filterValue) !== -1) ? '' : 'none';
-    });
-  }
-
-  /* S5 Sally Whitman Per-Topic table filter */
-  function filterPerTopicTable(filter) {
-    chipFilterTable('#screen-4 .col-8', filter, 'data-topic-cat', 'data-filter-topic');
-  }
-
-  /* S6 Conversation logs filter */
-  function filterSessions(filter) {
-    chipFilterTable('#screen-5', filter, 'data-session-cat', 'data-filter-session');
-  }
-
-  /* v4.109: S8 audit-event filter — hide/show event-log rows by category.
-     Each row has a data-event-cat attribute (ai / learner / model / guardrail).
-     "all" shows everything; other filters show only matching rows. */
-  function filterAuditEvents(filter) {
-    document.querySelectorAll('#screen-7 .chip-filter').forEach(function(c) {
-      c.classList.remove('active');
-    });
-    var activeChip = document.querySelector('#screen-7 .chip-filter[data-filter-event="' + filter + '"]');
-    if (activeChip) activeChip.classList.add('active');
-    document.querySelectorAll('#screen-7 tbody tr').forEach(function(row) {
-      var cat = row.dataset.eventCat;
-      row.style.display = (filter === 'all' || cat === filter) ? '' : 'none';
-    });
-  }
-
-  function filterTranscript(filter) {
-    document.querySelectorAll('#screen-6 .chip-filter').forEach(function(c) {
-      c.classList.remove('active', 'danger');
-    });
-    var activeChip = document.querySelector('#screen-6 .chip-filter[data-filter-msg="' + filter + '"]');
-    if (activeChip) {
-      activeChip.classList.add('active');
-      if (filter === 'miss') activeChip.classList.add('danger');
-    }
-    document.querySelectorAll('#screen-6 .chat-row').forEach(function(row) {
-      var type = row.dataset.msgType;
-      var show = false;
-      if (filter === 'all') show = true;
-      else if (filter === 'ai-feedback') show = (type !== 'learner');
-      else if (filter === 'miss') show = (type === 'feedback-miss');
-      row.style.display = show ? '' : 'none';
-    });
-  }
-</script>
-
+  </script>
 </body>
 </html>

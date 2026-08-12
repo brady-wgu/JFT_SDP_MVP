@@ -8,6 +8,22 @@ This is a prototype repo — entries below cover the active JFT meeting follow-u
 
 ---
 
+## v4.167 — 23 Jul 2026 — Persona portals rebuilt as live-app screenshot walkthroughs
+
+SkillProof is now in **beta** on the live app (`wgu.teamjft.com`), so the four hand-built persona storyboards were replaced with **click-through walkthroughs built from real screenshots of the working app** — a login-free backup for when the live app is unavailable. The original mockups are **preserved, not deleted**.
+
+- **Archived the 4 hand-built mockups** to `_archive/{student,instructor,tenant_admin,super_admin}/` via `git mv` (history preserved); unlinked from the landing page but still reachable by direct URL. Their relative paths were re-based one level deeper (`../assets/` → `../../assets/`, `../help/` → `../../help/`, `href="../"` → `href="../../"`) so they still render.
+- **New `build_prototypes.py`** generator: emits each persona `index.html` from a per-persona `flow.json` (screens + hotspot wiring). Screenshots are full-page live-app captures; transparent percentage-positioned hotspots overlay the advancing buttons and call the reused `goToScreen()` switcher — flow-nav, `?screen=N` deep-link, arrow-key nav, and the collapsible meta-bar are all retained. Light theme only for v1 (toggle gated on a complete `screenshots_dark/` set).
+- **Captured via** a new `capture-screen.js` helper (in the `skillproof-qa-tools` Playwright toolkit) driving real Chrome over CDP, one authenticated session per persona (WGU SSO). Screen counts: Student 4 (STU101 · Time Management), Instructor 5, School Admin 4, Super Admin 4 = **17**.
+- **School Admin tenant was empty**, so a demo course (`DEMO101 · Sample Course (SkillProof Walkthrough)`) with two staging Skills was created in-app (School of Business) to populate the Dashboard, Course Detail, and Analytics screens — avoiding empty pages. Flow: Dashboard → Course Detail → Analytics → Help & Support.
+- **Landing page:** the "Prototype Storyboards" section is relabeled **"Live-App Walkthroughs · Screenshot Backup (no login)"**; the 4 rows' dates → 23 Jul 2026 and aria-labels reworded; meta-bar quick-launch links de-personalized (dropped Sally/Charlie/Alice/Bob → role labels only).
+- `<title>` → `v4.167`; README overview note, Surfaces table, and Repo layout updated.
+
+### Files
+`index.html`, `README.md`, `build_prototypes.py`, `{student,instructor,tenant_admin,super_admin}/{index.html,flow.json,screenshots/}`, `_archive/**`, this file.
+
+---
+
 ## v4.166 — 16 Jul 2026 — Added 24 E010/D522 skill-level LRPS links
 
 Per the 16 Jul 2026 link-list update: E010 and D522 were broken out from a single course-level LRPS link each into their constituent Topics, for granular skill-level testing.

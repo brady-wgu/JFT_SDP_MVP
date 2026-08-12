@@ -1,0 +1,47 @@
+{
+  "persona": "tenant_admin",
+  "title": "SkillProof — School Admin",
+  "metabarLabel": "SkillProof Project Link Page · School Admin",
+  "v": 2,
+  "hasDark": false,
+  "screens": [
+    {
+      "n": 1,
+      "file": "screen-01.png",
+      "label": "Dashboard",
+      "docW": 1329,
+      "wire": [
+        { "label": "Open Course details", "goto": 2, "pct": { "left": 8.5, "top": 81.71, "width": 11.17, "height": 2.02 } },
+        { "label": "Analytics", "goto": 3, "pct": { "left": 39.18, "top": 30.85, "width": 8.95, "height": 3.15 } },
+        { "label": "Help & Support", "goto": 4, "pct": { "left": 61.83, "top": 1.58, "width": 2.71, "height": 3.34 } }
+      ]
+    },
+    {
+      "n": 2,
+      "file": "screen-02.png",
+      "label": "Course Detail (DEMO101)",
+      "docW": 1329,
+      "wire": [
+        { "label": "Back to Dashboard", "goto": 1, "pct": { "left": 6.62, "top": 84.3, "width": 13.47, "height": 2.9 } }
+      ]
+    },
+    {
+      "n": 3,
+      "file": "screen-03.png",
+      "label": "Analytics & Reporting",
+      "docW": 1329,
+      "wire": [
+        { "label": "Back to Dashboard", "goto": 1, "pct": { "left": 6.62, "top": 7.26, "width": 11.86, "height": 1.53 } }
+      ]
+    },
+    {
+      "n": 4,
+      "file": "screen-04.png",
+      "label": "Help & Support",
+      "docW": 1329,
+      "wire": [
+        { "label": "Back to Dashboard", "goto": 1, "pct": { "left": 19.13, "top": 83.04, "width": 6.62, "height": 3.29 } }
+      ]
+    }
+  ]
+}

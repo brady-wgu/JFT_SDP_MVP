@@ -1,0 +1,2441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>SkillProof — Coding Coach (Student) — Storyboard v4.107 (Live-MVP rebuild)</title>
+  <link rel="icon" type="image/png" href="../../assets/wgu-favicon.png">
+  <link rel="stylesheet" href="../../assets/table-controls.css?v=11">
+  <script defer src="../../assets/table-controls.js?v=11"></script>
+
+  <!--
+    LIVE-MVP REBUILD — Student Portal (Sally)
+    Rebuilt 18 May 2026 from screenshots of the deployed MVP at https://wgu.teamjft.com/.
+    Decisions locked:
+      - Replace student/index.html on branch student-live-rebuild
+        (original prototype preserved at tag prototype-v4.57-frozen)
+      - Apply SkillProof rebrand while rebuilding (live still says "SDP";
+        rebuilt prototype uses SkillProof + 'skillproof-theme' localStorage key)
+      - Use Sally as the persona throughout (navbar + body), per
+        User Profile Catalog v1.3 (13 MAY 2026): canonical first-name only.
+      - Light mode only (moon-icon toggle present as decoration only)
+
+    design tokens — Built on Paragon / Open edX
+    Upstream: @openedx/paragon (github.com/openedx/paragon, release-23.x)
+    Production uses real npm packages:
+      npm install @openedx/paragon
+      @use "@openedx/paragon/dist/core.min.css";
+      @use "@wgu/skillproof-brand/light.min.css";
+  -->
+  <link rel="stylesheet" href="https://brady-wgu.github.io/brady-design-system/fonts/aptos.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+  <style>
+    /* ================================================================
+       DESIGN TOKENS — design tokens
+       Mapped to Paragon --pgn-* CSS custom property slots.
+       ================================================================ */
+    :root {
+      --pgn-color-primary-base: #001730;
+      --pgn-color-brand-base:   #0070F0;
+      --pgn-color-info-base:    #46B1EF;
+      --pgn-color-danger-base:  #C13232;
+      --pgn-color-success-base: #2E7D32;
+      --pgn-color-warning-base: #FBAE40;
+
+      --pgn-color-brand-tint:   #EBF2FF;
+      --pgn-color-info-tint:    #EAF6FD;
+      --pgn-color-primary-tint: #E8EBF0;
+      --pgn-color-success-tint: #E8F5E9;
+      --pgn-color-danger-tint:  #FDEAEA;
+
+      --color-deep-navy:     #001730;
+      --color-ice-blue:      #EEF6F9;
+      --color-bright-blue:   #0070F0;
+      --color-dark-navy:     #002855;
+      --color-sky-blue:      #46B1EF;
+
+      /* Code block tokens — light mode */
+      --code-bg: #0D1A2E;
+      --code-text: #E6E6E6;
+      --code-border: #1A2A45;
+      --code-comment: #999999;
+
+      --pgn-color-white:    #FFFFFF;
+      --pgn-color-black:    #000000;
+      --pgn-color-gray-100: #E6E6E6;
+      --pgn-color-gray-200: #CCCCCC;
+      --pgn-color-gray-300: #B3B3B3;
+      --pgn-color-gray-400: #999999;
+      --pgn-color-gray-base:#808080;
+      --pgn-color-gray-600: #666666;
+      --pgn-color-gray-700: #4D4D4D;
+      --pgn-color-gray-800: #333333;
+      --pgn-color-gray-900: #1A1A1A;
+      --pgn-color-bg-base:  #FFFFFF;
+      --pgn-color-bg-light: #F2F4F7;
+
+      --pgn-spacing-1: 8px;
+      --pgn-spacing-2: 16px;
+      --pgn-spacing-3: 24px;
+      --pgn-spacing-4: 32px;
+      --pgn-spacing-5: 40px;
+      --pgn-spacing-6: 48px;
+
+      --pgn-size-border-radius-base: 0.375rem;
+      --pgn-size-border-radius-lg:   0.5rem;
+      --pgn-size-border-radius-sm:   0.25rem;
+      --pgn-size-rounded-pill:       50rem;
+      --pgn-size-container-max-width-lg: 1080px;
+
+      --pgn-font-family-heading: 'Aptos Display', Arial, sans-serif;
+      --pgn-font-family-body: 'Aptos', Arial, sans-serif;
+    }
+
+    /* Dark mode tokens — full dark-theme parity since v4.154 (the 18 MAY 2026
+       "light-only" framing has been reversed). All admin portals + Student
+       render correctly under [data-theme="dark"]; the audit on 2 Jun 2026
+       found zero light-bg suspects across S1, S2, S5, S7, S8, S9, S15. */
+    [data-theme="dark"] {
+      --pgn-color-bg-base: #0D1A2E;
+      --pgn-color-bg-light: #0F2240;
+      --pgn-color-white: #0D1A2E;
+      --pgn-color-gray-900: #E6E6E6;
+      --pgn-color-gray-800: #CCCCCC;
+      --pgn-color-gray-700: #B3B3B3;
+      --pgn-color-gray-600: #999999;
+      --pgn-color-gray-base: #808080;
+      --pgn-color-gray-400: #666666;
+      --pgn-color-gray-300: #4D4D4D;
+      --pgn-color-gray-200: #333333;
+      --pgn-color-gray-100: #1A2A45;
+      --pgn-color-primary-tint: #0D2240;
+      --pgn-color-brand-tint: #001E3E;
+      --pgn-color-info-tint: #002E4A;
+      --pgn-color-success-tint: #0A2E1A;
+      --pgn-color-danger-tint: #3A1A1A;
+    }
+
+    /* ================================================================
+       RESET & BASE
+       ================================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Aptos', Arial, sans-serif;
+      font-size: 16px; line-height: 1.5;
+      color: var(--pgn-color-gray-700);
+      background: var(--pgn-color-bg-light);
+      min-height: 100vh;
+    }
+    :focus-visible {
+      outline: 3px solid var(--pgn-color-brand-base);
+      outline-offset: 2px;
+    }
+    a { color: var(--pgn-color-brand-base); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ================================================================
+       TYPOGRAPHY
+       ================================================================ */
+    .h1, h1 { font-family: 'Aptos Display', Arial, sans-serif; font-size: 40px; line-height: 1.2; font-weight: 700; color: var(--pgn-color-gray-900); }
+    .h2, h2 { font-family: 'Aptos Display', Arial, sans-serif; font-size: 32px; line-height: 1.25; font-weight: 700; color: var(--pgn-color-gray-900); }
+    .h3, h3 { font-family: 'Aptos Display', Arial, sans-serif; font-size: 24px; line-height: 1.3; font-weight: 700; color: var(--pgn-color-gray-900); }
+    .h4, h4 { font-family: 'Aptos Display', Arial, sans-serif; font-size: 20px; line-height: 1.35; font-weight: 700; color: var(--pgn-color-gray-900); }
+    .text-muted { color: var(--pgn-color-gray-600) !important; }
+    .text-secondary { color: var(--pgn-color-gray-base) !important; }
+    .small { font-size: 14px; }
+    .micro { font-size: 12px; }
+    .mono { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; }
+
+    /* ================================================================
+       LAYOUT
+       ================================================================ */
+    .container {
+      max-width: var(--pgn-size-container-max-width-lg);
+      width: 100%; margin: 0 auto;
+      padding-left: var(--pgn-spacing-3); padding-right: var(--pgn-spacing-3);
+    }
+    .container-narrow {
+      max-width: 720px; width: 100%; margin: 0 auto;
+      padding-left: var(--pgn-spacing-3); padding-right: var(--pgn-spacing-3);
+    }
+    .row { display: flex; flex-wrap: wrap; gap: var(--pgn-spacing-4); }
+    .col-6 { flex: 1 1 calc(50% - 16px); min-width: 0; }
+    .col-12 { flex: 0 0 100%; }
+
+    /* ================================================================
+       BUTTONS
+       ================================================================ */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: var(--pgn-spacing-1); border-radius: var(--pgn-size-border-radius-base);
+      font-family: 'Aptos', sans-serif; font-size: 16px; font-weight: 700; line-height: 1;
+      cursor: pointer; border: 2px solid transparent;
+      transition: background 150ms, color 150ms, border-color 150ms;
+      text-decoration: none; white-space: nowrap;
+    }
+    .btn-lg { height: 48px; padding: 0 var(--pgn-spacing-3); font-size: 16px; }
+    .btn:not(.btn-lg):not(.btn-sm) { height: 44px; padding: 0 var(--pgn-spacing-3); }
+    .btn-sm { height: 36px; padding: 0 var(--pgn-spacing-2); font-size: 14px; }
+    .btn-block { width: 100%; }
+    .btn-primary {
+      background: var(--pgn-color-brand-base); color: #fff; border-color: var(--pgn-color-brand-base);
+    }
+    .btn-primary:hover { background: #005CC8; border-color: #005CC8; color: #fff; text-decoration: none; }
+    .btn-primary:disabled, .btn-primary.is-disabled {
+      background: #A8C7F0; border-color: #A8C7F0; cursor: not-allowed;
+    }
+    .btn-outline-primary {
+      background: transparent; color: var(--pgn-color-brand-base);
+      border-color: var(--pgn-color-brand-base);
+    }
+    .btn-outline-primary:hover { background: var(--pgn-color-brand-tint); text-decoration: none; }
+    .btn-tertiary {
+      background: transparent; color: var(--pgn-color-brand-base); border-color: transparent;
+    }
+    .btn .material-icons-outlined { font-size: 18px; }
+
+    .btn-theme-toggle {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #FFFFFF;
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background 150ms;
+      padding: 0;
+    }
+    .btn-theme-toggle:hover { background: rgba(255,255,255,0.2); }
+    .btn-theme-toggle .material-icons-outlined { font-size: 20px; }
+    [data-theme="dark"] .theme-icon-light { display: none !important; }
+    [data-theme="dark"] .theme-icon-dark { display: inline !important; }
+
+    /* ================================================================
+       NAVBAR — matches live MVP capture chrome
+       ================================================================ */
+    .navbar {
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 var(--pgn-spacing-4);
+      background: var(--color-deep-navy);
+      color: #fff;
+    }
+    .navbar-brand {
+      display: flex; align-items: center; gap: var(--pgn-spacing-1);
+      text-decoration: none; color: #fff;
+    }
+    .navbar-brand-logo {
+      height: 40px; width: auto;
+    }
+    /* v4.84: school logos have a stacked WGU + School name layout; bump to 64px so 'School of X' text reads */
+    .navbar-brand-logo[data-school-logo] { height: 64px; }
+    .navbar-brand-text {
+      font-family: 'Aptos Display', sans-serif; font-size: 16px; font-weight: 700; color: #fff;
+    }
+    .navbar-right { display: flex; align-items: center; gap: var(--pgn-spacing-2); }
+    .navbar-chip {
+      background: transparent; color: rgba(255,255,255,0.92);
+      font-size: 13px; padding: 6px 14px; border-radius: var(--pgn-size-rounded-pill);
+      border: 1px solid rgba(255,255,255,0.35);
+    }
+    .navbar-user {
+      display: flex; align-items: center; gap: var(--pgn-spacing-1);
+      color: rgba(255,255,255,0.92); font-size: 14px;
+    }
+    .avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(255,255,255,0.18); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Aptos', sans-serif; font-size: 11px; font-weight: 700;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    /* ================================================================
+       BREADCRUMB
+       ================================================================ */
+    .breadcrumb {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 13px; color: var(--pgn-color-brand-base);
+      margin-bottom: var(--pgn-spacing-3); flex-wrap: wrap;
+    }
+    .breadcrumb a { color: var(--pgn-color-brand-base); }
+    .breadcrumb-sep { color: var(--pgn-color-gray-400); }
+    .breadcrumb .current { color: var(--pgn-color-gray-700); }
+
+    /* ================================================================
+       CARDS
+       ================================================================ */
+    .pgn__card {
+      background: var(--pgn-color-white); border-radius: var(--pgn-size-border-radius-lg);
+      border: 1px solid var(--pgn-color-gray-100);
+    }
+    .pgn__card-section {
+      padding: var(--pgn-spacing-3);
+    }
+    .pgn__card-featured {
+      background: var(--pgn-color-white); border-radius: var(--pgn-size-border-radius-lg);
+      border: 1px solid var(--pgn-color-gray-100);
+    }
+
+    /* ================================================================
+       AI PROMPT CARD — used on diagnostic + coaching + adaptive screens
+       ================================================================ */
+    .ai-prompt-card {
+      background: var(--pgn-color-white); border-radius: var(--pgn-size-border-radius-lg);
+      padding: var(--pgn-spacing-3); border: 1px solid var(--pgn-color-gray-100);
+      border-left: 4px solid var(--pgn-color-info-base);
+      margin-bottom: var(--pgn-spacing-3);
+    }
+    .ai-label {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--color-dark-navy); margin-bottom: var(--pgn-spacing-2);
+    }
+    .ai-label .material-icons-outlined { font-size: 16px; color: var(--pgn-color-brand-base); }
+    .ai-prompt-card h3 {
+      font-size: 20px; margin-bottom: var(--pgn-spacing-2); color: var(--pgn-color-gray-900);
+    }
+    .ai-prompt-card .prompt-body {
+      font-size: 14px; color: var(--pgn-color-gray-700); line-height: 1.6;
+    }
+    .topic-row {
+      font-size: 12px; color: var(--pgn-color-gray-600); margin-top: var(--pgn-spacing-1);
+    }
+    .topic-row b { color: var(--pgn-color-gray-900); }
+
+    /* ================================================================
+       CODE BLOCKS (prompt code) + CODE EDITOR (your answer)
+       ================================================================ */
+    .code-block {
+      background: var(--code-bg); color: var(--code-text);
+      font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+      font-size: 13px; line-height: 1.6;
+      border-radius: var(--pgn-size-border-radius-base);
+      padding: var(--pgn-spacing-2) var(--pgn-spacing-3);
+      overflow-x: auto; white-space: pre-wrap;
+    }
+    .code-block.inline {
+      font-size: 12.5px; padding: 8px 12px;
+    }
+    .code-editor {
+      width: 100%; min-height: 140px;
+      background: var(--code-bg); color: var(--code-text);
+      font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+      font-size: 13px; line-height: 1.6;
+      border: 2px solid transparent;
+      border-radius: var(--pgn-size-border-radius-base);
+      padding: var(--pgn-spacing-2); resize: vertical;
+    }
+    .code-editor:focus { outline: none; border-color: var(--pgn-color-brand-base); }
+    .code-editor.is-disabled {
+      background: #475569; color: #CBD5E1; cursor: not-allowed;
+    }
+
+    /* ================================================================
+       ANSWER PANEL — the "Your Answer" card
+       ================================================================ */
+    .answer-panel {
+      background: var(--pgn-color-white); border-radius: var(--pgn-size-border-radius-lg);
+      padding: var(--pgn-spacing-3); border: 1px solid var(--pgn-color-gray-100);
+    }
+    .answer-panel h4 {
+      font-size: 18px; margin-bottom: var(--pgn-spacing-2); color: var(--pgn-color-gray-900);
+    }
+    .answer-panel .answer-hint {
+      font-size: 13px; color: var(--pgn-color-gray-600); margin-bottom: var(--pgn-spacing-2);
+    }
+    .answer-actions {
+      display: flex; gap: var(--pgn-spacing-2); align-items: center; margin-top: var(--pgn-spacing-2);
+    }
+    .answer-actions .char-count {
+      font-size: 12px; color: var(--pgn-color-gray-600); margin-left: auto;
+    }
+    .submit-note {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; color: var(--pgn-color-gray-600); margin-top: var(--pgn-spacing-2);
+    }
+    .submit-note .material-icons-outlined { font-size: 14px; }
+
+    /* ================================================================
+       FEEDBACK PANEL — diagnostic + coaching feedback
+       ================================================================ */
+    .feedback-panel {
+      background: var(--pgn-color-success-tint); border-radius: var(--pgn-size-border-radius-lg);
+      padding: var(--pgn-spacing-3); border-left: 4px solid var(--pgn-color-success-base);
+      margin-top: var(--pgn-spacing-3);
+    }
+    .feedback-panel.danger {
+      background: var(--pgn-color-danger-tint); border-left-color: var(--pgn-color-danger-base);
+    }
+    .feedback-label {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+      color: #1B5E20; margin-bottom: var(--pgn-spacing-1);
+    }
+    .feedback-panel.danger .feedback-label { color: #8A1E1E; }
+    .feedback-label .material-icons-outlined { font-size: 18px; }
+    .feedback-body { font-size: 14px; color: var(--pgn-color-gray-800); line-height: 1.6; }
+    .feedback-body b, .feedback-body strong { color: var(--pgn-color-gray-900); }
+    .feedback-table {
+      width: 100%; border-collapse: collapse; margin-top: var(--pgn-spacing-2);
+      background: var(--pgn-color-white); border-radius: var(--pgn-size-border-radius-base);
+      overflow: hidden; font-size: 13px;
+    }
+    .feedback-table th, .feedback-table td {
+      padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--pgn-color-gray-100);
+      vertical-align: top;
+    }
+    .feedback-table th {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;
+      color: var(--pgn-color-gray-600); font-weight: 700;
+      background: var(--pgn-color-bg-light);
+    }
+    .feedback-table .score { font-weight: 700; color: var(--pgn-color-gray-900); }
+    .feedback-table .score.partial { color: var(--pgn-color-warning-base); }
+    .feedback-table .score.zero { color: var(--pgn-color-danger-base); }
+    .feedback-summary {
+      margin-top: var(--pgn-spacing-2); font-size: 13px; color: var(--pgn-color-gray-800);
+      line-height: 1.65;
+    }
+    .feedback-summary .summary-label,
+    .feedback-summary .next-focus-label {
+      display: block; font-weight: 700; color: var(--pgn-color-gray-900);
+      margin-top: var(--pgn-spacing-2); margin-bottom: 4px;
+      text-transform: uppercase; font-size: 11px; letter-spacing: 0.06em;
+    }
+    .feedback-summary .next-focus-label { color: var(--pgn-color-brand-base); text-transform: none; font-size: 13px; letter-spacing: 0; margin-top: var(--pgn-spacing-2); }
+    .feedback-summary .next-focus-label b { color: var(--pgn-color-brand-base); }
+
+    /* ================================================================
+       BADGES + ALERTS
+       ================================================================ */
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: var(--pgn-size-border-radius-sm);
+      font-size: 12px; font-weight: 700; line-height: 1.4;
+    }
+    .badge-success { background: #72C06C; color: #000; }
+    .badge-danger { background: #EC6A52; color: #000; }
+    .badge-info    { background: var(--pgn-color-info-tint); color: var(--color-dark-navy); }
+    .badge-gray    { background: var(--pgn-color-bg-light); color: var(--pgn-color-gray-600); }
+
+    /* ================================================================
+       PROGRESS BAR
+       ================================================================ */
+    .progress {
+      height: 6px; background: var(--pgn-color-gray-100);
+      border-radius: var(--pgn-size-rounded-pill); overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%; border-radius: var(--pgn-size-rounded-pill);
+      background: var(--pgn-color-brand-base);
+    }
+
+    /* ================================================================
+       SCREEN SYSTEM
+       ================================================================ */
+    .screen { display: none; min-height: calc(100vh - 64px - 48px); flex-direction: column; }
+    .screen.active { display: flex; }
+    .screen-main {
+      flex: 1;
+      padding: var(--pgn-spacing-5) 0 var(--pgn-spacing-6);
+    }
+    .screen-main.centered { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: var(--pgn-spacing-5); }
+
+    /* Page-bottom footer-button bar shown above the storyboard meta-bar */
+    .page-footer-bar {
+      display: flex; justify-content: space-between; align-items: center; gap: var(--pgn-spacing-2);
+      padding: var(--pgn-spacing-3) 0;
+      border-top: 1px solid var(--pgn-color-gray-100);
+      margin-top: var(--pgn-spacing-3);
+    }
+    .page-footer-bar.right-only { justify-content: flex-end; }
+    .page-footer-bar .spacer { flex: 1; }
+
+    /* Eyebrow / section label */
+    .eyebrow {
+      font-size: 13px; font-weight: 700; color: var(--pgn-color-gray-700);
+      margin-bottom: 4px;
+    }
+    .eyebrow-blue { color: var(--pgn-color-brand-base); }
+    .question-num {
+      font-size: 13px; color: var(--pgn-color-gray-600); text-align: right;
+    }
+    .question-num .num {
+      display: block; font-family: 'Aptos Display', sans-serif; font-size: 28px; font-weight: 700;
+      color: var(--pgn-color-gray-900); line-height: 1.1;
+    }
+    .question-num .num-total { font-size: 16px; font-weight: 400; color: var(--pgn-color-gray-600); }
+
+    /* Header row: title + question counter side-by-side */
+    .question-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: var(--pgn-spacing-3); margin-bottom: var(--pgn-spacing-3);
+    }
+    .question-header .question-title {
+      flex: 1;
+    }
+    .question-header h1, .question-header h2 { margin-bottom: 6px; }
+    .question-header .caption {
+      font-size: 13px; color: var(--pgn-color-gray-600); max-width: 540px; line-height: 1.5;
+    }
+
+    /* ================================================================
+       LANDING HERO (Screen 1)
+       ================================================================ */
+    .landing-hero {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: var(--pgn-spacing-5); align-items: center;
+      padding-top: var(--pgn-spacing-5);
+    }
+    .landing-left h1 { font-size: 44px; line-height: 1.1; margin-bottom: 8px; }
+    .landing-left h2 { font-size: 22px; line-height: 1.3; font-weight: 700; color: var(--pgn-color-gray-600); margin-bottom: var(--pgn-spacing-3); }
+    .landing-left p { font-size: 15px; line-height: 1.65; color: var(--pgn-color-gray-700); margin-bottom: var(--pgn-spacing-2); max-width: 480px; }
+    .landing-cta-row {
+      display: flex; align-items: center; gap: var(--pgn-spacing-2); margin-top: var(--pgn-spacing-3);
+    }
+    .landing-cta-row .time-hint {
+      font-size: 13px; color: var(--pgn-color-gray-600);
+    }
+    .landing-features {
+      display: flex; gap: var(--pgn-spacing-3); margin-top: var(--pgn-spacing-3);
+      flex-wrap: wrap;
+    }
+    .landing-features .feature {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 13px; color: var(--pgn-color-gray-700);
+    }
+    .landing-features .feature .material-icons-outlined {
+      font-size: 16px; color: var(--pgn-color-brand-base);
+    }
+    .practice-areas-card {
+      background: linear-gradient(180deg, #001E3E 0%, #001730 100%);
+      color: #fff; border-radius: var(--pgn-size-border-radius-lg);
+      padding: var(--pgn-spacing-4);
+      box-shadow: 0 8px 24px rgba(0,23,48,0.12);
+    }
+    .practice-areas-card .pa-label {
+      font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
+      color: var(--color-sky-blue); text-transform: uppercase;
+      margin-bottom: var(--pgn-spacing-2);
+    }
+    .practice-areas-card ul {
+      list-style: none; display: flex; flex-direction: column; gap: 8px;
+    }
+    .practice-areas-card ul li {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; color: rgba(255,255,255,0.92);
+    }
+    .practice-areas-card ul li::before {
+      content: ""; width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.4); flex-shrink: 0;
+    }
+    .practice-areas-card hr {
+      border: none; border-top: 1px solid rgba(255,255,255,0.12);
+      margin: var(--pgn-spacing-2) 0;
+    }
+    .practice-areas-card .pa-note {
+      font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.5;
+    }
+
+    /* ================================================================
+       DIAGNOSTIC RESULTS (Screen 7)
+       ================================================================ */
+    .result-card {
+      background: var(--pgn-color-white); border-radius: var(--pgn-size-border-radius-lg);
+      padding: var(--pgn-spacing-4);
+      max-width: 560px; margin: 0 auto;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      border: 1px solid var(--pgn-color-gray-100);
+    }
+    .check-icon {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--pgn-color-success-tint);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto var(--pgn-spacing-1);
+    }
+    .check-icon .material-icons-outlined {
+      font-size: 36px; color: var(--pgn-color-success-base);
+    }
+    .baseline-panel {
+      background: var(--pgn-color-bg-light); border-radius: var(--pgn-size-border-radius-base);
+      padding: var(--pgn-spacing-2) var(--pgn-spacing-3); margin: var(--pgn-spacing-2) 0;
+    }
+    .baseline-panel h5 { font-size: 14px; color: var(--pgn-color-gray-900); margin-bottom: 6px; }
+    .baseline-panel p { font-size: 13px; color: var(--pgn-color-gray-700); line-height: 1.55; }
+    .result-columns {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: var(--pgn-spacing-2); margin: var(--pgn-spacing-2) 0;
+    }
+    .result-column {
+      border-radius: var(--pgn-size-border-radius-base);
+      padding: var(--pgn-spacing-2);
+      min-height: 160px;
+    }
+    .result-column.mastered { background: var(--pgn-color-success-tint); }
+    .result-column.needs { background: var(--pgn-color-danger-tint); }
+    .result-column h4 {
+      font-size: 14px; margin-bottom: var(--pgn-spacing-1); color: var(--pgn-color-gray-900);
+    }
+    .result-skill {
+      display: flex; align-items: center; gap: var(--pgn-spacing-1);
+      background: var(--pgn-color-white); border-radius: var(--pgn-size-border-radius-sm);
+      padding: 8px 10px; font-size: 12px; margin-bottom: 6px;
+      justify-content: space-between;
+    }
+    .result-skill-name { color: var(--pgn-color-gray-800); line-height: 1.3; }
+    .result-skill-score { font-weight: 700; font-size: 12px; }
+    .result-column.mastered .result-skill-score { color: var(--pgn-color-success-base); }
+    .result-column.needs .result-skill-score { color: var(--pgn-color-danger-base); }
+
+    /* ================================================================
+       PROGRESS MAP (Screen 8)
+       ================================================================ */
+    .pm-header {
+      margin-bottom: var(--pgn-spacing-3);
+    }
+    .pm-stats {
+      font-size: 13px; color: var(--pgn-color-gray-600);
+      margin-top: 4px;
+    }
+    .pm-legend {
+      display: flex; gap: var(--pgn-spacing-2); margin-bottom: var(--pgn-spacing-2);
+      font-size: 12px; color: var(--pgn-color-gray-700); flex-wrap: wrap;
+    }
+    .pm-legend-dot {
+      width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px;
+      vertical-align: middle;
+    }
+    .pm-legend-dot.recommended { background: var(--pgn-color-brand-base); }
+    .pm-legend-dot.in-progress { background: var(--pgn-color-warning-base); }
+    .pm-legend-dot.not-started { background: var(--pgn-color-gray-200); }
+    .pm-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .pm-card {
+      background: var(--pgn-color-white); border-radius: var(--pgn-size-border-radius-base);
+      padding: 12px 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      border: 1px solid var(--pgn-color-gray-100);
+      gap: var(--pgn-spacing-2);
+    }
+    .pm-card.recommended { border-color: var(--pgn-color-warning-base); }
+    .pm-card-left {
+      display: flex; align-items: center; gap: var(--pgn-spacing-1); flex: 1; min-width: 0;
+    }
+    .pm-num {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--pgn-color-bg-light); color: var(--pgn-color-gray-600);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; flex-shrink: 0;
+    }
+    .pm-card-body { flex: 1; min-width: 0; }
+    .pm-card-name { font-size: 14px; font-weight: 700; color: var(--pgn-color-gray-900); line-height: 1.3; }
+    .pm-card-sub { font-size: 12px; color: var(--pgn-color-gray-600); margin-top: 2px; }
+    .pm-card-right {
+      display: flex; align-items: center; gap: var(--pgn-spacing-1); flex-shrink: 0;
+    }
+    .pm-bottom-actions {
+      display: flex; gap: var(--pgn-spacing-2); margin-top: var(--pgn-spacing-3);
+    }
+
+    /* ================================================================
+       COACHING / ADAPTIVE 2-COLUMN
+       ================================================================ */
+    .coaching-layout {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: var(--pgn-spacing-3); align-items: start;
+    }
+    .coaching-layout .ai-prompt-card { margin-bottom: 0; }
+    .save-exit-row {
+      display: flex; justify-content: flex-end; margin-bottom: var(--pgn-spacing-1);
+    }
+
+    /* "Sally's Answer" panel — adaptive feedback screens */
+    .sally-answer-panel {
+      background: var(--pgn-color-white); border-radius: var(--pgn-size-border-radius-lg);
+      padding: var(--pgn-spacing-3); border: 1px solid var(--pgn-color-gray-100);
+      margin-top: var(--pgn-spacing-3);
+    }
+    .sally-answer-panel h4 {
+      font-size: 18px; margin-bottom: var(--pgn-spacing-2); color: var(--pgn-color-gray-900);
+    }
+    .sally-answer-panel .code-block { margin: 0; }
+
+    /* TIP card — adaptive verification screen */
+    .tip-card {
+      background: var(--pgn-color-info-tint); border-radius: var(--pgn-size-border-radius-base);
+      padding: var(--pgn-spacing-2) var(--pgn-spacing-3); margin-top: var(--pgn-spacing-2);
+    }
+    .tip-card .tip-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+      color: var(--color-dark-navy); margin-bottom: 4px;
+    }
+    .tip-card p { font-size: 13px; color: var(--pgn-color-gray-800); line-height: 1.55; }
+
+    /* Difficulty progression card — verification passed screen */
+    .difficulty-card {
+      background: var(--pgn-color-white); border-radius: var(--pgn-size-border-radius-base);
+      border: 1px solid var(--pgn-color-gray-100);
+      padding: var(--pgn-spacing-2) var(--pgn-spacing-3);
+      margin: var(--pgn-spacing-2) auto;
+    }
+    .difficulty-card h5 { font-size: 14px; margin-bottom: 8px; color: var(--pgn-color-gray-900); }
+    .difficulty-track {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; color: var(--pgn-color-gray-600);
+      margin-bottom: var(--pgn-spacing-1);
+    }
+    .difficulty-track .stage { padding: 2px 4px; }
+    .difficulty-track .stage.current {
+      color: var(--pgn-color-brand-base); font-weight: 700;
+      text-decoration: underline;
+    }
+    .difficulty-track .material-icons-outlined { font-size: 14px; color: var(--pgn-color-gray-400); }
+    .difficulty-card p { font-size: 12px; color: var(--pgn-color-gray-600); line-height: 1.5; }
+
+    /* Snapshot table — session saved + verification screens */
+    .snapshot-table {
+      background: var(--pgn-color-bg-light); border-radius: var(--pgn-size-border-radius-base);
+      padding: var(--pgn-spacing-2) var(--pgn-spacing-3); margin-top: var(--pgn-spacing-2);
+    }
+    .snapshot-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 0; border-bottom: 1px solid var(--pgn-color-gray-100); font-size: 13px;
+    }
+    .snapshot-row:last-child { border-bottom: none; }
+    .snapshot-label { color: var(--pgn-color-gray-600); }
+    .snapshot-value { font-weight: 700; color: var(--pgn-color-gray-900); }
+    .snapshot-value.link { color: var(--pgn-color-brand-base); }
+
+    /* Welcome Back panel — returning user */
+    .welcome-table {
+      width: 100%; border-collapse: collapse; margin-top: var(--pgn-spacing-2);
+    }
+    .welcome-table tr { border-bottom: 1px solid var(--pgn-color-gray-100); }
+    .welcome-table td { padding: 12px 4px; font-size: 14px; }
+    .welcome-table td:first-child { color: var(--pgn-color-gray-600); }
+    .welcome-table td:last-child { color: var(--pgn-color-gray-900); font-weight: 700; text-align: right; }
+
+    /* ================================================================
+       META BAR — storyboard navigation (not a production element)
+       ================================================================ */
+    .meta-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+      background: var(--color-deep-navy); color: #fff;
+      font-size: 12px; padding: 8px var(--pgn-spacing-4) 12px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .meta-bar-header {
+      display: flex; align-items: center; gap: var(--pgn-spacing-2);
+      padding-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .meta-bar .meta-id { color: var(--pgn-color-info-base); font-weight: 700; }
+    .meta-bar-toggle {
+      margin-left: auto; flex-shrink: 0;
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+      color: #fff; width: 26px; height: 26px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      cursor: pointer; padding: 0;
+      transition: background 150ms;
+    }
+    .meta-bar-toggle:hover { background: rgba(255,255,255,0.22); }
+    .meta-bar-toggle .material-icons-outlined { font-size: 18px; display: block; transition: transform 150ms; }
+    .meta-bar.metabar-collapsed .meta-bar-flows,
+    .meta-bar.metabar-collapsed .flow-nav { display: none; }
+    .meta-bar.metabar-collapsed .meta-bar-header { padding-bottom: 0; border-bottom: none; }
+    .meta-bar.metabar-collapsed .meta-bar-toggle .material-icons-outlined { transform: rotate(180deg); }
+    body.metabar-collapsed.has-meta-bar { padding-bottom: 40px; }
+    .flow-nav { display: flex; gap: 6px; flex-wrap: wrap; padding-top: 2px; }
+    .step-btn {
+      background: transparent; border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.78); font-size: 11px; font-family: 'Aptos', sans-serif;
+      padding: 4px 8px; border-radius: var(--pgn-size-rounded-pill);
+      cursor: pointer; transition: all 100ms; white-space: nowrap;
+      min-width: 28px; min-height: 26px;
+    }
+    .step-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .step-btn.active { background: var(--pgn-color-info-base); border-color: var(--pgn-color-info-base); color: #fff; font-weight: 700; }
+    .meta-link { color: var(--pgn-color-info-base); text-decoration: none; }
+    .meta-link:hover { text-decoration: underline; }
+
+    body.has-meta-bar { padding-bottom: 90px; }
+
+    /* Responsive shrink */
+    @media (max-width: 880px) {
+      .landing-hero, .coaching-layout, .pm-grid, .result-columns { grid-template-columns: 1fr; }
+    }
+
+    /* ================================================================
+       v4.62 — LIGHT-MODE NAVBAR THEME (header bar light in light mode,
+       dark navy only in dark mode). Cascade-overrides earlier rules.
+       ================================================================ */
+    .navbar,
+    .navbar-dark {
+      background: var(--pgn-color-white);
+      color: var(--color-deep-navy);
+      border-bottom: 1px solid var(--color-deep-navy);
+    }
+    .navbar-brand,
+    .navbar-brand-text,
+    .navbar-user {
+      color: var(--color-deep-navy);
+    }
+    .navbar-chip {
+      background: transparent;
+      color: var(--color-deep-navy);
+      border: 1px solid var(--color-deep-navy);
+    }
+    .avatar {
+      background: var(--color-deep-navy);
+      color: #fff;
+    }
+    .btn-theme-toggle {
+      background: var(--pgn-color-bg-light);
+      border: 1px solid var(--pgn-color-gray-200);
+      color: var(--color-deep-navy);
+    }
+    .btn-theme-toggle:hover { background: var(--pgn-color-gray-100); }
+    /* v4.70: ensure light-mode navbar icons (help, theme toggle) render crisply against the white navbar */
+    .btn-theme-toggle .material-icons-outlined {
+      color: var(--color-deep-navy);
+      font-weight: 500;
+    }
+    [data-theme="dark"] .btn-theme-toggle .material-icons-outlined {
+      color: #fff;
+    }
+    /* v4.83: dark-mode footer theming — overrides hardcoded inline footer styles */
+    [data-theme="dark"] footer[role="contentinfo"] {
+      background: var(--color-deep-navy) !important;
+      border-top-color: rgba(255,255,255,0.1) !important;
+    }
+    [data-theme="dark"] footer[role="contentinfo"] > div {
+      border-bottom-color: rgba(255,255,255,0.1) !important;
+    }
+    [data-theme="dark"] footer[role="contentinfo"] a {
+      color: #fff !important;
+    }
+    [data-theme="dark"] footer[role="contentinfo"] span {
+      color: rgba(255,255,255,0.7) !important;
+    }
+    /* student/ uses a <span class="navbar-brand-logo">WGU</span> text mark;
+       :not(img) targets only the span so img logos are unaffected. */
+    .navbar-brand-logo:not(img) {
+      background: var(--color-deep-navy) !important;
+      color: #fff !important;
+    }
+
+    [data-theme="dark"] .navbar,
+    [data-theme="dark"] .navbar-dark {
+      background: var(--color-deep-navy);
+      color: #fff;
+      border-bottom: none;
+    }
+    [data-theme="dark"] .navbar-brand,
+    [data-theme="dark"] .navbar-brand-text,
+    [data-theme="dark"] .navbar-user {
+      color: #fff;
+    }
+    [data-theme="dark"] .navbar-chip {
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.92);
+      border-color: rgba(255,255,255,0.2);
+    }
+    [data-theme="dark"] .avatar {
+      background: var(--pgn-color-info-base);
+      color: #fff;
+    }
+    [data-theme="dark"] .btn-theme-toggle {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.2);
+      color: #fff;
+    }
+    [data-theme="dark"] .btn-theme-toggle:hover { background: rgba(255,255,255,0.2); }
+    [data-theme="dark"] .navbar-brand-logo:not(img) {
+      background: #fff !important;
+      color: var(--color-deep-navy) !important;
+    }
+
+    /* v4.62 — Footer logo light/dark swap rules (parity with the navbar logo swap) */
+    .logo-light { display: inline-block; }
+    .logo-dark  { display: none; }
+    [data-theme="dark"] .logo-light { display: none !important; }
+    [data-theme="dark"] .logo-dark  { display: inline-block !important; }
+
+    /* ================================================================
+       INTRO OVERLAY — first-run walkthrough (v4.163)
+       ================================================================ */
+    #intro-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,23,48,0.72);
+      z-index: 9000;
+      display: flex; align-items: center; justify-content: center;
+      padding: var(--pgn-spacing-3);
+    }
+    .intro-card {
+      background: var(--pgn-color-bg-base);
+      border-radius: 12px;
+      max-width: 600px; width: 100%;
+      padding: var(--pgn-spacing-5);
+      box-shadow: 0 24px 64px rgba(0,23,48,0.32);
+      position: relative;
+    }
+    .intro-skip {
+      position: absolute; top: 16px; right: 20px;
+      background: none; border: none; cursor: pointer;
+      display: flex; align-items: center; gap: 4px;
+      color: var(--pgn-color-gray-600); font-size: 14px;
+      font-family: 'Aptos', sans-serif; padding: 4px 8px;
+      border-radius: var(--pgn-size-border-radius-sm);
+    }
+    .intro-skip .material-icons-outlined { font-size: 16px; }
+    .intro-skip:hover { color: var(--pgn-color-gray-900); background: var(--pgn-color-bg-light); }
+    .intro-step { display: none; }
+    .intro-step.active { display: block; }
+    .intro-step-icon {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--pgn-color-brand-tint);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: var(--pgn-spacing-3);
+    }
+    .intro-step-icon .material-icons-outlined { font-size: 28px; color: var(--pgn-color-brand-base); }
+    .intro-step-icon.icon-success { background: var(--pgn-color-success-tint); }
+    .intro-step-icon.icon-success .material-icons-outlined { color: var(--pgn-color-success-base); }
+    .intro-step h3 { margin-bottom: var(--pgn-spacing-2); }
+    .intro-step > p {
+      font-size: 15px; line-height: 1.65; color: var(--pgn-color-gray-700);
+      margin-bottom: var(--pgn-spacing-2);
+    }
+    /* How it works: 3-column mini-step row (Step 2) */
+    .hiw-row {
+      display: flex; gap: var(--pgn-spacing-2); margin-top: var(--pgn-spacing-3);
+    }
+    .hiw-item {
+      flex: 1; padding: var(--pgn-spacing-2);
+      background: var(--pgn-color-bg-light);
+      border-radius: var(--pgn-size-border-radius-base);
+    }
+    .hiw-icon { font-size: 20px; color: var(--pgn-color-brand-base); display: block; margin-bottom: 4px; }
+    .hiw-label { font-size: 14px; font-weight: 700; color: var(--pgn-color-gray-900); display: block; margin-bottom: 4px; }
+    .hiw-desc { font-size: 14px; line-height: 1.5; color: var(--pgn-color-gray-600); }
+    /* Tips list (Step 3) */
+    .intro-tips {
+      list-style: none; display: flex; flex-direction: column; gap: 14px;
+      margin-top: var(--pgn-spacing-2);
+    }
+    .intro-tips li { display: flex; gap: 10px; font-size: 14px; line-height: 1.6; color: var(--pgn-color-gray-700); }
+    .intro-tips li .material-icons-outlined { font-size: 18px; color: var(--pgn-color-brand-base); flex-shrink: 0; margin-top: 2px; }
+    /* Footer: dots + nav */
+    .intro-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: var(--pgn-spacing-4); padding-top: var(--pgn-spacing-3);
+      border-top: 1px solid var(--pgn-color-gray-100);
+    }
+    .intro-dots { display: flex; gap: 8px; }
+    .intro-dots .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--pgn-color-gray-200); transition: background 200ms;
+    }
+    .intro-dots .dot.active { background: var(--pgn-color-brand-base); }
+    .intro-nav { display: flex; gap: var(--pgn-spacing-2); align-items: center; }
+  </style>
+</head>
+
+<body class="has-meta-bar">
+
+<!-- ================================================================
+     SHARED NAVBAR — single navbar above all screens (matches live MVP chrome)
+     ================================================================ -->
+<header class="navbar" role="banner">
+  <a href="#" class="navbar-brand" aria-label="School of Technology home">
+    <img class="navbar-brand-logo logo-light" data-school-logo="light" src="../../assets/school-tech-light.png" alt="School of Technology">
+    <img class="navbar-brand-logo logo-dark" data-school-logo="dark" src="../../assets/school-tech-dark.png" alt="School of Technology">
+  </a>
+  <div class="navbar-right">
+    <button class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode">
+      <span class="material-icons-outlined theme-icon-light">dark_mode</span>
+      <span class="material-icons-outlined theme-icon-dark" style="display:none;">light_mode</span>
+    </button>
+    <a href="../../help/index.html#submit-request" class="btn-theme-toggle" aria-label="Help and Support" title="Help &amp; Support"><span class="material-icons-outlined">help_outline</span></a>
+    <span class="navbar-chip">Introduction to Python</span>
+    <div class="navbar-user">
+      <div class="avatar" aria-hidden="true">S</div>
+      <span>Sally</span>
+    </div>
+  </div>
+</header>
+
+<!-- ================================================================
+     INTRO OVERLAY — first-run walkthrough (v4.163)
+     ================================================================ -->
+<div id="intro-overlay" role="dialog" aria-modal="true" aria-labelledby="intro-heading">
+  <div class="intro-card">
+
+    <button class="intro-skip" onclick="document.getElementById('intro-overlay').style.display='none'" aria-label="Skip intro">
+      <span class="material-icons-outlined">close</span> Skip
+    </button>
+
+    <!-- Step 1: What is SkillProof? -->
+    <div class="intro-step active" data-step="1">
+      <div class="intro-step-icon">
+        <span class="material-icons-outlined">school</span>
+      </div>
+      <h3 id="intro-heading">Welcome to SkillProof</h3>
+      <p>SkillProof is an AI-powered practice tool you can use alongside your course. It figures out what you already know about a subject, then builds a targeted practice plan around your actual gaps. You practice what you need, not what you already know.</p>
+      <p class="small text-muted">This tool is separate from your graded coursework. Use it to sharpen your skills at your own pace and on your own schedule. It has no impact on assessments or grades at all.</p>
+    </div>
+
+    <!-- Step 2: How it works -->
+    <div class="intro-step" data-step="2">
+      <div class="intro-step-icon">
+        <span class="material-icons-outlined">route</span>
+      </div>
+      <h3>Three stages, one smooth flow</h3>
+      <p>Here is what to expect after you begin:</p>
+      <div class="hiw-row">
+        <div class="hiw-item">
+          <span class="material-icons-outlined hiw-icon">search</span>
+          <span class="hiw-label">1. Diagnostic</span>
+          <span class="hiw-desc">Answer the questions from the topics in this Skill.</span>
+        </div>
+        <div class="hiw-item">
+          <span class="material-icons-outlined hiw-icon">insights</span>
+          <span class="hiw-label">2. Progress Map</span>
+          <span class="hiw-desc">See which topics you have mastered and which need coaching. Return anytime and pick up exactly where you left off.</span>
+        </div>
+        <div class="hiw-item">
+          <span class="material-icons-outlined hiw-icon">model_training</span>
+          <span class="hiw-label">3. Coaching</span>
+          <span class="hiw-desc">Work through practice questions until you master the subject. Repeat as much practice as you want to prepare you for proving your competency in the course.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: Tips for best results -->
+    <div class="intro-step" data-step="3">
+      <div class="intro-step-icon">
+        <span class="material-icons-outlined">lightbulb</span>
+      </div>
+      <h3>A few things to know</h3>
+      <ul class="intro-tips">
+        <li>
+          <span class="material-icons-outlined">check_circle_outline</span>
+          <span>Answer the diagnostic honestly. Saying "I'm not sure" is more useful than guessing. The AI needs an accurate baseline to coach you well.</span>
+        </li>
+        <li>
+          <span class="material-icons-outlined">check_circle_outline</span>
+          <span>Getting something wrong is not a penalty. It is how the AI finds where to start with you.</span>
+        </li>
+        <li>
+          <span class="material-icons-outlined">check_circle_outline</span>
+          <span>Your progress saves automatically to your WGU account. No separate login and no lost work. Come back anytime.</span>
+        </li>
+        <li>
+          <span class="material-icons-outlined">check_circle_outline</span>
+          <span>SkillProof is a practice coach designed to help you prepare for passing your course assessments. It is not required to complete.</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Footer: progress dots + nav buttons -->
+    <div class="intro-footer">
+      <div class="intro-dots" aria-hidden="true">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+      <div class="intro-nav">
+        <button id="intro-back" class="btn btn-outline-primary btn-sm" onclick="introNav(-1)" style="visibility:hidden;">
+          <span class="material-icons-outlined">arrow_back</span> Back
+        </button>
+        <button id="intro-next" class="btn btn-primary btn-sm" onclick="introNav(1)">
+          Next <span class="material-icons-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================================================================
+     SCREEN 1 — LANDING (Coding Coach intro)
+     ================================================================ -->
+<section class="screen active" id="screen-1" aria-labelledby="s1-heading">
+  <main class="screen-main">
+    <div class="container">
+      <div class="landing-hero">
+        <div class="landing-left">
+          <div class="eyebrow eyebrow-blue" style="display:flex;align-items:center;gap:6px;">
+            <span class="material-icons-outlined" style="font-size:18px;color:var(--pgn-color-brand-base);">school</span>
+            Supplemental Practice Tool
+          </div>
+          <h1 id="s1-heading">Coding Coach</h1>
+          <h2>Introduction to Python</h2>
+          <p>A comprehensive introduction to Python programming from basics to ML.</p>
+          <p class="text-muted small">Start with a short diagnostic. Your progress saves automatically. No separate account needed — you're already verified through WGU.</p>
+          <div class="landing-cta-row">
+            <button class="btn btn-primary btn-lg" onclick="goToScreen(2)">
+              <span class="material-icons-outlined">play_arrow</span> Begin Diagnostic
+            </button>
+          </div>
+        </div>
+        <aside class="practice-areas-card" aria-label="Topics in this Skill">
+          <div class="pa-label">13 Topics</div>
+          <ul>
+            <li>Basic Syntax &amp; Data Types</li>
+            <li>Control Flow &amp; Logic</li>
+            <li>Functions &amp; Modular Programming</li>
+            <li>Data Structures: Lists, Tuples, Sets, Dictionaries</li>
+            <li>Working with Files &amp; I/O</li>
+            <li>Error Handling &amp; Debugging</li>
+            <li>Object-Oriented Programming (OOP)</li>
+            <li>Python Libraries &amp; Modules</li>
+            <li>Advanced Data Handling</li>
+            <li>Regular Expressions &amp; String Manipulation</li>
+            <li>Working with Databases</li>
+            <li>Introduction to Automation</li>
+            <li>Introduction to Machine Learning</li>
+          </ul>
+          <hr>
+          <div class="pa-note">The diagnostic samples across all 13 Topics. You'll only practice what you don't already know.</div>
+        </aside>
+      </div>
+
+      <div class="page-footer-bar right-only">
+        <button class="btn btn-primary" onclick="goToScreen(2)">
+          Next: Diagnostic <span class="material-icons-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ================================================================
+     SCREEN 2 — DIAGNOSTIC Q1 EMPTY
+     ================================================================ -->
+<section class="screen" id="screen-2" aria-labelledby="s2-heading">
+  <main class="screen-main">
+    <div class="container-narrow">
+      <div class="question-header">
+        <div class="question-title">
+          <div class="eyebrow">Diagnostic Assessment</div>
+          <h2 id="s2-heading">Basic Syntax &amp; Data Types</h2>
+          <p class="caption">The AI coaching engine adapts the next question based on your response. The diagnostic ends automatically once we have enough signal.</p>
+        </div>
+        <div class="question-num">
+          Question <span class="num">1<span class="num-total"> / 13</span></span>
+        </div>
+      </div>
+
+      <div class="ai-prompt-card">
+        <div class="ai-label"><span class="material-icons-outlined">smart_toy</span> AI-Generated Assessment</div>
+        <h3>Assessment Prompt</h3>
+        <pre class="code-block">Explain how you would declare a variable in Python to store your age as an
+integer. Then, provide an example of how to convert a string representation of
+your height (e.g., "5.9") to a float and use it in a calculation to determine the
+total height of you and a friend who is 6.1 feet tall. Finally, demonstrate how to
+concatenate a string that introduces yourself with your age and height, and format
+it to include both values.</pre>
+        <div class="topic-row"><b>Topic:</b> Basic Syntax &amp; Data Types</div>
+      </div>
+
+      <div class="answer-panel">
+        <h4>Your Answer</h4>
+        <textarea class="code-editor" placeholder="# Type your answer here..." aria-label="Type your answer"></textarea>
+        <div class="answer-actions">
+          <button class="btn btn-primary is-disabled" disabled>
+            <span class="material-icons-outlined">send</span> Submit Answer
+          </button>
+          <span class="submit-note"><span class="material-icons-outlined">info</span> Your answer is evaluated by the AI coaching engine.</span>
+        </div>
+      </div>
+
+      <div class="page-footer-bar">
+        <button class="btn btn-outline-primary" onclick="goToScreen(1)">
+          <span class="material-icons-outlined">arrow_back</span> Back
+        </button>
+        <button class="btn btn-primary" onclick="goToScreen(3)">
+          Next Question <span class="material-icons-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ================================================================
+     SCREEN 3 — DIAGNOSTIC Q1 TYPED (answer entered, Submit active)
+     ================================================================ -->
+<section class="screen" id="screen-3" aria-labelledby="s3-heading">
+  <main class="screen-main">
+    <div class="container-narrow">
+      <div class="question-header">
+        <div class="question-title">
+          <div class="eyebrow">Diagnostic Assessment</div>
+          <h2 id="s3-heading">Basic Syntax &amp; Data Types</h2>
+          <p class="caption">The AI coaching engine adapts the next question based on your response. The diagnostic ends automatically once we have enough signal.</p>
+        </div>
+        <div class="question-num">
+          Question <span class="num">1<span class="num-total"> / 13</span></span>
+        </div>
+      </div>
+
+      <div class="ai-prompt-card">
+        <div class="ai-label"><span class="material-icons-outlined">smart_toy</span> AI-Generated Assessment</div>
+        <h3>Assessment Prompt</h3>
+        <pre class="code-block">Explain how you would declare a variable in Python to store your age as an
+integer. Then, provide an example of how to convert a string representation of
+your height (e.g., "5.9") to a float and use it in a calculation to determine the
+total height of you and a friend who is 6.1 feet tall. Finally, demonstrate how to
+concatenate a string that introduces yourself with your age and height, and format
+it to include both values.</pre>
+        <div class="topic-row"><b>Topic:</b> Basic Syntax &amp; Data Types</div>
+      </div>
+
+      <div class="answer-panel">
+        <h4>Your Answer</h4>
+        <textarea class="code-editor" style="border-color: var(--pgn-color-brand-base);" aria-label="Type your answer">age = 25
+height = float('5.9')
+total = height + 6.1
+print(f'I am {age} and {height} ft tall.')</textarea>
+        <div class="answer-actions">
+          <button class="btn btn-primary" onclick="goToScreen(4)">
+            <span class="material-icons-outlined">send</span> Submit Answer
+          </button>
+          <span class="submit-note"><span class="material-icons-outlined">info</span> Your answer is evaluated by the AI coaching engine.</span>
+        </div>
+      </div>
+
+      <div class="page-footer-bar">
+        <button class="btn btn-outline-primary" onclick="goToScreen(2)">
+          <span class="material-icons-outlined">arrow_back</span> Back
+        </button>
+        <button class="btn btn-primary" onclick="goToScreen(4)">
+          Next Question <span class="material-icons-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ================================================================
+     SCREEN 4 — DIAGNOSTIC Q1 EVALUATING (Submit becomes spinner)
+     ================================================================ -->
+<section class="screen" id="screen-4" aria-labelledby="s4-heading">
+  <main class="screen-main">
+    <div class="container-narrow">
+      <div class="question-header">
+        <div class="question-title">
+          <div class="eyebrow">Diagnostic Assessment</div>
+          <h2 id="s4-heading">Basic Syntax &amp; Data Types</h2>
+          <p class="caption">The AI coaching engine adapts the next question based on your response. The diagnostic ends automatically once we have enough signal.</p>
+        </div>
+        <div class="question-num">
+          Question <span class="num">1<span class="num-total"> / 13</span></span>
+        </div>
+      </div>
+
+      <div class="ai-prompt-card">
+        <div class="ai-label"><span class="material-icons-outlined">smart_toy</span> AI-Generated Assessment</div>
+        <h3>Assessment Prompt</h3>
+        <pre class="code-block">Explain how you would declare a variable in Python to store your age as an
+integer. Then, provide an example of how to convert a string representation of
+your height (e.g., "5.9") to a float and use it in a calculation to determine the
+total height of you and a friend who is 6.1 feet tall. Finally, demonstrate how to
+concatenate a string that introduces yourself with your age and height, and format
+it to include both values.</pre>
+        <div class="topic-row"><b>Topic:</b> Basic Syntax &amp; Data Types</div>
+      </div>
+
+      <div class="answer-panel">
+        <h4>Your Answer</h4>
+        <textarea class="code-editor is-disabled" disabled aria-label="Your typed answer (evaluating)">age = 25
+height = float('5.9')
+total = height + 6.1
+print(f'I am {age} and {height} ft tall.')</textarea>
+        <div class="answer-actions">
+          <button class="btn btn-primary is-disabled" disabled>
+            <span class="material-icons-outlined" style="animation: spin 1s linear infinite;">progress_activity</span> Evaluating…
+          </button>
+          <span class="submit-note"><span class="material-icons-outlined">info</span> Your answer is evaluated by the AI coaching engine.</span>
+        </div>
+      </div>
+
+      <div class="page-footer-bar">
+        <button class="btn btn-outline-primary" onclick="goToScreen(3)">
+          <span class="material-icons-outlined">arrow_back</span> Back
+        </button>
+        <button class="btn btn-primary" onclick="goToScreen(5)">
+          Next Question <span class="material-icons-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ================================================================
+     SCREEN 5 — DIAGNOSTIC Q1 FEEDBACK (results panel)
+     ================================================================ -->
+<section class="screen" id="screen-5" aria-labelledby="s5-heading">
+  <main class="screen-main">
+    <div class="container-narrow">
+      <div class="question-header">
+        <div class="question-title">
+          <div class="eyebrow">Diagnostic Assessment</div>
+          <h2 id="s5-heading">Basic Syntax &amp; Data Types</h2>
+          <p class="caption">The AI coaching engine adapts the next question based on your response. The diagnostic ends automatically once we have enough signal.</p>
+        </div>
+        <div class="question-num">
+          Question <span class="num">1<span class="num-total"> / 13</span></span>
+        </div>
+      </div>
+
+      <div class="ai-prompt-card">
+        <div class="ai-label"><span class="material-icons-outlined">smart_toy</span> AI-Generated Assessment</div>
+        <h3>Assessment Prompt</h3>
+        <pre class="code-block">Explain how you would declare a variable in Python to store your age as an
+integer. Then, provide an example of how to convert a string representation of
+your height (e.g., "5.9") to a float and use it in a calculation to determine the
+total height of you and a friend who is 6.1 feet tall. Finally, demonstrate how to
+concatenate a string that introduces yourself with your age and height, and format
+it to include both values.</pre>
+        <div class="topic-row"><b>Topic:</b> Basic Syntax &amp; Data Types</div>
+      </div>
+
+      <div class="answer-panel">
+        <h4>Your Answer</h4>
+        <textarea class="code-editor is-disabled" disabled aria-label="Your submitted answer">age = 25
+height = float('5.9')
+total = height + 6.1
+print(f'I am {age} and {height} ft tall.')</textarea>
+        <div class="answer-actions">
+          <button class="btn btn-primary is-disabled" disabled>
+            <span class="material-icons-outlined">send</span> Submit Answer
+          </button>
+          <span class="submit-note"><span class="material-icons-outlined">info</span> Your answer is evaluated by the AI coaching engine.</span>
+        </div>
+      </div>
+
+      <div class="feedback-panel">
+        <div class="feedback-label"><span class="material-icons-outlined">check_circle</span> Feedback</div>
+        <div class="feedback-body">The response demonstrates a good understanding of variable declaration, type casting, and string formatting, but it lacks explicit mention of the data types and some explanation of the process.</div>
+        <table class="feedback-table" data-no-controls>
+          <thead>
+            <tr><th>#</th><th>Objective</th><th>Score</th><th>Feedback</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Define and use variables in Python.</td><td class="score">1.0</td><td>Correctly declares the variable 'age' as an integer.</td></tr>
+            <tr><td>2</td><td>Identify and use Python data types: int, float, string, and bool.</td><td class="score">1.0</td><td>Correctly uses int for age and float for height.</td></tr>
+            <tr><td>3</td><td>Perform type casting between data types.</td><td class="score">1.0</td><td>Successfully converts a string to a float.</td></tr>
+            <tr><td>4</td><td>Use basic arithmetic operators (+, -, *, /, //, %, **).</td><td class="score">1.0</td><td>Correctly uses addition to calculate total height.</td></tr>
+            <tr><td>5</td><td>Perform string operations: concatenation, slicing, and formatting.</td><td class="score partial">0.5</td><td>Uses f-string formatting correctly, but lacks clear concatenation explanation.</td></tr>
+          </tbody>
+        </table>
+        <div class="feedback-summary">
+          <span class="summary-label">Summary</span>
+          <b>Strengths:</b> The student successfully declared variables and performed type casting and arithmetic operations. They also utilized string formatting effectively.
+          <p style="margin-top:8px;"><b>Areas for Improvement:</b> More explicit mention of data types and a clearer explanation of the string operations would enhance the response.</p>
+          <p class="next-focus-label"><b>Next focus:</b> Review string operations and their explanations, especially concatenation.</p>
+        </div>
+      </div>
+
+      <div class="page-footer-bar">
+        <button class="btn btn-outline-primary" onclick="goToScreen(4)">
+          <span class="material-icons-outlined">arrow_back</span> Back
+        </button>
+        <button class="btn btn-primary" onclick="goToScreen(6)">
+          Next Question <span class="material-icons-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ================================================================
+     SCREEN 6 — DIAGNOSTIC Q13 FINAL (insufficient feedback, Next: Results)
+     ================================================================ -->
+<section class="screen" id="screen-6" aria-labelledby="s6-heading">
+  <main class="screen-main">
+    <div class="container-narrow">
+      <div class="question-header">
+        <div class="question-title">
+          <div class="eyebrow">Diagnostic Assessment</div>
+          <h2 id="s6-heading">Introduction to Machine Learning</h2>
+          <p class="caption">The AI coaching engine adapts the next question based on your response. The diagnostic ends automatically once we have enough signal.</p>
+        </div>
+        <div class="question-num">
+          Question <span class="num">13<span class="num-total"> / 13</span></span>
+        </div>
+      </div>
+
+      <div class="ai-prompt-card">
+        <div class="ai-label"><span class="material-icons-outlined">smart_toy</span> AI-Generated Assessment</div>
+        <h3>Assessment Prompt</h3>
+        <pre class="code-block">Consider the following scenario where you are tasked with predicting housing
+prices based on various features such as the number of rooms, location, and age
+of the house.
+
+1. Explain the difference between supervised and unsupervised learning in the
+context of this housing price prediction task. Which approach would you use and
+why?
+2. You are given a dataset `housing_data.csv` with columns: `rooms`, `location`,
+`age`, and `price`. Write a Python function using Pandas to load this dataset and
+prepare it for a machine learning model by handling missing values and encoding
+categorical features.
+3. Using scikit-learn, write a Python function that trains a linear regression
+model on the prepared data and evaluates its performance using mean squared error
+(MSE). Include a way to split the data into training and testing sets.
+
+Provide the complete code for the functions and explain each part of your
+solution.</pre>
+        <div class="topic-row"><b>Topic:</b> Introduction to Machine Learning</div>
+      </div>
+
+      <div class="answer-panel">
+        <h4>Your Answer</h4>
+        <textarea class="code-editor is-disabled" disabled aria-label="Your submitted answer">pass</textarea>
+        <div class="answer-actions">
+          <button class="btn btn-primary is-disabled" disabled>
+            <span class="material-icons-outlined">send</span> Submit Answer
+          </button>
+          <span class="submit-note"><span class="material-icons-outlined">info</span> Your answer is evaluated by the AI coaching engine.</span>
+        </div>
+      </div>
+
+      <div class="feedback-panel">
+        <div class="feedback-label"><span class="material-icons-outlined">check_circle</span> Feedback</div>
+        <div class="feedback-body">The response is insufficient as it does not address any of the learning objectives. There is no explanation of supervised vs unsupervised learning, no code provided for data preparation, and no implementation of a machine learning model.</div>
+        <table class="feedback-table" data-no-controls>
+          <thead>
+            <tr><th>#</th><th>Objective</th><th>Score</th><th>Feedback</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Explain supervised vs unsupervised learning.</td><td class="score zero">0.0</td><td>No explanation provided.</td></tr>
+            <tr><td>2</td><td>Load and prepare a dataset for ML using Pandas.</td><td class="score zero">0.0</td><td>No code provided.</td></tr>
+            <tr><td>3</td><td>Train and evaluate a regression model with scikit-learn.</td><td class="score zero">0.0</td><td>No code provided.</td></tr>
+          </tbody>
+        </table>
+        <div class="feedback-summary">
+          <p class="next-focus-label"><b>Next focus:</b> Review the supervised learning workflow and revisit the Pandas + scikit-learn fundamentals before attempting ML practice.</p>
+        </div>
+      </div>
+
+      <div class="page-footer-bar">
+        <button class="btn btn-outline-primary" onclick="goToScreen(5)">
+          <span class="material-icons-outlined">arrow_back</span> Back
+        </button>
+        <button class="btn btn-primary" onclick="goToScreen(7)">
+          Next: Results <span class="material-icons-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ================================================================
+     SCREEN 7 — DIAGNOSTIC RESULTS
+     ================================================================ -->
+<section class="screen" id="screen-7" aria-labelledby="s7-heading">
+  <main class="screen-main centered">
+    <div class="container-narrow">
+      <div class="result-card">
+        <div class="check-icon"><span class="material-icons-outlined">check_circle</span></div>
+        <div class="text-center"><span class="badge badge-success">Diagnostic Complete</span></div>
+        <h3 id="s7-heading" class="text-center" style="margin-top:12px;">We've established your starting point</h3>
+        <p class="text-center text-muted small" style="margin-top:8px;">The student has demonstrated a basic understanding of Python syntax and data types, achieving full marks in several foundational areas. However, significant gaps exist in control flow, functions, data structures, and other advanced topics, indicating a need for further study and practice.</p>
+
+        <div class="baseline-panel">
+          <h5>Baseline Result — Overall 0.12</h5>
+          <p>Focus on practicing control flow statements, including conditional statements and loops, as well as functions and data structures. Utilize coding exercises and online platforms to reinforce these concepts through hands-on practice.</p>
+        </div>
+
+        <div class="result-columns">
+          <div class="result-column mastered">
+            <h4>Mastered Topics</h4>
+            <div class="result-skill">
+              <span class="result-skill-name"><span class="material-icons-outlined" style="font-size:14px;vertical-align:middle;color:var(--pgn-color-warning-base);">emoji_events</span> Basic Syntax &amp; Data Types</span>
+              <span class="result-skill-score">1.00</span>
+            </div>
+          </div>
+          <div class="result-column needs">
+            <h4>Needs Practice</h4>
+            <div class="result-skill">
+              <span class="result-skill-name"><span class="material-icons-outlined" style="font-size:14px;vertical-align:middle;color:var(--pgn-color-danger-base);">flag</span> Control Flow &amp; Logic</span>
+              <span class="result-skill-score">0.00</span>
+            </div>
+            <div class="result-skill">
+              <span class="result-skill-name"><span class="material-icons-outlined" style="font-size:14px;vertical-align:middle;color:var(--pgn-color-danger-base);">flag</span> Functions &amp; Modular Programming</span>
+              <span class="result-skill-score">0.00</span>
+            </div>
+            <div class="result-skill">
+              <span class="result-skill-name"><span class="material-icons-outlined" style="font-size:14px;vertical-align:middle;color:var(--pgn-color-danger-base);">flag</span> Data Structures: Lists, Tuples, Sets, Dictionaries</span>
+              <span class="result-skill-score">0.00</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:8px; margin-top:16px;">
+          <button class="btn btn-primary btn-block" onclick="goToScreen(8)">
+            View Your Progress Map <span class="material-icons-outlined">map</span>
+          </button>
+          <button class="btn btn-outline-primary btn-block" onclick="goToScreen(2)">
+            <span class="material-icons-outlined">refresh</span> Retake Diagnostics
+          </button>
+        </div>
+      </div>
+
+      <div class="page-footer-bar">
+        <button class="btn btn-outline-primary" onclick="goToScreen(1)">
+          <span class="material-icons-outlined">home</span> Home
+        </button>
+        <button class="btn btn-primary" onclick="goToScreen(8)">
+          Next: Progress Map <span class="material-icons-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ================================================================
+     SCREEN 8 — PROGRESS MAP (initial, after diagnostic)
+     ================================================================ -->
+<section class="screen" id="screen-8" aria-labelledby="s8-heading">
+  <main class="screen-main">
+    <div class="container">
+      <div class="pm-header">
+        <div class="eyebrow">Your Starting Point</div>
+        <h2 id="s8-heading">Progress Map</h2>
+        <div class="pm-stats">13 Topics · 3 mastered · 10 to explore</div>
+      </div>
+
+      <div class="pm-legend">
+        <span><span class="pm-legend-dot recommended"></span>Recommended</span>
+        <span><span class="pm-legend-dot in-progress"></span>In Progress</span>
+        <span><span class="pm-legend-dot not-started"></span>Not Started</span>
+      </div>
+
+      <div class="pm-grid">
+        <div class="pm-card">
+          <div class="pm-card-left">
+            <span class="pm-num">1</span>
+            <div class="pm-card-body">
+              <div class="pm-card-name">Basic Syntax &amp; Data Types</div>
+              <div class="pm-card-sub">Completed · Score 1.00</div>
+            </div>
+          </div>
+          <div class="pm-card-right">
+            <span class="badge badge-gray">Completed</span>
+            <button class="btn btn-primary btn-sm">Retake <span class="material-icons-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+
+        <div class="pm-card recommended">
+          <div class="pm-card-left">
+            <span class="pm-num" style="background:var(--pgn-color-brand-base);color:#fff;">2</span>
+            <div class="pm-card-body">
+              <div class="pm-card-name">Control Flow &amp; Logic</div>
+              <div class="pm-card-sub">Question 1 of 5</div>
+            </div>
+          </div>
+          <div class="pm-card-right">
+            <button class="btn btn-primary btn-sm" onclick="goToScreen(9)">Continue <span class="material-icons-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+
+        <div class="pm-card">
+          <div class="pm-card-left">
+            <span class="pm-num">3</span>
+            <div class="pm-card-body">
+              <div class="pm-card-name">Functions &amp; Modular Programming</div>
+              <div class="pm-card-sub">Completed · Score 0.00</div>
+            </div>
+          </div>
+          <div class="pm-card-right">
+            <span class="badge badge-gray">Completed</span>
+            <button class="btn btn-primary btn-sm">Retake <span class="material-icons-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+
+        <div class="pm-card">
+          <div class="pm-card-left">
+            <span class="pm-num">4</span>
+            <div class="pm-card-body">
+              <div class="pm-card-name">Data Structures: Lists, Tuples, Sets, Dictionaries</div>
+              <div class="pm-card-sub">Completed · Score 0.00</div>
+            </div>
+          </div>
+          <div class="pm-card-right">
+            <span class="badge badge-gray">Completed</span>
+            <button class="btn btn-primary btn-sm">Retake <span class="material-icons-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+
+        <div class="pm-card">
+          <div class="pm-card-left"><span class="pm-num">5</span><div class="pm-card-body"><div class="pm-card-name">Working with Files &amp; I/O</div><div class="pm-card-sub">Not Started</div></div></div>
+          <div class="pm-card-right"><span class="badge badge-gray">Not Started</span><button class="btn btn-primary btn-sm">Start <span class="material-icons-outlined">arrow_forward</span></button></div>
+        </div>
+        <div class="pm-card">
+          <div class="pm-card-left"><span class="pm-num">6</span><div class="pm-card-body"><div class="pm-card-name">Error Handling &amp; Debugging</div><div class="pm-card-sub">Not Started</div></div></div>
+          <div class="pm-card-right"><span class="badge badge-gray">Not Started</span><button class="btn btn-primary btn-sm">Start <span class="material-icons-outlined">arrow_forward</span></button></div>
+        </div>
+        <div class="pm-card">
+          <div class="pm-card-left"><span class="pm-num">7</span><div class="pm-card-body"><div class="pm-card-name">Object-Oriented Programming (OOP)</div><div class="pm-card-sub">Not Started</div></div></div>
+          <div class="pm-card-right"><span class="badge badge-gray">Not Started</span><button class="btn btn-primary btn-sm">Start <span class="material-icons-outlined">arrow_forward</span></button></div>
+        </div>
+        <div class="pm-card">
+          <div class="pm-card-left"><span class="pm-num">8</span><div class="pm-card-body"><div class="pm-card-name">Python Libraries &amp; Modules</div><div class="pm-card-sub">Not Started</div></div></div>
+          <div class="pm-card-right"><span class="badge badge-gray">Not Started</span><button class="btn btn-primary btn-sm">Start <span class="material-icons-outlined">arrow_forward</span></button></div>
+        </div>
+        <div class="pm-card">
+          <div class="pm-card-left"><span class="pm-num">9</span><div class="pm-card-body"><div class="pm-card-name">Advanced Data Handling</div><div class="pm-card-sub">Not Started</div></div></div>
+          <div class="pm-card-right"><span class="badge badge-gray">Not Started</span><button class="btn btn-primary btn-sm">Start <span class="material-icons-outlined">arrow_forward</span></button></div>
+        </div>
+        <div class="pm-card">
+          <div class="pm-card-left"><span class="pm-num">10</span><div class="pm-card-body"><div class="pm-card-name">Regular Expressions &amp; String Manipulation</div><div class="pm-card-sub">Not Started</div></div></div>
+          <div class="pm-card-right"><span class="badge badge-gray">Not Started</span><button class="btn btn-primary btn-sm">Start <span class="material-icons-outlined">arrow_forward</span></button></div>
+        </div>
+        <div class="pm-card">
+          <div class="pm-card-left"><span class="pm-num">11</span><div class="pm-card-body"><div class="pm-card-name">Working with Databases</div><div class="pm-card-sub">Not Started</div></div></div>
+          <div class="pm-card-right"><span class="badge badge-gray">Not Started</span><button class="btn btn-primary btn-sm">Start <span class="material-icons-outlined">arrow_forward</span></button></div>
+        </div>
+        <div class="pm-card">
+          <div class="pm-card-left"><span class="pm-num">12</span><div class="pm-card-body"><div class="pm-card-name">Introduction to Automation</div><div class="pm-card-sub">Not Started</div></div></div>
+          <div class="pm-card-right"><span class="badge badge-gray">Not Started</span><button class="btn btn-primary btn-sm">Start <span class="material-icons-outlined">arrow_forward</span></button></div>
+        </div>
+        <div class="pm-card">
+          <div class="pm-card-left"><span class="pm-num">13</span><div class="pm-card-body"><div class="pm-card-name">Introduction to Machine Learning</div><div class="pm-card-sub">Not Started</div></div></div>
+          <div class="pm-card-right"><span class="badge badge-gray">Not Started</span><button class="btn btn-primary btn-sm">Start <span class="material-icons-outlined">arrow_forward</span></button></div>
+        </div>
+      </div>
+
+      <div class="pm-bottom-actions">
+        <button class="btn btn-primary" onclick="goToScreen(9)">
+          <span class="material-icons-outlined">play_arrow</span> Start Coaching
+        </button>
+        <button class="btn btn-outline-primary">
+          <span class="material-icons-outlined">menu_book</span> Return to Course Textbook
+        </button>
+      </div>
+
+      <div class="page-footer-bar">
+        <button class="btn btn-outline-primary" onclick="goToScreen(7)">
+          <span class="material-icons-outlined">arrow_back</span> Back
+        </button>
+        <button class="btn btn-primary" onclick="goToScreen(9)">
+          Begin Coaching <span class="material-icons-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ================================================================
+     SCREEN 9 — COACHING TASK EMPTY (2-column)
+     ================================================================ -->
+<section class="screen" id="screen-9" aria-labelledby="s9-heading">
+  <main class="screen-main">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="#" onclick="goToScreen(1); return false;">Coding Coach</a>
+        <span class="breadcrumb-sep">›</span>
+        <a href="#" onclick="return false;" title="E010 · Foundations of Programming (Python)">E010</a>
+        <span class="breadcrumb-sep">›</span>
+        <a href="#" onclick="goToScreen(8); return false;">Progress Map</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="current">Control Flow &amp; Logic</span>
+      </nav>
+
+      <div class="save-exit-row">
+        <button class="btn btn-outline-primary btn-sm" onclick="goToScreen(13)">
+          <span class="material-icons-outlined">save</span> Save &amp; Exit
+        </button>
+      </div>
+
+      <div style="margin-bottom: var(--pgn-spacing-3);">
+        <div class="eyebrow eyebrow-blue">Question 2 of 5 · Control Flow &amp; Logic</div>
+        <h2 id="s9-heading">Control Flow &amp; Logic</h2>
+      </div>
+
+      <div class="coaching-layout">
+        <div class="ai-prompt-card">
+          <div class="ai-label"><span class="material-icons-outlined">smart_toy</span> AI Coaching Prompt</div>
+          <h3>Use logical operators: and, or, not.</h3>
+          <div class="prompt-body">Write a function called <code>is_valid_score</code> that accepts a score as an argument and returns <code>True</code> if the score is between 50 and 100 (inclusive) and <code>False</code> otherwise. Additionally, if the score is less than 0, the function should return <code>False</code> due to invalid input. Use logical operators to implement this logic.</div>
+        </div>
+
+        <div class="answer-panel">
+          <h4>Your Answer</h4>
+          <div class="answer-hint">Write your answer below.</div>
+          <textarea class="code-editor" placeholder="# Write your answer here..." aria-label="Type your answer"></textarea>
+          <div class="answer-actions">
+            <button class="btn btn-primary is-disabled" disabled>
+              <span class="material-icons-outlined">send</span> Submit Answer
+            </button>
+            <button class="btn btn-tertiary">
+              <span class="material-icons-outlined">refresh</span> Clear
+            </button>
+            <span class="char-count">0 / 5,000 characters</span>
+          </div>
+          <span class="submit-note"><span class="material-icons-outlined">info</span> Your answer is evaluated by the AI coaching engine. Feedback appears after submission.</span>
+        </div>
+      </div>
+
+      <div class="page-footer-bar">
+        <button class="btn btn-outline-primary" onclick="goToScreen(8)">
+          <span class="material-icons-outlined">arrow_back</span> Back
+        </button>
+        <button class="btn btn-primary" onclick="goToScreen(10)">
+          Next Question <span class="material-icons-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ================================================================
+     SCREEN 10 — COACHING TASK FEEDBACK
+     ================================================================ -->
+<section class="screen" id="screen-10" aria-labelledby="s10-heading">
+  <main class="screen-main">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="#" onclick="goToScreen(1); return false;">Coding Coach</a>
+        <span class="breadcrumb-sep">›</span>
+        <a href="#" onclick="return false;" title="E010 · Foundations of Programming (Python)">E010</a>
+        <span class="breadcrumb-sep">›</span>
+        <a href="#" onclick="goToScreen(8); return false;">Progress Map</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="current">Control Flow &amp; Logic</span>
+      </nav>
+
+      <div class="save-exit-row">
+        <button class="btn btn-outline-primary btn-sm" onclick="goToScreen(13)">
+          <span class="material-icons-outlined">save</span> Save &amp; Exit
+        </button>
+      </div>
+
+      <div style="margin-bottom: var(--pgn-spacing-3);">
+        <div class="eyebrow eyebrow-blue">Question 2 of 5 · Control Flow &amp; Logic</div>
+        <h2 id="s10-heading">Control Flow &amp; Logic</h2>
+      </div>
+
+      <div class="coaching-layout">
+        <div class="ai-prompt-card">
+          <div class="ai-label"><span class="material-icons-outlined">smart_toy</span> AI Coaching Prompt</div>
+          <h3>Use logical operators: and, or, not.</h3>
+          <div class="prompt-body">Write a function called <code>is_valid_score</code> that accepts a score as an argument and returns <code>True</code> if the score is between 50 and 100 (inclusive) and <code>False</code> otherwise. Additionally, if the score is less than 0, the function should return <code>False</code> due to invalid input. Use logical operators to implement this logic.</div>
+        </div>
+
+        <div class="answer-panel">
+          <h4>Your Answer</h4>
+          <div class="answer-hint">Write your answer below.</div>
+          <textarea class="code-editor is-disabled" disabled aria-label="Your submitted answer">def is_valid_score(score):
+    return score >= 50 and score <= 100</textarea>
+          <div class="answer-actions">
+            <button class="btn btn-primary is-disabled" disabled>
+              <span class="material-icons-outlined">send</span> Submit Answer
+            </button>
+            <button class="btn btn-tertiary">
+              <span class="material-icons-outlined">refresh</span> Clear
+            </button>
+            <span class="char-count">66 / 5,000 characters</span>
+          </div>
+          <span class="submit-note"><span class="material-icons-outlined">info</span> Your answer is evaluated by the AI coaching engine. Feedback appears after submission.</span>
+        </div>
+      </div>
+
+      <div class="feedback-panel" style="grid-column: 1 / -1; margin-top: var(--pgn-spacing-3);">
+        <div class="feedback-label" style="color: var(--pgn-color-gray-800);">Feedback</div>
+        <div class="feedback-body">The function partially meets the requirements. It correctly checks if the score is between 50 and 100 using logical operators, but it does not handle the case where the score is less than 0, which is also a specified requirement.</div>
+        <table class="feedback-table" data-no-controls>
+          <thead>
+            <tr><th>#</th><th>Objective</th><th>Score</th><th>Feedback</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Use logical operators: and, or, not</td><td class="score">1.0</td><td>The use of 'and' is appropriate for checking the range of scores.</td></tr>
+            <tr><td>2</td><td>Use logical operators: and, or, not</td><td class="score zero">0.0</td><td>The function does not use logical operators to check for invalid input (score &lt; 0). It should return False in this case as well.</td></tr>
+          </tbody>
+        </table>
+        <div class="feedback-summary">
+          <span class="summary-label">Summary</span>
+          The function correctly implements the logical check for valid scores between 50 and 100. However, it fails to account for scores below 0, which is a crucial requirement. Improving the function to include this check will enhance its correctness.
+          <p class="next-focus-label"><b>Next focus:</b> Review how to combine multiple conditions using logical operators (and, or, not) to ensure all specified requirements are met.</p>
+        </div>
+      </div>
+
+      <div class="page-footer-bar">
+        <button class="btn btn-outline-primary" onclick="goToScreen(9)">
+          <span class="material-icons-outlined">arrow_back</span> Back
+        </button>
+        <button class="btn btn-primary" onclick="goToScreen(11)">
+          Next Question <span class="material-icons-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ================================================================
+     SCREEN 11 — WELCOME BACK (returning user)
+     ================================================================ -->
+<section class="screen" id="screen-11" aria-labelledby="s11-heading">
+  <main class="screen-main">
+    <div class="container-narrow">
+      <h2 id="s11-heading">Welcome back, Sally</h2>
+      <p class="text-muted small" style="margin-top:8px;">Your prior progress has been preserved. Pick up right where you left off.</p>
+
+      <table class="welcome-table" data-no-controls>
+        <tr><td>Last session</td><td>3 weeks ago</td></tr>
+        <tr><td>Active Topic</td><td>Data Structures: Lists, Tuples, Sets, Dictionaries</td></tr>
+        <tr><td>Difficulty level</td><td>Intermediate</td></tr>
+        <tr><td>Resume point</td><td><a href="#" onclick="goToScreen(15); return false;">Dictionary Iteration — Task 5</a></td></tr>
+        <tr><td>Topics explored</td><td>2 of 13</td></tr>
+      </table>
+
+      <p class="text-muted small" style="margin-top:24px; margin-bottom:8px;">Your progress map across all 13 Topics:</p>
+
+      <div class="pm-legend">
+        <span><span class="pm-legend-dot recommended" style="background:var(--pgn-color-success-base);"></span>Baseline</span>
+        <span><span class="pm-legend-dot in-progress"></span>In Progress</span>
+        <span><span class="pm-legend-dot not-started"></span>Not Started</span>
+      </div>
+
+      <div class="pm-grid">
+        <div class="pm-card">
+          <div class="pm-card-left"><span class="pm-num" style="background:var(--pgn-color-success-base);color:#fff;">1</span><div class="pm-card-body"><div class="pm-card-name">Basic Syntax &amp; Data Types</div><div class="pm-card-sub">Completed baseline</div></div></div>
+          <div class="pm-card-right"><span class="badge badge-gray">Baseline</span></div>
+        </div>
+        <div class="pm-card">
+          <div class="pm-card-left"><span class="pm-num">2</span><div class="pm-card-body"><div class="pm-card-name">Control Flow &amp; Logic</div><div class="pm-card-sub">Not Started</div></div></div>
+          <div class="pm-card-right"><span class="badge badge-gray">Not Started</span></div>
+        </div>
+        <div class="pm-card">
+          <div class="pm-card-left"><span class="pm-num">3</span><div class="pm-card-body"><div class="pm-card-name">Functions &amp; Modular Programming</div><div class="pm-card-sub">Not Started</div></div></div>
+          <div class="pm-card-right"><span class="badge badge-gray">Not Started</span></div>
+        </div>
+        <div class="pm-card recommended">
+          <div class="pm-card-left"><span class="pm-num" style="background:var(--pgn-color-warning-base);color:#fff;">4</span><div class="pm-card-body"><div class="pm-card-name">Data Structures: Lists, Tuples, Sets, Dictionaries</div><div class="pm-card-sub">In Progress — Intermediate level</div></div></div>
+          <div class="pm-card-right"><button class="btn btn-primary btn-sm" onclick="goToScreen(15); return false;">Resume <span class="material-icons-outlined">arrow_forward</span></button></div>
+        </div>
+        <div class="pm-card"><div class="pm-card-left"><span class="pm-num">5</span><div class="pm-card-body"><div class="pm-card-name">Working with Files &amp; I/O</div><div class="pm-card-sub">Not Started</div></div></div><div class="pm-card-right"><span class="badge badge-gray">Not Started</span></div></div>
+        <div class="pm-card"><div class="pm-card-left"><span class="pm-num">6</span><div class="pm-card-body"><div class="pm-card-name">Error Handling &amp; Debugging</div><div class="pm-card-sub">Not Started</div></div></div><div class="pm-card-right"><span class="badge badge-gray">Not Started</span></div></div>
+        <div class="pm-card"><div class="pm-card-left"><span class="pm-num">7</span><div class="pm-card-body"><div class="pm-card-name">Object-Oriented Programming</div><div class="pm-card-sub">Not Started</div></div></div><div class="pm-card-right"><span class="badge badge-gray">Not Started</span></div></div>
+        <div class="pm-card"><div class="pm-card-left"><span class="pm-num">8</span><div class="pm-card-body"><div class="pm-card-name">Python Libraries &amp; Modules</div><div class="pm-card-sub">Not Started</div></div></div><div class="pm-card-right"><span class="badge badge-gray">Not Started</span></div></div>
+        <div class="pm-card"><div class="pm-card-left"><span class="pm-num">9</span><div class="pm-card-body"><div class="pm-card-name">Advanced Data Handling</div><div class="pm-card-sub">Not Started</div></div></div><div class="pm-card-right"><span class="badge badge-gray">Not Started</span></div></div>
+        <div class="pm-card"><div class="pm-card-left"><span class="pm-num">10</span><div class="pm-card-body"><div class="pm-card-name">Regular Expressions &amp; Strings</div><div class="pm-card-sub">Not Started</div></div></div><div class="pm-card-right"><span class="badge badge-gray">Not Started</span></div></div>
+        <div class="pm-card"><div class="pm-card-left"><span class="pm-num">11</span><div class="pm-card-body"><div class="pm-card-name">Working with Databases</div><div class="pm-card-sub">Not Started</div></div></div><div class="pm-card-right"><span class="badge badge-gray">Not Started</span></div></div>
+        <div class="pm-card"><div class="pm-card-left"><span class="pm-num">12</span><div class="pm-card-body"><div class="pm-card-name">Introduction to Automation</div><div class="pm-card-sub">Not Started</div></div></div><div class="pm-card-right"><span class="badge badge-gray">Not Started</span></div></div>
+        <div class="pm-card"><div class="pm-card-left"><span class="pm-num">13</span><div class="pm-card-body"><div class="pm-card-name">Introduction to Machine Learning</div><div class="pm-card-sub">Not Started</div></div></div><div class="pm-card-right"><span class="badge badge-gray">Not Started</span></div></div>
+      </div>
+
+      <div class="pm-bottom-actions">
+        <button class="btn btn-primary" onclick="goToScreen(12)">
+          <span class="material-icons-outlined">play_arrow</span> Resume Coaching
+        </button>
+        <button class="btn btn-outline-primary">
+          <span class="material-icons-outlined">menu_book</span> Return to Course
+        </button>
+      </div>
+      <p class="micro text-muted" style="margin-top:8px;"><span class="material-icons-outlined" style="font-size:13px;vertical-align:middle;">info</span> No re-assessment is triggered in the current release. Your prior progress is fully preserved.</p>
+
+      <div class="page-footer-bar">
+        <button class="btn btn-outline-primary" onclick="goToScreen(8)">
+          <span class="material-icons-outlined">arrow_back</span> Back
+        </button>
+        <button class="btn btn-primary" onclick="goToScreen(12)">
+          Restart Flow <span class="material-icons-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ================================================================
+     SCREEN 12 — RE-ASSESSMENT (verifying retention)
+     ================================================================ -->
+<section class="screen" id="screen-12" aria-labelledby="s12-heading">
+  <main class="screen-main">
+    <div class="container-narrow">
+      <div class="question-header">
+        <div class="question-title">
+          <div class="eyebrow">Re-Assessment · Welcome Back</div>
+          <h2 id="s12-heading">Control Flow &amp; Logic</h2>
+          <p class="caption">Verifying retention of previously covered material</p>
+        </div>
+        <div class="question-num">
+          Question <span class="num">1<span class="num-total"> / 2</span></span>
+        </div>
+      </div>
+
+      <div class="progress" style="margin-bottom: var(--pgn-spacing-3);">
+        <div class="progress-bar" style="width: 50%;"></div>
+      </div>
+
+      <div class="ai-prompt-card">
+        <div class="ai-label"><span class="material-icons-outlined">smart_toy</span> AI-Generated Re-Assessment</div>
+        <h3>Use loops and conditionals to process a collection.</h3>
+        <pre class="code-block"># Re-assessment prompt: Write a Python function called count_passing that
+# takes a list of numeric scores and returns a dictionary with two keys:
+# "pass": count of scores &gt;= 70  "fail": count of scores &lt; 70  Test it with:
+# [85, 42, 91, 67, 73, 55, 88]</pre>
+        <div class="topic-row"><b>Topic:</b> Control Flow &amp; Logic — Loops and Conditionals (Intermediate)</div>
+      </div>
+
+      <div class="answer-panel">
+        <h4>Your Answer</h4>
+        <textarea class="code-editor" aria-label="Type your answer"># Type your answer here...
+def count_passing(scores):</textarea>
+        <div class="answer-actions">
+          <button class="btn btn-primary" onclick="goToScreen(13)">
+            <span class="material-icons-outlined">send</span> Submit Answer
+          </button>
+          <span class="submit-note"><span class="material-icons-outlined">info</span> Your answer is evaluated by the AI coaching engine.</span>
+        </div>
+      </div>
+
+      <div class="page-footer-bar">
+        <button class="btn btn-outline-primary" onclick="goToScreen(11)">
+          <span class="material-icons-outlined">arrow_back</span> Back
+        </button>
+        <button class="btn btn-primary" onclick="goToScreen(13)">
+          Next: Question 2 <span class="material-icons-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ================================================================
+     SCREEN 13 — SESSION SAVED
+     ================================================================ -->
+<section class="screen" id="screen-13" aria-labelledby="s13-heading">
+  <main class="screen-main centered">
+    <div class="container-narrow">
+      <div class="result-card">
+        <div class="check-icon"><span class="material-icons-outlined">check_circle</span></div>
+        <div class="text-center"><span class="badge badge-success">Session Saved</span></div>
+        <h3 id="s13-heading" class="text-center" style="margin-top:12px;">Your progress has been saved</h3>
+        <p class="text-center text-muted small" style="margin-top:8px;">Everything from this session is tied to your WGU student account. When you return, you'll pick up exactly where you left off.</p>
+
+        <div class="snapshot-table" style="margin-top: 16px;">
+          <div class="snapshot-row"><span class="snapshot-label">Topic</span><span class="snapshot-value">Basic Syntax &amp; Data Types</span></div>
+          <div class="snapshot-row"><span class="snapshot-label">Tasks completed</span><span class="snapshot-value">1</span></div>
+          <div class="snapshot-row"><span class="snapshot-label">Topics unlocked</span><span class="snapshot-value">1 of 13</span></div>
+          <div class="snapshot-row"><span class="snapshot-label">Resume next time</span><span class="snapshot-value link">Variables &amp; Assignment — Task 2</span></div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:8px; margin-top:16px;">
+          <button class="btn btn-primary btn-block">
+            <span class="material-icons-outlined">open_in_new</span> Return to E010 Course
+          </button>
+          <button class="btn btn-outline-primary btn-block" onclick="goToScreen(8)">
+            <span class="material-icons-outlined">menu_book</span> View Progress Map
+          </button>
+        </div>
+        <p class="micro text-muted text-center" style="margin-top:12px;"><span class="material-icons-outlined" style="font-size:13px;vertical-align:middle;">info</span> This tool does not affect your course grade or academic record.</p>
+      </div>
+
+      <div class="page-footer-bar right-only">
+        <button class="btn btn-outline-primary" onclick="goToScreen(9)">
+          <span class="material-icons-outlined">arrow_back</span> Back
+        </button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ================================================================
+     SCREEN 14 — VERIFICATION PASSED (difficulty advancing)
+     ================================================================ -->
+<section class="screen" id="screen-14" aria-labelledby="s14-heading">
+  <main class="screen-main centered">
+    <div class="container-narrow">
+      <div class="result-card">
+        <div class="check-icon"><span class="material-icons-outlined">check_circle</span></div>
+        <div class="text-center"><span class="badge badge-success">Verification Passed</span></div>
+        <h3 id="s14-heading" class="text-center" style="margin-top:12px;">Gap resolved — difficulty advancing</h3>
+        <p class="text-center text-muted small" style="margin-top:8px;">Your understanding of dictionary iteration has been verified. The coaching engine is advancing your difficulty level.</p>
+
+        <div class="difficulty-card">
+          <h5>Difficulty Progression</h5>
+          <div class="difficulty-track">
+            <span class="stage">Foundational</span>
+            <span class="material-icons-outlined">arrow_forward</span>
+            <span class="stage current">Intermediate</span>
+            <span class="material-icons-outlined">arrow_forward</span>
+            <span class="stage">Advanced</span>
+          </div>
+          <p>Assessment difficulty increases progressively. Identical questions are never repeated within a session.</p>
+        </div>
+
+        <div class="snapshot-table">
+          <div class="snapshot-row"><span class="snapshot-label">Topic</span><span class="snapshot-value">Data Structures</span></div>
+          <div class="snapshot-row"><span class="snapshot-label">Tasks completed</span><span class="snapshot-value">3</span></div>
+          <div class="snapshot-row"><span class="snapshot-label">Current difficulty</span><span class="snapshot-value link">Intermediate</span></div>
+        </div>
+
+        <div style="margin-top: 16px;">
+          <button class="btn btn-primary btn-block" onclick="goToScreen(15)">
+            <span class="material-icons-outlined">save</span> Save &amp; Exit
+          </button>
+        </div>
+        <p class="micro text-muted text-center" style="margin-top:8px;">Progress map updates in real time during your session.</p>
+      </div>
+
+      <div class="page-footer-bar">
+        <button class="btn btn-outline-primary" onclick="goToScreen(10)">
+          <span class="material-icons-outlined">arrow_back</span> Back
+        </button>
+        <button class="btn btn-primary" onclick="goToScreen(15)">
+          Save &amp; Exit <span class="material-icons-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ================================================================
+     SCREEN 15 — ADAPTIVE TASK FOUNDATIONAL (List Operations)
+     ================================================================ -->
+<section class="screen" id="screen-15" aria-labelledby="s15-heading">
+  <main class="screen-main">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="#" onclick="goToScreen(1); return false;">Coding Coach</a>
+        <span class="breadcrumb-sep">›</span>
+        <a href="#" onclick="return false;" title="E010 · Foundations of Programming (Python)">E010</a>
+        <span class="breadcrumb-sep">›</span>
+        <a href="#" onclick="goToScreen(8); return false;">Data Structures</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="current">Verification — Dictionary Iteration</span>
+      </nav>
+
+      <div class="save-exit-row">
+        <button class="btn btn-outline-primary btn-sm" onclick="goToScreen(13)">
+          <span class="material-icons-outlined">save</span> Save &amp; Exit
+        </button>
+      </div>
+
+      <div style="margin-bottom: var(--pgn-spacing-3);">
+        <div class="eyebrow eyebrow-blue">Foundational · Data Structures</div>
+        <h2 id="s15-heading">List Operations</h2>
+      </div>
+
+      <div class="coaching-layout">
+        <div class="ai-prompt-card">
+          <div class="ai-label"><span class="material-icons-outlined">smart_toy</span> AI Coaching Prompt</div>
+          <div class="prompt-body">What is the correct Python syntax to append the value 'grape' to a list called fruits?</div>
+          <pre class="code-block" style="margin-top: 8px;">fruits = ["apple", "banana", "cherry"]
+# Add 'grape' to this list</pre>
+        </div>
+
+        <div class="answer-panel">
+          <h4>Your Answer</h4>
+          <div class="answer-hint">Write your answer below.</div>
+          <textarea class="code-editor" placeholder="# Write your answer here..." aria-label="Type your answer"></textarea>
+          <div class="answer-actions">
+            <button class="btn btn-primary is-disabled" disabled>
+              <span class="material-icons-outlined">send</span> Submit Answer
+            </button>
+            <button class="btn btn-tertiary">
+              <span class="material-icons-outlined">refresh</span> Clear
+            </button>
+            <span class="char-count">0 / 5,000 characters</span>
+          </div>
+          <span class="submit-note"><span class="material-icons-outlined">info</span> Your answer is evaluated by the AI coaching engine. Feedback appears after submission.</span>
+        </div>
+      </div>
+
+      <div class="page-footer-bar">
+        <button class="btn btn-outline-primary" onclick="goToScreen(11)">
+          <span class="material-icons-outlined">arrow_back</span> Back
+        </button>
+        <button class="btn btn-primary" onclick="goToScreen(16)">
+          Next: Results <span class="material-icons-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ================================================================
+     SCREEN 16 — ADAPTIVE FEEDBACK CORRECT
+     ================================================================ -->
+<section class="screen" id="screen-16" aria-labelledby="s16-heading">
+  <main class="screen-main">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="#" onclick="goToScreen(1); return false;">Coding Coach</a>
+        <span class="breadcrumb-sep">›</span>
+        <a href="#" onclick="return false;" title="E010 · Foundations of Programming (Python)">E010</a>
+        <span class="breadcrumb-sep">›</span>
+        <a href="#" onclick="goToScreen(8); return false;">Data Structures</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="current">List Operations</span>
+      </nav>
+
+      <div class="save-exit-row">
+        <button class="btn btn-outline-primary btn-sm" onclick="goToScreen(13)">
+          <span class="material-icons-outlined">save</span> Save &amp; Exit
+        </button>
+      </div>
+
+      <div style="margin-bottom: var(--pgn-spacing-3);">
+        <div class="eyebrow eyebrow-blue">Foundational · Data Structures</div>
+        <h2 id="s16-heading">List Operations</h2>
+      </div>
+
+      <div class="ai-prompt-card">
+        <div class="ai-label"><span class="material-icons-outlined">smart_toy</span> AI Coaching Prompt</div>
+        <div class="prompt-body">What is the correct Python syntax to append the value 'grape' to a list called fruits?</div>
+        <pre class="code-block inline" style="margin-top: 8px;">fruits = ["apple", "banana", "cherry"]  # Add 'grape' to this list</pre>
+      </div>
+
+      <div class="sally-answer-panel">
+        <h4>Sally's Answer</h4>
+        <pre class="code-block">fruits.append('grape')</pre>
+      </div>
+
+      <div class="feedback-panel">
+        <div class="feedback-label"><span class="material-icons-outlined">check_circle</span> Correct!</div>
+        <div class="feedback-body">You used the <code>.append()</code> method properly. Lists in Python are mutable, and <code>.append()</code> adds a single element to the end of the list.</div>
+        <div style="display: flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 13px; color: var(--pgn-color-success-base); font-weight: 700;">
+          <span class="material-icons-outlined" style="font-size:18px;">trending_up</span>
+          Difficulty will increase for your next question.
+        </div>
+      </div>
+
+      <div style="margin-top: var(--pgn-spacing-3);">
+        <button class="btn btn-primary" onclick="goToScreen(18)">
+          <span class="material-icons-outlined">arrow_forward</span> Continue to Next Question
+        </button>
+      </div>
+
+      <div class="page-footer-bar">
+        <button class="btn btn-outline-primary" onclick="goToScreen(15)">
+          <span class="material-icons-outlined">arrow_back</span> Back
+        </button>
+        <button class="btn btn-primary" onclick="goToScreen(18)">
+          Next: Increased Difficulty <span class="material-icons-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ================================================================
+     SCREEN 17 — ADAPTIVE FEEDBACK INCORRECT
+     ================================================================ -->
+<section class="screen" id="screen-17" aria-labelledby="s17-heading">
+  <main class="screen-main">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="#" onclick="goToScreen(1); return false;">Coding Coach</a>
+        <span class="breadcrumb-sep">›</span>
+        <a href="#" onclick="return false;" title="E010 · Foundations of Programming (Python)">E010</a>
+        <span class="breadcrumb-sep">›</span>
+        <a href="#" onclick="goToScreen(8); return false;">Data Structures</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="current">Dictionary Iteration</span>
+      </nav>
+
+      <div class="save-exit-row">
+        <button class="btn btn-outline-primary btn-sm" onclick="goToScreen(13)">
+          <span class="material-icons-outlined">save</span> Save &amp; Exit
+        </button>
+      </div>
+
+      <div style="margin-bottom: var(--pgn-spacing-3);">
+        <div class="eyebrow eyebrow-blue">Increased Difficulty · Data Structures</div>
+        <h2 id="s17-heading">Dictionary Iteration</h2>
+      </div>
+
+      <div class="ai-prompt-card">
+        <div class="ai-label"><span class="material-icons-outlined">smart_toy</span> AI Coaching Prompt</div>
+        <div class="prompt-body">Write a Python loop that iterates over the following dictionary and prints each key-value pair in the format <code>key: value</code>.</div>
+        <pre class="code-block inline" style="margin-top: 8px;">student_scores = {"Alice": 92, "Bob": 87, "Charlie": 95}</pre>
+      </div>
+
+      <div class="sally-answer-panel">
+        <h4>Sally's Answer</h4>
+        <pre class="code-block">for key in student_scores: print(student_scores)</pre>
+      </div>
+
+      <div class="feedback-panel danger">
+        <div class="feedback-label"><span class="material-icons-outlined">cancel</span> Incorrect — Here's what happened</div>
+        <div class="feedback-body">
+          Your loop iterates over the dictionary keys correctly, but <code>print(student_scores)</code> prints the entire dictionary on each iteration instead of the individual key-value pair.
+          <p style="margin-top: 8px;">To access both the key and value, use the <code>.items()</code> method and unpack into two variables:</p>
+        </div>
+        <pre class="code-block" style="margin-top: 12px;">for key, value in student_scores.items(): print(f"{key}: {value}")</pre>
+      </div>
+
+      <div style="margin-top: var(--pgn-spacing-3);">
+        <button class="btn btn-primary" onclick="goToScreen(18)">
+          <span class="material-icons-outlined">arrow_forward</span> Try Next Question
+        </button>
+        <span class="text-muted small" style="margin-left: 12px;">Next question will be at the same difficulty level</span>
+      </div>
+
+      <div class="page-footer-bar">
+        <button class="btn btn-outline-primary" onclick="goToScreen(16)">
+          <span class="material-icons-outlined">arrow_back</span> Back
+        </button>
+        <button class="btn btn-primary" onclick="goToScreen(18)">
+          Next: Increased Difficulty <span class="material-icons-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ================================================================
+     SCREEN 18 — ADAPTIVE VERIFICATION SAME DIFFICULTY (with TIP card)
+     ================================================================ -->
+<section class="screen" id="screen-18" aria-labelledby="s18-heading">
+  <main class="screen-main">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="#" onclick="goToScreen(1); return false;">Coding Coach</a>
+        <span class="breadcrumb-sep">›</span>
+        <a href="#" onclick="return false;" title="E010 · Foundations of Programming (Python)">E010</a>
+        <span class="breadcrumb-sep">›</span>
+        <a href="#" onclick="goToScreen(8); return false;">Data Structures</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="current">Verification — Dictionary Iteration</span>
+      </nav>
+
+      <div class="save-exit-row">
+        <button class="btn btn-outline-primary btn-sm" onclick="goToScreen(13)">
+          <span class="material-icons-outlined">save</span> Save &amp; Exit
+        </button>
+      </div>
+
+      <div style="margin-bottom: var(--pgn-spacing-3);">
+        <div class="eyebrow eyebrow-blue">Verification · Same Difficulty</div>
+        <h2 id="s18-heading">Dictionary Filtering</h2>
+      </div>
+
+      <div class="coaching-layout">
+        <div>
+          <div class="ai-prompt-card">
+            <div class="ai-label"><span class="material-icons-outlined">smart_toy</span> AI Coaching Prompt</div>
+            <div class="prompt-body">Given the same dictionary, write a loop that prints only the students who scored 90 or above.</div>
+            <pre class="code-block inline" style="margin-top: 8px;">student_scores = {"Alice": 92, "Bob": 87, "Charlie": 95}</pre>
+            <div class="tip-card">
+              <div class="tip-label">Tip</div>
+              <p>Use <code>.items()</code> to access both keys and values during iteration.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="answer-panel">
+          <h4>Your Answer</h4>
+          <div class="answer-hint">Write your answer below.</div>
+          <textarea class="code-editor" placeholder="# Write your answer here..." aria-label="Type your answer"></textarea>
+          <div class="answer-actions">
+            <button class="btn btn-primary is-disabled" disabled>
+              <span class="material-icons-outlined">send</span> Submit Answer
+            </button>
+            <button class="btn btn-tertiary">
+              <span class="material-icons-outlined">refresh</span> Clear
+            </button>
+            <span class="char-count">0 / 5,000 characters</span>
+          </div>
+          <span class="submit-note"><span class="material-icons-outlined">info</span> Your answer is evaluated by the AI coaching engine. Feedback appears after submission.</span>
+        </div>
+      </div>
+
+      <div class="page-footer-bar">
+        <button class="btn btn-outline-primary" onclick="goToScreen(17)">
+          <span class="material-icons-outlined">arrow_back</span> Back
+        </button>
+        <button class="btn btn-primary" onclick="goToScreen(14)">
+          Next: Results <span class="material-icons-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ================================================================
+     WGU GLOBAL FOOTER — production design; consistent across every storyboard surface
+     ================================================================ -->
+<footer role="contentinfo" style="background: #F5F7FA; border-top: 1px solid #E4E7EB;">
+  <div style="padding: 20px 28px; border-bottom: 1px solid #E4E7EB; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+    <img class="logo-light" src="../../assets/wgu-corporation-full-color.png" alt="WGU" style="height: 40px; width: auto;"><img class="logo-dark" src="../../assets/wgu-corporation-full-color-reverse.png" alt="WGU" style="height: 40px; width: auto;">
+    <a href="https://cm.wgu.edu/t5/WGU-Student-Policy-Handbook/Accommodations-for-Students-with-Disabilities/ta-p/151" target="_blank" rel="noopener" style="font-size: 13px; color: #002855; font-weight: 600; text-decoration: none;">ADA Accommodation</a>
+  </div>
+  <div style="padding: 16px 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+    <span style="font-size: 12px; color: #4A5A6A;">&copy; 2026 Western Governors University &ndash; WGU. All Rights Reserved.</span>
+    <div style="display: flex; gap: 12px; font-size: 13px; align-items: center;">
+      <a href="https://www.wgu.edu/privacy.html" target="_blank" rel="noopener" style="color: #002855; font-weight: 600; text-decoration: none;">Privacy Policy</a>
+      <span style="color: #C5CDD5;">|</span>
+      <a href="https://cm.wgu.edu/t5/WGU-Student-Policy-Handbook/Terms-of-Use-for-Learning-and-Assessment-Materials/ta-p/77" target="_blank" rel="noopener" style="color: #002855; font-weight: 600; text-decoration: none;">Terms of Service</a>
+      <span style="color: #C5CDD5;">|</span>
+      <a href="https://cm.wgu.edu/t5/WGU-Student-Policy-Handbook/Student-Code-of-Conduct/ta-p/129" target="_blank" rel="noopener" style="color: #002855; font-weight: 600; text-decoration: none;">Honor Code</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ================================================================
+     STORYBOARD META BAR (demo-only navigation)
+     ================================================================ -->
+<nav class="meta-bar" aria-label="Storyboard navigation">
+  <div class="meta-bar-header">
+    <span class="meta-id">SkillProof Project Link Page</span>
+    <span>· Student Portal</span>
+    <span style="margin-left:auto;"><a href="../../" class="meta-link">← Storyboard Index</a></span>
+    <button class="meta-bar-toggle" type="button" onclick="toggleMetaBar()" aria-label="Hide demo bar" aria-expanded="true" title="Hide/show this demo bar">
+      <span class="material-icons-outlined">expand_more</span>
+    </button>
+  </div>
+  <div class="flow-nav" role="tablist" aria-label="Screen jump buttons">
+    <button class="step-btn active" onclick="goToScreen(1)" aria-current="step">01 Landing</button>
+    <button class="step-btn" onclick="goToScreen(2)">02 Diag Q1 empty</button>
+    <button class="step-btn" onclick="goToScreen(3)">03 Diag Q1 typed</button>
+    <button class="step-btn" onclick="goToScreen(4)">04 Diag Q1 evaluating</button>
+    <button class="step-btn" onclick="goToScreen(5)">05 Diag Q1 feedback</button>
+    <button class="step-btn" onclick="goToScreen(6)">06 Diag Q13 end</button>
+    <button class="step-btn" onclick="goToScreen(7)">07 Diag results</button>
+    <button class="step-btn" onclick="goToScreen(8)">08 Progress map</button>
+    <button class="step-btn" onclick="goToScreen(9)">09 Coaching task empty</button>
+    <button class="step-btn" onclick="goToScreen(10)">10 Coaching task feedback</button>
+    <button class="step-btn" onclick="goToScreen(11)">11 Welcome back</button>
+    <button class="step-btn" onclick="goToScreen(12)">12 Re-Assessment</button>
+    <button class="step-btn" onclick="goToScreen(13)">13 Session saved</button>
+    <button class="step-btn" onclick="goToScreen(14)">14 Verification passed</button>
+    <button class="step-btn" onclick="goToScreen(15)">15 Adaptive foundational</button>
+    <button class="step-btn" onclick="goToScreen(16)">16 Adaptive correct</button>
+    <button class="step-btn" onclick="goToScreen(17)">17 Adaptive incorrect</button>
+    <button class="step-btn" onclick="goToScreen(18)">18 Adaptive verification</button>
+  </div>
+</nav>
+
+<script>
+  /* Collapsible demo meta-bar (persisted via localStorage) */
+  (function() {
+    var KEY = 'skillproof-metabar-collapsed';
+    var bar = document.querySelector('.meta-bar');
+    if (!bar) return;
+    var btn = bar.querySelector('.meta-bar-toggle');
+    function apply(collapsed) {
+      bar.classList.toggle('metabar-collapsed', collapsed);
+      document.body.classList.toggle('metabar-collapsed', collapsed);
+      if (btn) btn.setAttribute('aria-expanded', String(!collapsed));
+    }
+    apply(localStorage.getItem(KEY) === '1');
+    window.toggleMetaBar = function() {
+      var collapsed = !bar.classList.contains('metabar-collapsed');
+      apply(collapsed);
+      localStorage.setItem(KEY, collapsed ? '1' : '0');
+    };
+  })();
+
+  /* ================================================================
+     STORYBOARD NAVIGATION
+     ================================================================ */
+  const TOTAL_SCREENS = 18;
+
+  function goToScreen(n) {
+    if (n < 1 || n > TOTAL_SCREENS) return;
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.step-btn').forEach(btn => {
+      const match = btn.getAttribute('onclick').match(/goToScreen\((\d+)\)/);
+      if (!match) return;
+      const btnScreen = parseInt(match[1]);
+      const isActive = btnScreen === n;
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-current', isActive ? 'step' : 'false');
+    });
+    const target = document.getElementById('screen-' + n);
+    if (!target) return;
+    target.classList.add('active');
+    window.scrollTo(0, 0);
+    const heading = target.querySelector('[id^="s' + n + '-heading"]');
+    if (heading) { heading.setAttribute('tabindex', '-1'); heading.focus({ preventScroll: true }); }
+  }
+
+  // Deep-link support: ?screen=N navigates to screen N on load (used by the
+  // Coda Contract Requirements tracker to deep-link to specific screens).
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const n = parseInt(params.get('screen'), 10);
+    if (n >= 1 && n <= TOTAL_SCREENS) goToScreen(n);
+  })();
+
+  document.addEventListener('keydown', function(e) {
+    const active = document.querySelector('.screen.active');
+    if (!active) return;
+    const idMatch = active.id.match(/^screen-(\d+)$/);
+    if (!idMatch) return;
+    const n = parseInt(idMatch[1]);
+    if (e.key === 'ArrowRight' && n < TOTAL_SCREENS) goToScreen(n + 1);
+    if (e.key === 'ArrowLeft'  && n > 1) goToScreen(n - 1);
+  });
+
+  /* ================================================================
+     DARK MODE TOGGLE — full theme support across all 18 screens since
+     v4.154 (the 18 MAY 2026 "light-only" framing has been reversed).
+     Toggles between light and dark via [data-theme="dark"] on <html>;
+     theme persists in localStorage.skillproof-theme.
+     ================================================================ */
+  function toggleTheme() {
+    var html = document.documentElement;
+    var isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.querySelectorAll('.theme-icon-light').forEach(function(el) { el.style.display = isDark ? '' : 'none'; });
+    document.querySelectorAll('.theme-icon-dark').forEach(function(el) { el.style.display = isDark ? 'none' : ''; });
+    localStorage.setItem('skillproof-theme', isDark ? 'light' : 'dark');
+  }
+
+  (function() {
+    var saved = localStorage.getItem('skillproof-theme');
+    if (saved === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.querySelectorAll('.theme-icon-light').forEach(function(el) { el.style.display = 'none'; });
+      document.querySelectorAll('.theme-icon-dark').forEach(function(el) { el.style.display = ''; });
+    }
+  })();
+
+  /* ================================================================
+     INTRO OVERLAY — first-run walkthrough (v4.163)
+     ================================================================ */
+  var introCurrentStep = 1;
+  var INTRO_TOTAL = 3;
+
+  function introNav(dir) {
+    document.querySelector('.intro-step[data-step="' + introCurrentStep + '"]').classList.remove('active');
+    document.querySelectorAll('#intro-overlay .dot')[introCurrentStep - 1].classList.remove('active');
+    introCurrentStep += dir;
+    document.querySelector('.intro-step[data-step="' + introCurrentStep + '"]').classList.add('active');
+    document.querySelectorAll('#intro-overlay .dot')[introCurrentStep - 1].classList.add('active');
+
+    var backBtn = document.getElementById('intro-back');
+    var nextBtn = document.getElementById('intro-next');
+    backBtn.style.visibility = introCurrentStep === 1 ? 'hidden' : 'visible';
+
+    if (introCurrentStep === INTRO_TOTAL) {
+      nextBtn.innerHTML = '<span class="material-icons-outlined">play_arrow</span> Begin Diagnostic';
+      nextBtn.onclick = function() {
+        document.getElementById('intro-overlay').style.display = 'none';
+        goToScreen(2);
+      };
+    } else {
+      nextBtn.innerHTML = 'Next <span class="material-icons-outlined">arrow_forward</span>';
+      nextBtn.onclick = function() { introNav(1); };
+    }
+  }
+
+  /* Spinner keyframes for the Evaluating… state */
+  (function injectSpin() {
+    var style = document.createElement('style');
+    style.textContent = '@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }';
+    document.head.appendChild(style);
+  })();
+</script>
+
+</body>
+</html>

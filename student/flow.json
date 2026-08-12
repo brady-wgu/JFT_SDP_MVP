@@ -1,0 +1,45 @@
+{
+  "persona": "student",
+  "title": "SkillProof — Student (STU101 · Time Management)",
+  "metabarLabel": "SkillProof Project Link Page · Student",
+  "v": 1,
+  "hasDark": false,
+  "screens": [
+    {
+      "n": 1,
+      "file": "screen-01.png",
+      "label": "Skill landing",
+      "docW": 1329,
+      "wire": [
+        { "label": "Begin Diagnostic", "goto": 2, "pct": { "left": 7.83, "top": 60.68, "width": 14.75, "height": 4.23 } },
+        { "label": "Next: Diagnostic", "goto": 2, "pct": { "left": 85.19, "top": 81.18, "width": 13.53, "height": 3.69 } },
+        { "label": "Help & Support", "goto": 4, "pct": { "left": 59.8, "top": 1.71, "width": 2.71, "height": 3.62 } }
+      ]
+    },
+    {
+      "n": 2,
+      "file": "screen-02.png",
+      "label": "Diagnostic question 1/4",
+      "docW": 1329,
+      "wire": [
+        { "label": "Submit Answer", "goto": 3, "pct": { "left": 26.37, "top": 72.91, "width": 14.95, "height": 3.66 } }
+      ]
+    },
+    {
+      "n": 3,
+      "file": "screen-03.png",
+      "label": "AI feedback",
+      "docW": 1329,
+      "wire": []
+    },
+    {
+      "n": 4,
+      "file": "screen-04.png",
+      "label": "Help & Support",
+      "docW": 1329,
+      "wire": [
+        { "label": "Cancel", "goto": 1, "pct": { "left": 19.13, "top": 82.55, "width": 6.62, "height": 3.27 } }
+      ]
+    }
+  ]
+}
