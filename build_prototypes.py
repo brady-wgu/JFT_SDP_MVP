@@ -14,12 +14,16 @@ This script reads each flow.json and emits a fully-static <persona>/index.html: 
 `<section class="screen">` per screen holding the screenshot plus transparent,
 percentage-positioned `<button class="hotspot">` overlays that call goToScreen().
 
-THE FRAME. Every screen renders inside an identical fixed-size "app window"
-(flow.json's `frame`, default 1440x900) that scrolls INTERNALLY. This is the point of
-the whole page: the captures vary in height (a dashboard is 900px, an analytics rollup
-is 6000px), and letting that variance reach the viewer is what made the 12 AUG 2026
-first attempt feel broken — every click jumped to a different page shape. Uniform outer
-frame + internal scroll keeps all the content and still feels like one running app.
+THE FRAME. Every screen renders FULL BROWSER WIDTH in a viewport-height window that
+scrolls INTERNALLY. The captures vary wildly in height (a dashboard is ~1000px, an
+analytics rollup is ~6000px); letting that variance reach the viewer is what made the
+12 AUG 2026 first attempt feel broken, because every click jumped to a different page
+shape. Full-bleed frame + internal scroll keeps all the content, keeps every screen the
+same shape, and reads as one running app rather than a gallery of screenshots.
+
+flow.json's `frame` width is the CAPTURE width, asserted against every PNG below. It is
+NOT a display cap — the frame stretches to the browser, and hotspots are percentage-based
+so they track the image at any scale.
 
 Screenshots carry all of the app's own chrome (navbar, footer), so the page adds none
 of its own — only a demo meta-bar for navigating screens and switching personas.
@@ -85,23 +89,27 @@ PAGE = r"""<!DOCTYPE html>
     }
 
     /* --- the app window ------------------------------------------------
-       stage centres the frame; .shot IS the fixed window and owns the only
-       scrollbar the viewer should ever see. */
+       FULL BROWSER WIDTH, scrolls internally. The 12 AUG 2026 build pinned this
+       at min(1440px, 100%) centred in a grey backdrop, so it read as a floating
+       screenshot card rather than the app -- which is not what was asked for.
+       Edge-to-edge with the frame owning the only scrollbar is the point: the
+       capture fills the window exactly like the live app, and a 6000px-tall
+       analytics page scrolls inside the frame instead of resizing the page.
+       .stage is block, not flex: a flex row lets a second .active screen
+       flex-shrink both children, which produced phantom width readings. */
     .stage {
-      display: flex; align-items: flex-start; justify-content: center;
-      padding: 18px 18px calc(var(--bar-h) + 18px);
+      display: block;
+      padding: 0 0 var(--bar-h);
     }
     .screen { display: none; }
     .screen.active { display: block; }
     .shot {
       position: relative;
-      width: min(var(--frame-w), 100%);
-      height: min(var(--frame-h), calc(100vh - var(--bar-h) - 36px));
+      width: 100%;
+      height: calc(100vh - var(--bar-h));
       overflow-y: auto;
       overflow-x: hidden;
       background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 12px 44px rgba(0,0,0,0.32);
       scroll-behavior: smooth;
       /* iOS: keep the inner scroll from chaining to the page */
       overscroll-behavior: contain;

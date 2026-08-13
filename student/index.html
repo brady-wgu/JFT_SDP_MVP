@@ -37,23 +37,27 @@
     }
 
     /* --- the app window ------------------------------------------------
-       stage centres the frame; .shot IS the fixed window and owns the only
-       scrollbar the viewer should ever see. */
+       FULL BROWSER WIDTH, scrolls internally. The 12 AUG 2026 build pinned this
+       at min(1440px, 100%) centred in a grey backdrop, so it read as a floating
+       screenshot card rather than the app -- which is not what was asked for.
+       Edge-to-edge with the frame owning the only scrollbar is the point: the
+       capture fills the window exactly like the live app, and a 6000px-tall
+       analytics page scrolls inside the frame instead of resizing the page.
+       .stage is block, not flex: a flex row lets a second .active screen
+       flex-shrink both children, which produced phantom width readings. */
     .stage {
-      display: flex; align-items: flex-start; justify-content: center;
-      padding: 18px 18px calc(var(--bar-h) + 18px);
+      display: block;
+      padding: 0 0 var(--bar-h);
     }
     .screen { display: none; }
     .screen.active { display: block; }
     .shot {
       position: relative;
-      width: min(var(--frame-w), 100%);
-      height: min(var(--frame-h), calc(100vh - var(--bar-h) - 36px));
+      width: 100%;
+      height: calc(100vh - var(--bar-h));
       overflow-y: auto;
       overflow-x: hidden;
       background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 12px 44px rgba(0,0,0,0.32);
       scroll-behavior: smooth;
       /* iOS: keep the inner scroll from chaining to the page */
       overscroll-behavior: contain;
