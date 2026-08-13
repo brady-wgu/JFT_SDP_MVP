@@ -1,38 +1,28 @@
 {
   "persona": "instructor",
-  "title": "SkillProof — Instructor",
+  "title": "SkillProof — Instructor (STU101 · B002)",
   "metabarLabel": "SkillProof Demo · Instructor",
-  "v": 3,
+  "v": 5,
   "hasDark": false,
   "frame": {
-    "width": 1440,
-    "height": 900
+    "width": 1920,
+    "height": 1080
   },
   "screens": [
     {
       "n": 1,
       "file": "screen-01.png",
-      "label": "Dashboard",
-      "docW": 1440,
+      "label": "Dashboard — 4 courses, learners needing attention",
+      "docW": 1920,
       "wire": [
         {
-          "label": "Open E010 course details",
+          "label": "Open course B002",
           "goto": 2,
           "pct": {
-            "left": 52.29,
-            "top": 27.81,
-            "width": 9.97,
-            "height": 0.82
-          }
-        },
-        {
-          "label": "Help & Support",
-          "goto": 7,
-          "pct": {
-            "left": 72.72,
-            "top": 0.64,
-            "width": 2.5,
-            "height": 1.35
+            "left": 50.42,
+            "top": 15.77,
+            "width": 30,
+            "height": 13.74
           }
         }
       ]
@@ -40,27 +30,27 @@
     {
       "n": 2,
       "file": "screen-02.png",
-      "label": "Course Detail — Foundations of Programming",
-      "docW": 1440,
+      "label": "Course detail — B002",
+      "docW": 1920,
       "wire": [
         {
-          "label": "Open the first skill's heatmap",
+          "label": "Open the STU101 skill heatmap",
           "goto": 3,
           "pct": {
-            "left": 11.32,
-            "top": 16.97,
-            "width": 10.81,
-            "height": 1.03
+            "left": 20.99,
+            "top": 86.81,
+            "width": 8.1,
+            "height": 1.54
           }
         },
         {
           "label": "Back to Dashboard",
           "goto": 1,
           "pct": {
-            "left": 9.44,
-            "top": 3.13,
-            "width": 9.37,
-            "height": 0.66
+            "left": 19.58,
+            "top": 91.66,
+            "width": 9.32,
+            "height": 1.54
           }
         }
       ]
@@ -68,27 +58,27 @@
     {
       "n": 3,
       "file": "screen-03.png",
-      "label": "Skill Heatmap",
-      "docW": 1440,
+      "label": "Skill heatmap — STU101, 17 learners",
+      "docW": 1920,
       "wire": [
         {
           "label": "Open a learner profile",
           "goto": 4,
           "pct": {
-            "left": 12.01,
-            "top": 30.86,
-            "width": 6.14,
-            "height": 1.67
+            "left": 21.51,
+            "top": 35.65,
+            "width": 5.99,
+            "height": 1.93
           }
         },
         {
           "label": "Back to Course view",
           "goto": 2,
           "pct": {
-            "left": 77.55,
-            "top": 89.68,
-            "width": 13.01,
-            "height": 1.9
+            "left": 19.58,
+            "top": 88.08,
+            "width": 9.75,
+            "height": 2.2
           }
         }
       ]
@@ -96,17 +86,17 @@
     {
       "n": 4,
       "file": "screen-04.png",
-      "label": "Learner Profile",
-      "docW": 1440,
+      "label": "Learner profile — per-topic mastery",
+      "docW": 1920,
       "wire": [
         {
           "label": "Back to Heatmap",
           "goto": 3,
           "pct": {
-            "left": 78.89,
-            "top": 82.31,
-            "width": 11.67,
-            "height": 3.27
+            "left": 71.67,
+            "top": 79.19,
+            "width": 8.75,
+            "height": 3.15
           }
         }
       ]
@@ -114,53 +104,17 @@
     {
       "n": 5,
       "file": "screen-05.png",
-      "label": "Staging Skills",
-      "docW": 1440,
-      "wire": [
-        {
-          "label": "Preview a staging skill",
-          "goto": 6,
-          "pct": {
-            "left": 81.42,
-            "top": 34.48,
-            "width": 6.84,
-            "height": 4.89
-          }
-        }
-      ]
-    },
-    {
-      "n": 6,
-      "file": "screen-06.png",
-      "label": "Skill Preview",
-      "docW": 1440,
-      "wire": [
-        {
-          "label": "Back to Staging Skills",
-          "goto": 5,
-          "pct": {
-            "left": 77.49,
-            "top": 82.87,
-            "width": 7.56,
-            "height": 3.5
-          }
-        }
-      ]
-    },
-    {
-      "n": 7,
-      "file": "screen-07.png",
       "label": "Help & Support",
-      "docW": 1440,
+      "docW": 1920,
       "wire": [
         {
           "label": "Back to Dashboard",
           "goto": 1,
           "pct": {
-            "left": 20.99,
-            "top": 83.04,
-            "width": 6.11,
-            "height": 3.29
+            "left": 28.24,
+            "top": 83.62,
+            "width": 4.58,
+            "height": 3.19
           }
         }
       ]
