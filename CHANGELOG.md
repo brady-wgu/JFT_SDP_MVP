@@ -8,6 +8,22 @@ This is a prototype repo — entries below run from the active JFT meeting follo
 
 ---
 
+## v4.171 — 13 Aug 2026 — The status demo deck now opens in the browser
+
+The landing page linked the raw `.pptx`, which meant "view the deck" was really "download 41 MB, wait, open PowerPoint". **No browser renders PowerPoint natively**, so the deck is now converted to something a browser can paint: a viewer at [`/deck/`](https://brady-wgu.github.io/SkillProof/deck/).
+
+**Not** the Microsoft Office Online viewer (`view.officeapps.live.com/op/embed.aspx`), which fails here on three counts: it caps at 10 MB against a 41 MB deck, it would not play the embedded video anyway, and it would hand a WGU URL to a third party to fetch on every page load. Everything below is self-hosted.
+
+- **`render_deck.py`** exports the 7 slides to PNG at 2560×1440 via PowerPoint COM (no LibreOffice or `pdftoppm` on this machine). All 7 slides total **1.6 MB**.
+- **`build_deck_viewer.py`** generates `deck/index.html`. Arrow-key / Home / End paging, a slide counter, dot rail, full-screen, per-slide deep links (`/deck/#4`), and the original `.pptx` one click away on the toolbar.
+- **The video is not duplicated.** Slide 6 is 39.56 of the deck's 41 MB — one embedded MP4 that is **byte-identical (sha256)** to `assets/video/skillproof-walkthrough-2k.mp4` already in the repo. So a real `<video>` is overlaid on the slide's own video region and pointed at the existing asset. `preload="none"` keeps 40 MB from being fetched by anyone who never reaches slide 6, and the poster is cropped from the slide's own render so the region looks identical until you press play. The player pauses when you page away.
+- **The deck's hyperlinks survive.** Slide 6's "Launch the live STU101 coach" button and slide 7's two links to this site are real `<a>` elements overlaid on the exact regions the shapes occupy. A button authored as three stacked shapes carrying the same link merges into one anchor. Links on hidden slides are pulled out of the tab order.
+- **Overlay geometry is read from the slide XML**, not eyeballed — EMU offsets over slide size, expressed in percentages, the same technique the persona walkthrough hotspots use. Verified against the rendered page: the video lands at 28.03% / 0.12% / 71.90% / 99.76% against the XML's 28 / 0 / 72 / 100.
+- **Run-level link widths are measured, not trusted.** A hyperlink on a text *run* reports its whole containing text box. Slide 7's URL line sits in a 45%-wide box while the visible text covers about 16%, so the box verbatim would leave a huge invisible click target over blank slide. The width is measured from the rendered PNG's ink — and the measurement stops at the first gap wider than 1.5% of the slide, because a first pass took leftmost-to-rightmost ink, swept into the screenshot panel that starts at 43% of that slide, and produced a **39.8%-wide** hotspot. It is now **15.8%**, matching the text.
+- New `verify-deck.js` in the QA tools asserts all of the above plus no JS errors, every slide decoding, 16:9 with no overflow at 1024–2560px, and that the 40 MB video is not requested on load.
+
+---
+
 ## v4.170 — 13 Aug 2026 — Real owl favicon, and the status demo deck added to the landing page
 
 **Favicon rebuilt.** The old icon was invisible against a dark browser tab strip. Root cause: `assets/wgu-favicon.png` was never a favicon — it was the **2000×910 WGU wordmark** in Deep Navy on a transparent background. A 2.2:1 wordmark squashed into a 16×16 slot is an illegible blob, and navy-on-transparent has nothing to sit against once the tab strip goes dark.
