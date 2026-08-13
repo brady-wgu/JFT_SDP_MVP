@@ -38,9 +38,9 @@
           "goto": 3,
           "pct": {
             "left": 25,
-            "top": 60,
+            "top": 72.41,
             "width": 10.35,
-            "height": 3.89
+            "height": 3.73
           }
         }
       ]
@@ -56,9 +56,9 @@
           "goto": 4,
           "pct": {
             "left": 89.62,
-            "top": 87.28,
+            "top": 87.07,
             "width": 8.71,
-            "height": 2.49
+            "height": 2.52
           }
         }
       ]
@@ -74,9 +74,9 @@
           "goto": 5,
           "pct": {
             "left": 41.67,
-            "top": 64.83,
+            "top": 66.34,
             "width": 16.67,
-            "height": 4.07
+            "height": 3.95
           }
         }
       ]
@@ -91,10 +91,10 @@
           "label": "Start the recommended topic",
           "goto": 6,
           "pct": {
-            "left": 44.64,
-            "top": 21.73,
-            "width": 4.01,
-            "height": 2.95
+            "left": 43.07,
+            "top": 21.9,
+            "width": 5.52,
+            "height": 2.96
           }
         }
       ]
