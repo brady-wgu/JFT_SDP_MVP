@@ -8,13 +8,20 @@ This is a prototype repo — entries below run from the active JFT meeting follo
 
 ---
 
+## v4.174 — 13 Aug 2026 — Correct the archive-reachability claim
+
+Folded into the v4.173 entry below rather than split across two versions, since it was found while verifying that change: the `_archive/` tree is **not** publicly reachable and never was. See the second bullet of v4.173.
+
+---
+
 ## v4.173 — 13 Aug 2026 — The hand-built Help mockup is archived and unlinked
 
 `help/` was a **hand-built mockup**, not a real SkillProof surface. It should have moved to `_archive/` with the other four mockups in **v4.167**, when the persona portals were replaced by live-app screenshot walkthroughs, and it was simply missed. Left live, it presented a fabricated support desk as part of the product. The live app's own help screen is captured inside all four persona walkthroughs, so nothing is lost.
 
 Evidence it was an oversight rather than a decision: `capture_screens.py` still lists `help/index.html` alongside `student/`, `instructor/`, `tenant_admin/` and `super_admin/` at their **pre-v4.167 root paths** with the old mockup screen counts (18 / 5 / 12 / 11). That script is already flagged ARCHIVE ONLY and stale, and is left untouched here.
 
-- **Moved** `help/` to [`_archive/help/`](_archive/help/) with `git mv`, so its history follows it. Preserved and reachable by direct URL, unlinked from the site — the same treatment the other four mockups get.
+- **Moved** `help/` to [`_archive/help/`](_archive/help/) with `git mv`, so its history follows it — the same treatment the other four mockups get.
+- **It is now genuinely off the live site, not merely unlinked.** Verifying the move turned up something the docs had wrong since v4.167: GitHub Pages runs Jekyll, which excludes any path beginning with an underscore, so **the whole `_archive/` tree has always returned 404 on the deployed site**. `/_archive/student/`, `/_archive/instructor/` and the rest have never been publicly reachable. The README (and the `v4.171` release notes) claimed archived mockups were "reachable by direct URL"; both are corrected. No `.nojekyll` file was added — publishing the mockups is the opposite of what archiving them is for.
 - **Removed the topbar Help button** from the landing page, the only live link to it. Clicking through to an invented help desk mid-demo is worse than the landing page not carrying a help affordance, and that page is itself a recreation of LRPS rather than a real product surface.
 - **Repointed the archived mockups' own Help links.** All four pointed at `../../help/`, which resolved to the root copy that no longer exists; they now point at `../help/`. 29 links across `_archive/{student,instructor,tenant_admin,super_admin}/index.html`.
 - **Fixed the archived page's own up-paths** — it sits one directory deeper now, so its back-link and its logo/favicon references were re-rooted (8 references).
@@ -129,7 +136,7 @@ The persona walkthroughs were unusable as a stand-in for a live demo: the frames
 
 SkillProof is now in **beta** on the live app (`wgu.teamjft.com`), so the four hand-built persona storyboards were replaced with **click-through walkthroughs built from real screenshots of the working app** — a login-free backup for when the live app is unavailable. The original mockups are **preserved, not deleted**.
 
-- **Archived the 4 hand-built mockups** to `_archive/{student,instructor,tenant_admin,super_admin}/` via `git mv` (history preserved); unlinked from the landing page but still reachable by direct URL. Their relative paths were re-based one level deeper (`../assets/` → `../../assets/`, `../help/` → `../../help/`, `href="../"` → `href="../../"`) so they still render.
+- **Archived the 4 hand-built mockups** to `_archive/{student,instructor,tenant_admin,super_admin}/` via `git mv` (history preserved); unlinked from the landing page. *(Corrected in v4.173: this entry originally said they remained "reachable by direct URL". They do not — Jekyll excludes underscore-prefixed paths, so every `_archive/` URL 404s on the deployed site. They are preserved in the repo only.)* Their relative paths were re-based one level deeper (`../assets/` → `../../assets/`, `../help/` → `../../help/`, `href="../"` → `href="../../"`) so they still render.
 - **New `build_prototypes.py`** generator: emits each persona `index.html` from a per-persona `flow.json` (screens + hotspot wiring). Screenshots are full-page live-app captures; transparent percentage-positioned hotspots overlay the advancing buttons and call the reused `goToScreen()` switcher — flow-nav, `?screen=N` deep-link, arrow-key nav, and the collapsible meta-bar are all retained. Light theme only for v1 (toggle gated on a complete `screenshots_dark/` set).
 - **Captured via** a new `capture-screen.js` helper (in the `skillproof-qa-tools` Playwright toolkit) driving real Chrome over CDP, one authenticated session per persona (WGU SSO). Screen counts: Student 4 (STU101 · Time Management), Instructor 5, School Admin 4, Super Admin 4 = **17**.
 - **School Admin tenant was empty**, so a demo course (`DEMO101 · Sample Course (SkillProof Walkthrough)`) with two staging Skills was created in-app (School of Business) to populate the Dashboard, Course Detail, and Analytics screens — avoiding empty pages. Flow: Dashboard → Course Detail → Analytics → Help & Support.
