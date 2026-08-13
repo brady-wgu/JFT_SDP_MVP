@@ -5,7 +5,7 @@
 **Live-app click-through demo of WGU's AI coaching platform, plus the medium-fidelity storyboard for the administrative surfaces around it**
 
 [![Live Demo](https://img.shields.io/badge/Live-GitHub_Pages-0070F0?style=for-the-badge&logo=github)](https://brady-wgu.github.io/SkillProof/)
-[![Version](https://img.shields.io/badge/Version-4.172-46B1EF?style=for-the-badge)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-4.173-46B1EF?style=for-the-badge)](CHANGELOG.md)
 [![Live Screens](https://img.shields.io/badge/Live_Demo_Screens-32-001730?style=for-the-badge)]()
 [![Personas](https://img.shields.io/badge/Personas-4-FBAE40?style=for-the-badge)]()
 
@@ -38,7 +38,7 @@ This repo holds two things: the **live-app click-through demo** (the four person
 - **Alice** (School Admin) — Course + Skill management portal: School Dashboard with Course cards + filter/sort/search, 5-step New Skill wizard with Course Number/Title combobox typeahead, drill-chain mirroring Instructor for diagnostic, 4-level Analytics (School / Course / Skill / Topic). Scope is **Courses + Skills only** — at-risk learner tracking is Instructor's domain; School Settings + cross-School ops are Super Admin's. ([`_archive/tenant_admin/`](_archive/tenant_admin/)) — **12 screens**
 - **Bob** (Super Admin) — Cross-School governance, financial controls, security compliance, **access control** (role elevation + School Admin → Schools + Instructor → Skills + Skill ownership / deployment), data + integrations hub, **School Management** (per-School branding / thresholds / retention — moved from School Admin v4.114), FERPA-aligned Logs, plus the inherited Course → Skill → Learner drill and 5-level Analytics. ([`_archive/super_admin/`](_archive/super_admin/)) — **11 screens**
 - Plus **LRPS Landing** at the storyboard root ([`/`](./)) — recreated WGU internal Learning Resource Provisioning System; the realistic entry point for all four personas. **(v4.59: promoted to root; the standalone `/lrps/` URL was retired.)**
-- Plus **Help & Resources** ([help/](help/)) — shared self-service support surface linked from every admin portal's navbar. Video training (§16.4 #9.15) is **deferred**, not built — see [`help/README.md`](help/README.md).
+- Plus **Help & Resources** ([`_archive/help/`](_archive/help/)) — a hand-built self-service support mockup, **archived in v4.173**. It was never a real SkillProof surface, and it should have moved to `_archive/` with the other mockups in v4.167. The live app's own help surface is captured inside all four persona walkthroughs instead. Video training (§16.4 #9.15) is **deferred**, not built — see [`_archive/help/README.md`](_archive/help/README.md).
 
 **Platform-wide:** every *analyzable* data table carries a consistent control bar — **filter chips + search + sort + a unified "Export ▾" dropdown** (shared [`assets/table-controls.js`](assets/table-controls.js)), with export formats matched to the audience (**PDF / CSV** for people, **MD / JSON** for machines such as logs). Editors and pick-lists (Topics/LOs, model picker) carry no controls. Long analytics pages have a **sticky scroll-spy section nav**; status colors use one **heat scale** (red → amber → green) across heatmaps, score pills, badges, dots, and threshold/budget bars; and create / delete / remove flows confirm via **modals**.
 
@@ -55,7 +55,6 @@ Each persona has its own **secret LRPS deep link** in production and authenticat
 | **Instructor walkthrough** | [`/instructor/`](https://brady-wgu.github.io/SkillProof/instructor/) | Live-app screenshots (B002 · STU101): Dashboard (4 courses, 68 learners needing attention) → Course Detail → Skill heatmap (17 learners) → Learner profile → Staging Skills → **Skill Preview AI question → AI evaluation** → Help. **8 screens.** Archived mockup: [`_archive/instructor/`](_archive/instructor/) (5 screens). |
 | **School Admin walkthrough** | [`/tenant_admin/`](https://brady-wgu.github.io/SkillProof/tenant_admin/) | Live-app screenshots (B002 · STU101): Dashboard → Course Detail → Skill heatmap (17 learners) → Learner profile → Analytics → **New Skill wizard steps 1-3, incl. Model & AI prompt** → Tenant Settings → Help. **10 screens.** Archived mockup: [`_archive/tenant_admin/`](_archive/tenant_admin/) (12 screens). |
 | **Super Admin walkthrough** | [`/super_admin/`](https://brady-wgu.github.io/SkillProof/super_admin/) | Live-app screenshots: Dashboard → Analytics → Access Control → School Management → Course Detail (B002) → Help. **6 screens.** Archived mockup: [`_archive/super_admin/`](_archive/super_admin/) (11 screens). |
-| **Help & Resources** (shared) | [`/help/`](https://brady-wgu.github.io/SkillProof/help/) | Shared self-service support + documentation surface. Linked from every admin portal navbar. Closes Appendix A §16.4 #9.14 (self-service portal). **#9.15 (video training) is deferred per WGU direction (21 May 2026), not built** — the video gallery was removed in v4.81. |
 | **Status Demo Deck** (viewer) | [`/deck/`](https://brady-wgu.github.io/SkillProof/deck/) | Brady’s live demo deck, **v1.1 / 30 JUL 2026, 7 slides**, viewable in the browser instead of downloaded. Generated by [`build_deck_viewer.py`](build_deck_viewer.py) from the PNGs [`render_deck.py`](render_deck.py) exports. Slide 6’s embedded walkthrough is a real `<video>` overlay on the slide’s own video region; the deck’s two hyperlinks are preserved as click regions. Deep-linkable per slide (`/deck/#4`), arrow-key paging, and the original `.pptx` is one click away on the toolbar. |
 
 **Live-app click-through demo: 32 screens · 39 hotspots · 4 personas** (Student 8 · Instructor 8 · School Admin 10 · Super Admin 6), all four on **STU101 / course B002**. Every screen fills the full browser width and scrolls **inside** its own frame, so a 1,080px dashboard and a 6,100px analytics rollup present as the same shape. Hotspots are real clickable regions measured off the live DOM, so a whole role can be walked without logging in. The meta-bar switches roles, which is the point: one link replaces signing into four accounts to show the product. *(The archived mockups in `_archive/` hold the prior 46-screen hand-built set.)*
@@ -194,7 +193,6 @@ SkillProof/
 │   ├── flow.json
 │   └── screenshots/            6 PNGs, 1920px wide
 ├── pitch/                      One-slide pitch page + its own short embedded demo clip
-├── help/                       Shared self-service support + training (added v4.38)
 │   ├── index.html
 │   ├── screenshots/            1 PNG
 │   └── screenshots_dark/       1 PNG
@@ -202,12 +200,13 @@ SkillProof/
     ├── student/                18-screen mockup (+ light/dark screenshots, README)
     ├── instructor/             5-screen mockup
     ├── tenant_admin/           12-screen mockup
-    └── super_admin/            11-screen mockup
+    ├── super_admin/            11-screen mockup
+    └── help/                   Hand-built support mockup (archived v4.173, was live at /help/)
 ```
 
 Screenshot filenames follow `screen-NN.png` (since v4.155), 1:1 with on-page screen IDs and the `?screen=N` deep-link URLs.
 
-The four live persona folders are **light-mode only** — there is no `screenshots_dark/` set for them, so the demo pages ship without a theme toggle. Only `help/` retains a dark set, from the archived-mockup era.
+The four live persona folders are **light-mode only** — there is no `screenshots_dark/` set for them, so the demo pages ship without a theme toggle. Only the archived `_archive/help/` retains a dark set, from the archived-mockup era.
 
 The per-persona READMEs describe the **archived mockups** and live in [`_archive/<persona>/README.md`](_archive/). The four live persona folders hold generated output only — no README, since `flow.json` and this file document them.
 
@@ -311,9 +310,9 @@ The LRPS surface includes:
 
 ---
 
-### 📚 Help & Resources (shared surface)
+### 📚 Help & Resources (ARCHIVED MOCKUP)
 
-**Surface:** [`help/`](help/) · [Live](https://brady-wgu.github.io/SkillProof/help/)
+**Surface:** [`_archive/help/`](_archive/help/) — **archived in v4.173, no longer live.** A hand-built mockup, never a real SkillProof surface; the live app's help screen is captured in all four persona walkthroughs. Unlinked from the site but reachable by direct URL, like the other archived mockups.
 
 **Scope:** Single-page self-service support + documentation surface. Linked from the Help button in every admin portal's navbar (tenant_admin, super_admin — instructor still pending). Closes Appendix A §16.4 #9.14 (self-service support portal). #9.15 (video training resources) is **deferred per WGU direction (21 May 2026)** — the video gallery was removed in the v4.81 rewrite. The Contact JFT Support FAB at the bottom-right opens the support-ticket flow (Zendesk handoff).
 
@@ -514,7 +513,7 @@ When implementing:
 
 See [CHANGELOG.md](CHANGELOG.md) for the full version history.
 
-**Latest: v4.172 (13 Aug 2026)** — pre-demo fix: the Help page never loaded the icon font, so all 23 of its icons rendered as literal words. **v4.171 (13 Aug 2026)** — the status demo deck now opens **in the browser** at [`/deck/`](deck/): slides rendered to PNG, with the embedded walkthrough replayed as a real video overlay pointed at the copy already in the repo, and the deck’s own hyperlinks preserved as click regions. **v4.170 (13 Aug 2026)** — favicon rebuilt as the WGU owl on an opaque Deep Navy square (the old one was the wordmark on transparency, invisible on a dark tab strip), and the status demo deck added as a third landing-page link. **v4.169 (13 Aug 2026)** — added the 2K full walkthrough (2560×2000, 4m19s) as a second landing-page link under One-Slide Pitch. **v4.168 (13 Aug 2026)** — demo rebuilt on STU101 with the AI interaction loop on all three sides (student assessment, student coaching, instructor Skill Preview); frames made full-browser-width with internal scroll; captures moved to 1920px; Instructor granted B002 so every role shows the same course; capture harness gated on content readiness after three screens shipped as loading skeletons. **v4.167 (23 Jul 2026)** — the four persona portals were replaced by live-app screenshot walkthroughs and the hand-built mockups archived.
+**Latest: v4.173 (13 Aug 2026)** — the hand-built `help/` mockup was archived to `_archive/help/` and unlinked; it was never a real SkillProof surface and should have moved with the other mockups in v4.167. **v4.172 (13 Aug 2026)** — pre-demo fix: the Help page never loaded the icon font, so all 23 of its icons rendered as literal words. **v4.171 (13 Aug 2026)** — the status demo deck now opens **in the browser** at [`/deck/`](deck/): slides rendered to PNG, with the embedded walkthrough replayed as a real video overlay pointed at the copy already in the repo, and the deck’s own hyperlinks preserved as click regions. **v4.170 (13 Aug 2026)** — favicon rebuilt as the WGU owl on an opaque Deep Navy square (the old one was the wordmark on transparency, invisible on a dark tab strip), and the status demo deck added as a third landing-page link. **v4.169 (13 Aug 2026)** — added the 2K full walkthrough (2560×2000, 4m19s) as a second landing-page link under One-Slide Pitch. **v4.168 (13 Aug 2026)** — demo rebuilt on STU101 with the AI interaction loop on all three sides (student assessment, student coaching, instructor Skill Preview); frames made full-browser-width with internal scroll; captures moved to 1920px; Instructor granted B002 so every role shows the same course; capture harness gated on content readiness after three screens shipped as loading skeletons. **v4.167 (23 Jul 2026)** — the four persona portals were replaced by live-app screenshot walkthroughs and the hand-built mockups archived.
 
 Earlier: **v4.160 (2 Jun 2026)** — unified export: one consistently-placed "Export ▾" dropdown on every filtered table, formats by data nature (PDF/CSV for people, MD/JSON for machines). v4.159 de-duplicated the Logs filter bars, wired the navbar logo to "home", and added dashboard subtitles. v4.158 was the filter/sort placement audit + Result-column removal; v4.157 removed the analytics "AA contrast" chip; v4.156 was the design-system polish pass across the 3 admin portals (8-pt spacing + token consistency, grounded in the SkillProof Design System v1.3) plus leadership-facing enhancements: real export-confirmation toasts, a live institution-branding preview, a visualization key, and a responsive phone preview. Recent milestones: v4.155 screenshots regenerated with `screen-NN.png` naming; v4.152 shared controls module + heat-scale unification + modals; v4.153 `?screen=N` deep-link support; v4.154 dark mode working across all 6 surfaces; the Coda Contract Requirements tracker is fully populated (34 Met / 2 In Progress / 2 Deferred / 54 N/A out of 92 reqs).
 

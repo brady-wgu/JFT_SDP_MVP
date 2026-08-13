@@ -8,6 +8,23 @@ This is a prototype repo — entries below run from the active JFT meeting follo
 
 ---
 
+## v4.173 — 13 Aug 2026 — The hand-built Help mockup is archived and unlinked
+
+`help/` was a **hand-built mockup**, not a real SkillProof surface. It should have moved to `_archive/` with the other four mockups in **v4.167**, when the persona portals were replaced by live-app screenshot walkthroughs, and it was simply missed. Left live, it presented a fabricated support desk as part of the product. The live app's own help screen is captured inside all four persona walkthroughs, so nothing is lost.
+
+Evidence it was an oversight rather than a decision: `capture_screens.py` still lists `help/index.html` alongside `student/`, `instructor/`, `tenant_admin/` and `super_admin/` at their **pre-v4.167 root paths** with the old mockup screen counts (18 / 5 / 12 / 11). That script is already flagged ARCHIVE ONLY and stale, and is left untouched here.
+
+- **Moved** `help/` to [`_archive/help/`](_archive/help/) with `git mv`, so its history follows it. Preserved and reachable by direct URL, unlinked from the site — the same treatment the other four mockups get.
+- **Removed the topbar Help button** from the landing page, the only live link to it. Clicking through to an invented help desk mid-demo is worse than the landing page not carrying a help affordance, and that page is itself a recreation of LRPS rather than a real product surface.
+- **Repointed the archived mockups' own Help links.** All four pointed at `../../help/`, which resolved to the root copy that no longer exists; they now point at `../help/`. 29 links across `_archive/{student,instructor,tenant_admin,super_admin}/index.html`.
+- **Fixed the archived page's own up-paths** — it sits one directory deeper now, so its back-link and its logo/favicon references were re-rooted (8 references).
+- **README:** the live Surfaces row and the file-tree entry are gone; the overview bullet and the detailed section are relabelled as an archived mockup, with `_archive/help/` added to the archive tree.
+- **`preflight-live.js`** now asserts the opposite of what it used to: that `/help/` returns 404 on the deployed site, and that **no live page links to it**. Regression-proofs the removal instead of trusting it.
+
+Verified live afterwards: `/help/` returns 404, the seven remaining surfaces are clean, and the four persona walkthroughs are unchanged at 32 screens / 39 hotspots.
+
+---
+
 ## v4.172 — 13 Aug 2026 — Help page icon font (pre-demo pre-flight fix)
 
 Found by a pre-flight run against the **live** site rather than a local server: [`help/index.html`](help/index.html) declared `.material-icons-outlined { font-family: 'Material Icons Outlined' }` and preconnected to `fonts.googleapis.com`, but **never loaded the stylesheet**. With no font, the ligatures never resolved and all **23 icons rendered as their literal words** ("search", "expand_more", "dark_mode") — the one surface in the site missing the line every other page already had.
