@@ -6,8 +6,14 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <title>SkillProof Project — Storyboard v4.169</title>
-  <link rel="icon" type="image/png" href="assets/wgu-favicon.png">
+  <title>SkillProof Project — Storyboard v4.170</title>
+  <!-- Favicon set rebuilt 13 Aug 2026 (see make_favicon.py). The old wgu-favicon.png was
+       the 2000x910 WGU *wordmark* in navy on transparency: unreadable squashed into 16px,
+       and invisible against a dark tab strip. These are the owl mark on an opaque navy
+       square, so the icon carries its own background in both light and dark chrome. -->
+  <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/wgu-owl-favicon.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="stylesheet" href="assets/table-controls.css?v=11">
   <script defer src="assets/table-controls.js?v=11"></script>
 
@@ -798,6 +804,14 @@
              style="font-size:13px;" target="_blank" rel="noopener"
              title="Full SkillProof walkthrough — 2560x2000, 4 min 19 sec (40 MB)">
             <span class="material-icons-outlined">play_circle</span>Full Walkthrough (2K)
+          </a>
+          <!-- Brady's live demo deck (v1.1, 30 JUL 2026), added 13 Aug 2026. A 41 MB .pptx
+               with embedded video, so it downloads rather than previewing in the browser;
+               `download` gives it a sane filename instead of whatever the tab is titled. -->
+          <a class="sidebar-link" href="assets/decks/skillproof-status-demo_v1-1_30JUL2026.pptx"
+             style="font-size:13px;" download
+             title="Status demo deck v1.1, 30 JUL 2026 — 7 slides with embedded video (41 MB .pptx)">
+            <span class="material-icons-outlined">co_present</span>Status Demo Deck (.pptx)
           </a>
         </div>
       </aside>
