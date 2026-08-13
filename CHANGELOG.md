@@ -8,6 +8,22 @@ This is a prototype repo — entries below run from the active JFT meeting follo
 
 ---
 
+## v4.169 — 13 Aug 2026 — 2K full walkthrough added as a second landing-page link
+
+The 2K walkthrough capture (`skillproof-stu101-walkthrough_2K_30JUL2026.mp4`) is now linked from the landing page rather than replacing anything: **2560×2000, 4 min 19 s, 40 MB**.
+
+- Landed as **`assets/video/skillproof-walkthrough-2k.mp4`** — a site-level asset, since it is reached from the landing page and is not pitch-page media.
+- New sidebar link **Full Walkthrough (2K)** directly under *One-Slide Pitch* in the About SkillProof section. It points at the file and opens in a new tab, so the native player gets the full window and the landing page is not lost. `title` carries the resolution, duration and size.
+- **`pitch/index.html` is unchanged.** It keeps its own shorter embedded clip (1280×1000, 38 s), so the pitch slide still reads as a single tight slide while the long-form walkthrough lives one click away on the landing page.
+- Landing hero images regenerated, because the sidebar gained a visible row.
+
+Verified in-browser: the link resolves to the 2K file, `videoWidth`/`videoHeight` report 2560×2000, duration 259 s, playback advances, and no request fails (the `net::ERR_ABORTED` on the media request is a cancelled range request after buffering, not a load failure).
+
+### Files
+`index.html`, `assets/video/skillproof-walkthrough-2k.mp4`, `assets/landing/{light,dark}.png`, `README.md`, this file.
+
+---
+
 ## v4.168 — 13 Aug 2026 — Demo rebuilt on STU101 with the AI interaction loop
 
 The persona walkthroughs were unusable as a stand-in for a live demo: the frames were letterboxed cards rather than full-width app windows, no screen showed the AI interaction the platform exists for, and the student flow had silently moved off STU101 onto Introduction to Python. This release fixes all three and makes the failure modes structurally impossible to repeat.
