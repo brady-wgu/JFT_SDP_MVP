@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <title>SkillProof — Student</title>
+  <title>SkillProof — Student (STU101 · Time Management &amp; Study Skills)</title>
   <link rel="icon" type="image/png" href="../assets/wgu-favicon.png">
   <link rel="stylesheet" href="https://brady-wgu.github.io/brady-design-system/fonts/aptos.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
@@ -18,8 +18,8 @@
       --backdrop: #55657a;
       --text-dim: rgba(255,255,255,0.72);
       --font-body: 'Aptos', Arial, sans-serif;
-      --frame-w: 1440px;
-      --frame-h: 900px;
+      --frame-w: 1920px;
+      --frame-h: 1080px;
       --bar-h: 96px;
     }
     * { box-sizing: border-box; }
@@ -134,38 +134,74 @@
 
 <div class="stage">
   <section class="screen active" id="screen-1" aria-labelledby="s1-heading">
-    <h2 id="s1-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 1 — Coding Coach landing</h2>
+    <h2 id="s1-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 1 — Course landing — STU101</h2>
     <div class="shot">
       <div class="shot-inner">
-        <img src="screenshots/screen-01.png?v=3" alt="Student: Coding Coach landing">
-        <button class="hotspot" style="left:10.56%;top:47.82%;width:13.62%;height:4.67%;" aria-label="Begin the diagnostic" onclick="goToScreen(2)"></button>
+        <img src="screenshots/screen-01.png?v=5" alt="Student: Course landing — STU101">
+        <button class="hotspot" style="left:20.42%;top:55.84%;width:10.21%;height:3.89%;" aria-label="Begin the AI diagnostic" onclick="goToScreen(2)"></button>
       </div>
     </div>
   </section>
   <section class="screen" id="screen-2" aria-labelledby="s2-heading">
-    <h2 id="s2-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 2 — Diagnostic Results</h2>
+    <h2 id="s2-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 2 — AI diagnostic — generated question</h2>
     <div class="shot">
       <div class="shot-inner">
-        <img src="screenshots/screen-02.png?v=3" alt="Student: Diagnostic Results">
-        <button class="hotspot" style="left:38.89%;top:56.61%;width:22.22%;height:5.08%;" aria-label="View your Progress Map" onclick="goToScreen(3)"></button>
+        <img src="screenshots/screen-02.png?v=5" alt="Student: AI diagnostic — generated question">
+        <button class="hotspot" style="left:25%;top:60%;width:10.35%;height:3.89%;" aria-label="Submit the answer for AI evaluation" onclick="goToScreen(3)"></button>
       </div>
     </div>
   </section>
   <section class="screen" id="screen-3" aria-labelledby="s3-heading">
-    <h2 id="s3-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 3 — Progress Map</h2>
+    <h2 id="s3-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 3 — AI evaluation of the answer</h2>
     <div class="shot">
       <div class="shot-inner">
-        <img src="screenshots/screen-03.png?v=3" alt="Student: Progress Map">
-        <button class="hotspot" style="left:13.89%;top:74.37%;width:11.28%;height:4.08%;" aria-label="Start a coaching session" onclick="goToScreen(4)"></button>
+        <img src="screenshots/screen-03.png?v=5" alt="Student: AI evaluation of the answer">
+        <button class="hotspot" style="left:89.62%;top:87.28%;width:8.71%;height:2.49%;" aria-label="Continue the diagnostic" onclick="goToScreen(4)"></button>
       </div>
     </div>
   </section>
   <section class="screen" id="screen-4" aria-labelledby="s4-heading">
-    <h2 id="s4-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 4 — Help &amp; Support</h2>
+    <h2 id="s4-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 4 — Diagnostic results — baseline mastery</h2>
     <div class="shot">
       <div class="shot-inner">
-        <img src="screenshots/screen-04.png?v=3" alt="Student: Help &amp; Support">
-        <button class="hotspot" style="left:20.99%;top:82.55%;width:6.11%;height:3.27%;" aria-label="Back to the course" onclick="goToScreen(1)"></button>
+        <img src="screenshots/screen-04.png?v=5" alt="Student: Diagnostic results — baseline mastery">
+        <button class="hotspot" style="left:41.67%;top:64.83%;width:16.67%;height:4.07%;" aria-label="View your Progress Map" onclick="goToScreen(5)"></button>
+      </div>
+    </div>
+  </section>
+  <section class="screen" id="screen-5" aria-labelledby="s5-heading">
+    <h2 id="s5-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 5 — Progress Map — 4 topics</h2>
+    <div class="shot">
+      <div class="shot-inner">
+        <img src="screenshots/screen-05.png?v=5" alt="Student: Progress Map — 4 topics">
+        <button class="hotspot" style="left:44.64%;top:21.73%;width:4.01%;height:2.95%;" aria-label="Start the recommended topic" onclick="goToScreen(6)"></button>
+      </div>
+    </div>
+  </section>
+  <section class="screen" id="screen-6" aria-labelledby="s6-heading">
+    <h2 id="s6-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 6 — AI coaching — generated prompt</h2>
+    <div class="shot">
+      <div class="shot-inner">
+        <img src="screenshots/screen-06.png?v=5" alt="Student: AI coaching — generated prompt">
+        <button class="hotspot" style="left:51.88%;top:52.55%;width:10.35%;height:3.89%;" aria-label="Submit the answer for AI coaching feedback" onclick="goToScreen(7)"></button>
+      </div>
+    </div>
+  </section>
+  <section class="screen" id="screen-7" aria-labelledby="s7-heading">
+    <h2 id="s7-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 7 — AI coaching feedback — per-objective scoring</h2>
+    <div class="shot">
+      <div class="shot-inner">
+        <img src="screenshots/screen-07.png?v=5" alt="Student: AI coaching feedback — per-objective scoring">
+        <button class="hotspot" style="left:25.75%;top:7.16%;width:4.48%;height:1.64%;" aria-label="Back to the Progress Map" onclick="goToScreen(5)"></button>
+      </div>
+    </div>
+  </section>
+  <section class="screen" id="screen-8" aria-labelledby="s8-heading">
+    <h2 id="s8-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 8 — Help &amp; Support</h2>
+    <div class="shot">
+      <div class="shot-inner">
+        <img src="screenshots/screen-08.png?v=5" alt="Student: Help &amp; Support">
+        <button class="hotspot" style="left:28.24%;top:83.08%;width:4.58%;height:3.17%;" aria-label="Back to the course" onclick="goToScreen(1)"></button>
       </div>
     </div>
   </section>
@@ -173,7 +209,7 @@
 
   <nav class="meta-bar" aria-label="Demo navigation">
     <div class="meta-bar-header">
-      <span class="meta-id">SkillProof Demo · Student</span>
+      <span class="meta-id">SkillProof Demo · Student · STU101</span>
       <span class="visually-hidden">Switch role:</span>
       <a class="persona-link" href="../student/" aria-current="page"><span class="material-icons-outlined">person</span>Student</a>
       <a class="persona-link" href="../instructor/"><span class="material-icons-outlined">school</span>Instructor</a>
@@ -191,16 +227,20 @@
       </button>
     </div>
     <div class="flow-nav" role="tablist" aria-label="Screen jump buttons">
-      <button class="step-btn active" data-goto="1" role="tab" aria-current="step">01 Coding Coach landing</button>
-      <button class="step-btn" data-goto="2" role="tab" aria-current="false">02 Diagnostic Results</button>
-      <button class="step-btn" data-goto="3" role="tab" aria-current="false">03 Progress Map</button>
-      <button class="step-btn" data-goto="4" role="tab" aria-current="false">04 Help &amp; Support</button>
+      <button class="step-btn active" data-goto="1" role="tab" aria-current="step">01 Course landing — STU101</button>
+      <button class="step-btn" data-goto="2" role="tab" aria-current="false">02 AI diagnostic — generated question</button>
+      <button class="step-btn" data-goto="3" role="tab" aria-current="false">03 AI evaluation of the answer</button>
+      <button class="step-btn" data-goto="4" role="tab" aria-current="false">04 Diagnostic results — baseline mastery</button>
+      <button class="step-btn" data-goto="5" role="tab" aria-current="false">05 Progress Map — 4 topics</button>
+      <button class="step-btn" data-goto="6" role="tab" aria-current="false">06 AI coaching — generated prompt</button>
+      <button class="step-btn" data-goto="7" role="tab" aria-current="false">07 AI coaching feedback — per-objective scoring</button>
+      <button class="step-btn" data-goto="8" role="tab" aria-current="false">08 Help &amp; Support</button>
     </div>
   </nav>
 
   <script>
   (function () {
-    var TOTAL = 4;
+    var TOTAL = 8;
 
     window.goToScreen = function (n) {
       if (n < 1 || n > TOTAL) return;

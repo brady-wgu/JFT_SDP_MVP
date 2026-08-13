@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <title>SkillProof — School Admin</title>
+  <title>SkillProof — School Admin (STU101 · B002)</title>
   <link rel="icon" type="image/png" href="../assets/wgu-favicon.png">
   <link rel="stylesheet" href="https://brady-wgu.github.io/brady-design-system/fonts/aptos.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
@@ -18,8 +18,8 @@
       --backdrop: #55657a;
       --text-dim: rgba(255,255,255,0.72);
       --font-body: 'Aptos', Arial, sans-serif;
-      --frame-w: 1440px;
-      --frame-h: 900px;
+      --frame-w: 1920px;
+      --frame-h: 1080px;
       --bar-h: 96px;
     }
     * { box-sizing: border-box; }
@@ -134,40 +134,41 @@
 
 <div class="stage">
   <section class="screen active" id="screen-1" aria-labelledby="s1-heading">
-    <h2 id="s1-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 1 — Dashboard</h2>
+    <h2 id="s1-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 1 — Dashboard — 16 courses</h2>
     <div class="shot">
       <div class="shot-inner">
-        <img src="screenshots/screen-01.png?v=4" alt="Tenant Admin: Dashboard">
-        <button class="hotspot" style="left:39.49%;top:36.95%;width:8.26%;height:3.78%;" aria-label="Open Analytics &amp; Reporting" onclick="goToScreen(5)"></button>
+        <img src="screenshots/screen-01.png?v=5" alt="Tenant Admin: Dashboard — 16 courses">
+        <button class="hotspot" style="left:19.58%;top:28.51%;width:30%;height:8.87%;" aria-label="Open course B002" onclick="goToScreen(2)"></button>
+        <button class="hotspot" style="left:42.12%;top:10.05%;width:6.2%;height:1.03%;" aria-label="Open Analytics &amp; Reporting" onclick="goToScreen(5)"></button>
       </div>
     </div>
   </section>
   <section class="screen" id="screen-2" aria-labelledby="s2-heading">
-    <h2 id="s2-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 2 — Course Detail — Python for IT Automation</h2>
+    <h2 id="s2-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 2 — Course detail — B002</h2>
     <div class="shot">
       <div class="shot-inner">
-        <img src="screenshots/screen-02.png?v=4" alt="Tenant Admin: Course Detail — Python for IT Automation">
-        <button class="hotspot" style="left:28.19%;top:11.14%;width:8.27%;height:0.43%;" aria-label="Open a skill heatmap" onclick="goToScreen(3)"></button>
-        <button class="hotspot" style="left:9.44%;top:2.03%;width:10.94%;height:0.43%;" aria-label="Back to Dashboard" onclick="goToScreen(1)"></button>
+        <img src="screenshots/screen-02.png?v=5" alt="Tenant Admin: Course detail — B002">
+        <button class="hotspot" style="left:40.88%;top:87.08%;width:6.2%;height:0.99%;" aria-label="Open the STU101 skill heatmap" onclick="goToScreen(3)"></button>
+        <button class="hotspot" style="left:19.58%;top:91.66%;width:9.32%;height:1.54%;" aria-label="Back to Dashboard" onclick="goToScreen(1)"></button>
       </div>
     </div>
   </section>
   <section class="screen" id="screen-3" aria-labelledby="s3-heading">
-    <h2 id="s3-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 3 — Skill Heatmap</h2>
+    <h2 id="s3-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 3 — Skill heatmap — STU101, 17 learners</h2>
     <div class="shot">
       <div class="shot-inner">
-        <img src="screenshots/screen-03.png?v=4" alt="Tenant Admin: Skill Heatmap">
-        <button class="hotspot" style="left:12.01%;top:49.91%;width:6.67%;height:2.69%;" aria-label="Open a learner profile" onclick="goToScreen(4)"></button>
-        <button class="hotspot" style="left:9.44%;top:83.35%;width:13.01%;height:3.07%;" aria-label="Back to Course view" onclick="goToScreen(2)"></button>
+        <img src="screenshots/screen-03.png?v=5" alt="Tenant Admin: Skill heatmap — STU101, 17 learners">
+        <button class="hotspot" style="left:21.51%;top:35.65%;width:5.99%;height:1.93%;" aria-label="Open a learner profile" onclick="goToScreen(4)"></button>
+        <button class="hotspot" style="left:19.58%;top:88.08%;width:9.75%;height:2.2%;" aria-label="Back to Course view" onclick="goToScreen(2)"></button>
       </div>
     </div>
   </section>
   <section class="screen" id="screen-4" aria-labelledby="s4-heading">
-    <h2 id="s4-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 4 — Learner Profile</h2>
+    <h2 id="s4-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 4 — Learner profile — per-topic mastery</h2>
     <div class="shot">
       <div class="shot-inner">
-        <img src="screenshots/screen-04.png?v=4" alt="Tenant Admin: Learner Profile">
-        <button class="hotspot" style="left:9.44%;top:81.83%;width:11.67%;height:3.35%;" aria-label="Back to Heatmap" onclick="goToScreen(3)"></button>
+        <img src="screenshots/screen-04.png?v=5" alt="Tenant Admin: Learner profile — per-topic mastery">
+        <button class="hotspot" style="left:19.58%;top:79.19%;width:8.75%;height:3.15%;" aria-label="Back to Heatmap" onclick="goToScreen(3)"></button>
       </div>
     </div>
   </section>
@@ -175,35 +176,53 @@
     <h2 id="s5-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 5 — Analytics &amp; Reporting</h2>
     <div class="shot">
       <div class="shot-inner">
-        <img src="screenshots/screen-05.png?v=4" alt="Tenant Admin: Analytics &amp; Reporting">
-        <button class="hotspot" style="left:9.44%;top:7.04%;width:10.94%;height:1.49%;" aria-label="Back to Dashboard" onclick="goToScreen(1)"></button>
+        <img src="screenshots/screen-05.png?v=5" alt="Tenant Admin: Analytics &amp; Reporting">
+        <button class="hotspot" style="left:19.58%;top:3.41%;width:8.21%;height:0.72%;" aria-label="Back to Dashboard" onclick="goToScreen(1)"></button>
       </div>
     </div>
   </section>
   <section class="screen" id="screen-6" aria-labelledby="s6-heading">
-    <h2 id="s6-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 6 — New Skill wizard — Step 1: Skill Details</h2>
+    <h2 id="s6-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 6 — New Skill wizard — Step 1: Skill details</h2>
     <div class="shot">
       <div class="shot-inner">
-        <img src="screenshots/screen-06.png?v=4" alt="Tenant Admin: New Skill wizard — Step 1: Skill Details">
-        <button class="hotspot" style="left:9.44%;top:11.05%;width:10.94%;height:2.34%;" aria-label="Back to Dashboard" onclick="goToScreen(1)"></button>
+        <img src="screenshots/screen-06.png?v=5" alt="Tenant Admin: New Skill wizard — Step 1: Skill details">
+        <button class="hotspot" style="left:72.45%;top:69.71%;width:7.96%;height:3.52%;" aria-label="Continue to Topics" onclick="goToScreen(7)"></button>
       </div>
     </div>
   </section>
   <section class="screen" id="screen-7" aria-labelledby="s7-heading">
-    <h2 id="s7-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 7 — Tenant Settings</h2>
+    <h2 id="s7-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 7 — New Skill wizard — Step 2: Topics &amp; objectives</h2>
     <div class="shot">
       <div class="shot-inner">
-        <img src="screenshots/screen-07.png?v=4" alt="Tenant Admin: Tenant Settings">
-
+        <img src="screenshots/screen-07.png?v=5" alt="Tenant Admin: New Skill wizard — Step 2: Topics &amp; objectives">
+        <button class="hotspot" style="left:69.13%;top:79.64%;width:11.29%;height:3.52%;" aria-label="Continue to Model &amp; Prompt" onclick="goToScreen(8)"></button>
       </div>
     </div>
   </section>
   <section class="screen" id="screen-8" aria-labelledby="s8-heading">
-    <h2 id="s8-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 8 — Help &amp; Support</h2>
+    <h2 id="s8-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 8 — New Skill wizard — Step 3: Model &amp; AI prompt</h2>
     <div class="shot">
       <div class="shot-inner">
-        <img src="screenshots/screen-08.png?v=4" alt="Tenant Admin: Help &amp; Support">
-        <button class="hotspot" style="left:20.99%;top:83.04%;width:6.11%;height:3.29%;" aria-label="Back to Dashboard" onclick="goToScreen(1)"></button>
+        <img src="screenshots/screen-08.png?v=5" alt="Tenant Admin: New Skill wizard — Step 3: Model &amp; AI prompt">
+        <button class="hotspot" style="left:19.58%;top:89.48%;width:5.59%;height:2.12%;" aria-label="Back to Topics" onclick="goToScreen(7)"></button>
+      </div>
+    </div>
+  </section>
+  <section class="screen" id="screen-9" aria-labelledby="s9-heading">
+    <h2 id="s9-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 9 — Tenant Settings</h2>
+    <div class="shot">
+      <div class="shot-inner">
+        <img src="screenshots/screen-09.png?v=5" alt="Tenant Admin: Tenant Settings">
+
+      </div>
+    </div>
+  </section>
+  <section class="screen" id="screen-10" aria-labelledby="s10-heading">
+    <h2 id="s10-heading" class="screen-heading visually-hidden" tabindex="-1">Screen 10 — Help &amp; Support</h2>
+    <div class="shot">
+      <div class="shot-inner">
+        <img src="screenshots/screen-10.png?v=5" alt="Tenant Admin: Help &amp; Support">
+        <button class="hotspot" style="left:28.24%;top:83.62%;width:4.58%;height:3.19%;" aria-label="Back to Dashboard" onclick="goToScreen(1)"></button>
       </div>
     </div>
   </section>
@@ -229,20 +248,22 @@
       </button>
     </div>
     <div class="flow-nav" role="tablist" aria-label="Screen jump buttons">
-      <button class="step-btn active" data-goto="1" role="tab" aria-current="step">01 Dashboard</button>
-      <button class="step-btn" data-goto="2" role="tab" aria-current="false">02 Course Detail — Python for IT Automation</button>
-      <button class="step-btn" data-goto="3" role="tab" aria-current="false">03 Skill Heatmap</button>
-      <button class="step-btn" data-goto="4" role="tab" aria-current="false">04 Learner Profile</button>
+      <button class="step-btn active" data-goto="1" role="tab" aria-current="step">01 Dashboard — 16 courses</button>
+      <button class="step-btn" data-goto="2" role="tab" aria-current="false">02 Course detail — B002</button>
+      <button class="step-btn" data-goto="3" role="tab" aria-current="false">03 Skill heatmap — STU101, 17 learners</button>
+      <button class="step-btn" data-goto="4" role="tab" aria-current="false">04 Learner profile — per-topic mastery</button>
       <button class="step-btn" data-goto="5" role="tab" aria-current="false">05 Analytics &amp; Reporting</button>
-      <button class="step-btn" data-goto="6" role="tab" aria-current="false">06 New Skill wizard — Step 1: Skill Details</button>
-      <button class="step-btn" data-goto="7" role="tab" aria-current="false">07 Tenant Settings</button>
-      <button class="step-btn" data-goto="8" role="tab" aria-current="false">08 Help &amp; Support</button>
+      <button class="step-btn" data-goto="6" role="tab" aria-current="false">06 New Skill wizard — Step 1: Skill details</button>
+      <button class="step-btn" data-goto="7" role="tab" aria-current="false">07 New Skill wizard — Step 2: Topics &amp; objectives</button>
+      <button class="step-btn" data-goto="8" role="tab" aria-current="false">08 New Skill wizard — Step 3: Model &amp; AI prompt</button>
+      <button class="step-btn" data-goto="9" role="tab" aria-current="false">09 Tenant Settings</button>
+      <button class="step-btn" data-goto="10" role="tab" aria-current="false">10 Help &amp; Support</button>
     </div>
   </nav>
 
   <script>
   (function () {
-    var TOTAL = 8;
+    var TOTAL = 10;
 
     window.goToScreen = function (n) {
       if (n < 1 || n > TOTAL) return;

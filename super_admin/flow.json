@@ -2,47 +2,47 @@
   "persona": "super_admin",
   "title": "SkillProof — Super Admin",
   "metabarLabel": "SkillProof Demo · Super Admin",
-  "v": 4,
+  "v": 5,
   "hasDark": false,
   "frame": {
-    "width": 1440,
-    "height": 900
+    "width": 1920,
+    "height": 1080
   },
   "screens": [
     {
       "n": 1,
       "file": "screen-01.png",
-      "label": "Dashboard",
-      "docW": 1440,
+      "label": "Dashboard — platform governance",
+      "docW": 1920,
       "wire": [
         {
           "label": "Open Access Control",
           "goto": 3,
           "pct": {
-            "left": 8.61,
-            "top": 18.3,
-            "width": 10,
-            "height": 1.55
+            "left": 18.96,
+            "top": 16.68,
+            "width": 7.5,
+            "height": 1.41
           }
         },
         {
           "label": "Open School Management",
           "goto": 4,
           "pct": {
-            "left": 19.16,
-            "top": 18.3,
-            "width": 7.04,
-            "height": 1.55
+            "left": 26.87,
+            "top": 16.68,
+            "width": 5.28,
+            "height": 1.41
           }
         },
         {
           "label": "Open Analytics & Reporting",
           "goto": 2,
           "pct": {
-            "left": 26.76,
-            "top": 18.3,
-            "width": 7.71,
-            "height": 1.55
+            "left": 32.57,
+            "top": 16.68,
+            "width": 5.79,
+            "height": 1.41
           }
         }
       ]
@@ -51,16 +51,16 @@
       "n": 2,
       "file": "screen-02.png",
       "label": "Analytics & Reporting",
-      "docW": 1440,
+      "docW": 1920,
       "wire": [
         {
           "label": "Back to Dashboard",
           "goto": 1,
           "pct": {
-            "left": 8.61,
-            "top": 3.24,
-            "width": 10.58,
-            "height": 0.63
+            "left": 18.96,
+            "top": 1.81,
+            "width": 7.93,
+            "height": 0.35
           }
         }
       ]
@@ -68,16 +68,16 @@
     {
       "n": 3,
       "file": "screen-03.png",
-      "label": "Access Control",
-      "docW": 1440,
+      "label": "Access Control — permission scopes",
+      "docW": 1920,
       "wire": [
         {
           "label": "Back to Dashboard",
           "goto": 1,
           "pct": {
-            "left": 8.61,
+            "left": 18.96,
             "top": 3.66,
-            "width": 10.58,
+            "width": 7.93,
             "height": 0.72
           }
         }
@@ -87,15 +87,15 @@
       "n": 4,
       "file": "screen-04.png",
       "label": "School Management & Branding",
-      "docW": 1440,
+      "docW": 1920,
       "wire": [
         {
           "label": "Back to Dashboard",
           "goto": 1,
           "pct": {
-            "left": 8.61,
+            "left": 18.96,
             "top": 6.29,
-            "width": 10.58,
+            "width": 7.93,
             "height": 1.23
           }
         }
@@ -104,17 +104,17 @@
     {
       "n": 5,
       "file": "screen-05.png",
-      "label": "Course Detail",
-      "docW": 1440,
+      "label": "Course detail — B002 (contains STU101)",
+      "docW": 1920,
       "wire": [
         {
           "label": "Back to Analytics",
           "goto": 2,
           "pct": {
-            "left": 9.44,
-            "top": 7.98,
-            "width": 9.48,
-            "height": 1.69
+            "left": 19.58,
+            "top": 91.36,
+            "width": 8.78,
+            "height": 1.6
           }
         }
       ]
@@ -123,16 +123,16 @@
       "n": 6,
       "file": "screen-06.png",
       "label": "Help & Support",
-      "docW": 1440,
+      "docW": 1920,
       "wire": [
         {
           "label": "Back to Dashboard",
           "goto": 1,
           "pct": {
-            "left": 20.99,
-            "top": 83.04,
-            "width": 6.11,
-            "height": 3.29
+            "left": 28.24,
+            "top": 83.62,
+            "width": 4.58,
+            "height": 3.19
           }
         }
       ]

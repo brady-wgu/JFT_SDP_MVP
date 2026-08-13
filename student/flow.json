@@ -1,28 +1,28 @@
 {
   "persona": "student",
-  "title": "SkillProof — Student",
-  "metabarLabel": "SkillProof Demo · Student",
-  "v": 3,
+  "title": "SkillProof — Student (STU101 · Time Management & Study Skills)",
+  "metabarLabel": "SkillProof Demo · Student · STU101",
+  "v": 5,
   "hasDark": false,
   "frame": {
-    "width": 1440,
-    "height": 900
+    "width": 1920,
+    "height": 1080
   },
   "screens": [
     {
       "n": 1,
       "file": "screen-01.png",
-      "label": "Coding Coach landing",
-      "docW": 1440,
+      "label": "Course landing — STU101",
+      "docW": 1920,
       "wire": [
         {
-          "label": "Begin the diagnostic",
+          "label": "Begin the AI diagnostic",
           "goto": 2,
           "pct": {
-            "left": 10.56,
-            "top": 47.82,
-            "width": 13.62,
-            "height": 4.67
+            "left": 20.42,
+            "top": 55.84,
+            "width": 10.21,
+            "height": 3.89
           }
         }
       ]
@@ -30,17 +30,17 @@
     {
       "n": 2,
       "file": "screen-02.png",
-      "label": "Diagnostic Results",
-      "docW": 1440,
+      "label": "AI diagnostic — generated question",
+      "docW": 1920,
       "wire": [
         {
-          "label": "View your Progress Map",
+          "label": "Submit the answer for AI evaluation",
           "goto": 3,
           "pct": {
-            "left": 38.89,
-            "top": 56.61,
-            "width": 22.22,
-            "height": 5.08
+            "left": 25,
+            "top": 60,
+            "width": 10.35,
+            "height": 3.89
           }
         }
       ]
@@ -48,17 +48,17 @@
     {
       "n": 3,
       "file": "screen-03.png",
-      "label": "Progress Map",
-      "docW": 1440,
+      "label": "AI evaluation of the answer",
+      "docW": 1920,
       "wire": [
         {
-          "label": "Start a coaching session",
+          "label": "Continue the diagnostic",
           "goto": 4,
           "pct": {
-            "left": 13.89,
-            "top": 74.37,
-            "width": 11.28,
-            "height": 4.08
+            "left": 89.62,
+            "top": 87.28,
+            "width": 8.71,
+            "height": 2.49
           }
         }
       ]
@@ -66,17 +66,89 @@
     {
       "n": 4,
       "file": "screen-04.png",
+      "label": "Diagnostic results — baseline mastery",
+      "docW": 1920,
+      "wire": [
+        {
+          "label": "View your Progress Map",
+          "goto": 5,
+          "pct": {
+            "left": 41.67,
+            "top": 64.83,
+            "width": 16.67,
+            "height": 4.07
+          }
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "file": "screen-05.png",
+      "label": "Progress Map — 4 topics",
+      "docW": 1920,
+      "wire": [
+        {
+          "label": "Start the recommended topic",
+          "goto": 6,
+          "pct": {
+            "left": 44.64,
+            "top": 21.73,
+            "width": 4.01,
+            "height": 2.95
+          }
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "file": "screen-06.png",
+      "label": "AI coaching — generated prompt",
+      "docW": 1920,
+      "wire": [
+        {
+          "label": "Submit the answer for AI coaching feedback",
+          "goto": 7,
+          "pct": {
+            "left": 51.88,
+            "top": 52.55,
+            "width": 10.35,
+            "height": 3.89
+          }
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "file": "screen-07.png",
+      "label": "AI coaching feedback — per-objective scoring",
+      "docW": 1920,
+      "wire": [
+        {
+          "label": "Back to the Progress Map",
+          "goto": 5,
+          "pct": {
+            "left": 25.75,
+            "top": 7.16,
+            "width": 4.48,
+            "height": 1.64
+          }
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "file": "screen-08.png",
       "label": "Help & Support",
-      "docW": 1440,
+      "docW": 1920,
       "wire": [
         {
           "label": "Back to the course",
           "goto": 1,
           "pct": {
-            "left": 20.99,
-            "top": 82.55,
-            "width": 6.11,
-            "height": 3.27
+            "left": 28.24,
+            "top": 83.08,
+            "width": 4.58,
+            "height": 3.17
           }
         }
       ]
