@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SkillProof — Help &amp; Resources — Storyboard v4.116</title>
+  <title>SkillProof — Help &amp; Resources — Storyboard v4.172</title>
   <link rel="icon" href="../favicon.ico" sizes="16x16 32x32 48x48">
   <link rel="icon" type="image/png" sizes="512x512" href="../assets/wgu-owl-favicon.png">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
@@ -17,6 +17,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://brady-wgu.github.io/brady-design-system/fonts/aptos.css">
+  <!-- The icon font itself. This page preconnected to the font host but never loaded the
+       stylesheet, so .material-icons-outlined resolved to nothing and all 23 ligatures
+       rendered as their literal words ("search", "expand_more") instead of glyphs. Every
+       other surface already loads this line. -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 
   <style>
     /* design tokens — Paragon-aligned tokens (matches every portal) */

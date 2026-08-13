@@ -8,6 +8,18 @@ This is a prototype repo — entries below run from the active JFT meeting follo
 
 ---
 
+## v4.172 — 13 Aug 2026 — Help page icon font (pre-demo pre-flight fix)
+
+Found by a pre-flight run against the **live** site rather than a local server: [`help/index.html`](help/index.html) declared `.material-icons-outlined { font-family: 'Material Icons Outlined' }` and preconnected to `fonts.googleapis.com`, but **never loaded the stylesheet**. With no font, the ligatures never resolved and all **23 icons rendered as their literal words** ("search", "expand_more", "dark_mode") — the one surface in the site missing the line every other page already had.
+
+Fixed by adding the icon stylesheet link. Verified live afterwards: 23/23 glyphs resolve on Help, and all 8 surfaces are clean.
+
+Also added `preflight-live.js` to the QA tools (mirrored to `brady-browser-kit`). It checks the deployed site the way an audience gets it — real CDN, real third-party font requests from this network — asserting per page: HTTP 200, no JS errors, no failed requests, **icon ligatures resolved as glyphs rather than literal text**, the Aptos webfont loaded, no horizontal overflow at 1920 / 1366 / 1280, no broken images, and no page still declaring the superseded wordmark favicon. This class of bug is invisible to a local check that only asserts HTTP status.
+
+*(This lands after the `v4.171` release tag, so the tagged snapshot does not include it.)*
+
+---
+
 ## v4.171 — 13 Aug 2026 — The status demo deck now opens in the browser
 
 The landing page linked the raw `.pptx`, which meant "view the deck" was really "download 41 MB, wait, open PowerPoint". **No browser renders PowerPoint natively**, so the deck is now converted to something a browser can paint: a viewer at [`/deck/`](https://brady-wgu.github.io/SkillProof/deck/).
