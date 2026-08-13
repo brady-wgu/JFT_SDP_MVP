@@ -2,7 +2,7 @@
   "persona": "instructor",
   "title": "SkillProof — Instructor (STU101 · B002)",
   "metabarLabel": "SkillProof Demo · Instructor",
-  "v": 5,
+  "v": 6,
   "hasDark": false,
   "frame": {
     "width": 1920,
@@ -38,9 +38,9 @@
           "goto": 3,
           "pct": {
             "left": 20.99,
-            "top": 86.81,
+            "top": 77.3,
             "width": 8.1,
-            "height": 1.54
+            "height": 1.37
           }
         },
         {
@@ -48,9 +48,9 @@
           "goto": 1,
           "pct": {
             "left": 19.58,
-            "top": 91.66,
+            "top": 92.58,
             "width": 9.32,
-            "height": 1.54
+            "height": 1.37
           }
         }
       ]
@@ -104,6 +104,70 @@
     {
       "n": 5,
       "file": "screen-05.png",
+      "label": "Staging Skills — preview before go-live",
+      "docW": 1920,
+      "wire": [
+        {
+          "label": "Preview the B002 staging Skill",
+          "goto": 6,
+          "pct": {
+            "left": 73.57,
+            "top": 30.58,
+            "width": 5.13,
+            "height": 4.07
+          }
+        },
+        {
+          "label": "Back to Dashboard",
+          "goto": 1,
+          "pct": {
+            "left": 19.58,
+            "top": 10.28,
+            "width": 7.42,
+            "height": 2.02
+          }
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "file": "screen-06.png",
+      "label": "Skill Preview — AI-generated question",
+      "docW": 1920,
+      "wire": [
+        {
+          "label": "Submit the answer for AI evaluation",
+          "goto": 7,
+          "pct": {
+            "left": 25,
+            "top": 71.31,
+            "width": 10.35,
+            "height": 3.7
+          }
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "file": "screen-07.png",
+      "label": "Skill Preview — AI evaluation",
+      "docW": 1920,
+      "wire": [
+        {
+          "label": "Finish the preview",
+          "goto": 5,
+          "pct": {
+            "left": 89.6,
+            "top": 88.02,
+            "width": 8.74,
+            "height": 2.33
+          }
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "file": "screen-08.png",
       "label": "Help & Support",
       "docW": 1920,
       "wire": [

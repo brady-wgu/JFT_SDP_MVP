@@ -6,7 +6,7 @@
 
 [![Live Demo](https://img.shields.io/badge/Live-GitHub_Pages-0070F0?style=for-the-badge&logo=github)](https://brady-wgu.github.io/SkillProof/)
 [![Version](https://img.shields.io/badge/Version-4.167-46B1EF?style=for-the-badge)](CHANGELOG.md)
-[![Live Screens](https://img.shields.io/badge/Live_Demo_Screens-29-001730?style=for-the-badge)]()
+[![Live Screens](https://img.shields.io/badge/Live_Demo_Screens-32-001730?style=for-the-badge)]()
 [![Personas](https://img.shields.io/badge/Personas-4-FBAE40?style=for-the-badge)]()
 
 ![Portal selector landing](assets/landing/light.png)
@@ -43,22 +43,22 @@ Each persona has its own **secret LRPS deep link** in production and authenticat
 |:--------|:----|:------------|
 | **LRPS Landing** (storyboard root) | [`/`](https://brady-wgu.github.io/SkillProof/) | Entry point — table segmented into **Student Skills** (33, incl. 1 broken DEV, 24 E010/D522 skill-level links, and 1 broken skill-level link), **Staff Links** (6, incl. 3 broken DEV), and **Live-App Walkthroughs** (4). **Start here.** **v4.166:** added 24 skill-level LRPS links (10 for E010, 14 for D522) from the 16 Jul 2026 link-list update; flagged D522-13 as broken per LOG-033/034 (a post-deploy rename orphaned its LRPS link). **v4.165:** pagination removed — this is a single real, complete page now, not a sample of a huge simulated dataset. **v4.164:** all decorative filler rows removed; every real link from the SkillProof link tracker now represented, including broken DEV entries. **v4.163:** STU101 added. **v4.162:** segmented into 3 sections. **v4.161:** live skill rows added. **v4.59:** promoted to root. |
 | **Student walkthrough** | [`/student/`](https://brady-wgu.github.io/SkillProof/student/) | Live-app screenshots (STU101 · Time Management): course landing → **AI diagnostic question → AI evaluation** → diagnostic results → Progress Map → **AI coaching prompt → AI coaching feedback** → Help & Support. **8 screens.** Archived mockup: [`_archive/student/`](_archive/student/) (18 screens). |
-| **Instructor walkthrough** | [`/instructor/`](https://brady-wgu.github.io/SkillProof/instructor/) | Live-app screenshots (B002 · STU101): Dashboard (4 courses, 68 learners needing attention) → Course Detail → Skill heatmap (17 learners) → Learner profile → Help. **5 screens.** Archived mockup: [`_archive/instructor/`](_archive/instructor/) (5 screens). |
+| **Instructor walkthrough** | [`/instructor/`](https://brady-wgu.github.io/SkillProof/instructor/) | Live-app screenshots (B002 · STU101): Dashboard (4 courses, 68 learners needing attention) → Course Detail → Skill heatmap (17 learners) → Learner profile → Staging Skills → **Skill Preview AI question → AI evaluation** → Help. **8 screens.** Archived mockup: [`_archive/instructor/`](_archive/instructor/) (5 screens). |
 | **School Admin walkthrough** | [`/tenant_admin/`](https://brady-wgu.github.io/SkillProof/tenant_admin/) | Live-app screenshots (B002 · STU101): Dashboard → Course Detail → Skill heatmap (17 learners) → Learner profile → Analytics → **New Skill wizard steps 1-3, incl. Model & AI prompt** → Tenant Settings → Help. **10 screens.** Archived mockup: [`_archive/tenant_admin/`](_archive/tenant_admin/) (12 screens). |
 | **Super Admin walkthrough** | [`/super_admin/`](https://brady-wgu.github.io/SkillProof/super_admin/) | Live-app screenshots: Dashboard → Analytics → Access Control → School Management → Course Detail (B002) → Help. **6 screens.** Archived mockup: [`_archive/super_admin/`](_archive/super_admin/) (11 screens). |
 | **Help & Resources** (shared) | [`/help/`](https://brady-wgu.github.io/SkillProof/help/) | Shared self-service support, documentation, and video training surface. Linked from every admin portal navbar. Closes Appendix A §16.4 #9.14 (self-service portal) and #9.15 (video training). |
 
-**Live-app click-through demo: 29 screens · 35 hotspots · 4 personas** (Student 8 · Instructor 5 · School Admin 10 · Super Admin 6), all four on **STU101 / course B002**. Every screen fills the full browser width and scrolls **inside** its own frame, so a 1,080px dashboard and a 6,100px analytics rollup present as the same shape. Hotspots are real clickable regions measured off the live DOM, so a whole role can be walked without logging in. The meta-bar switches roles, which is the point: one link replaces signing into four accounts to show the product. *(The archived mockups in `_archive/` hold the prior 46-screen hand-built set.)*
+**Live-app click-through demo: 32 screens · 39 hotspots · 4 personas** (Student 8 · Instructor 8 · School Admin 10 · Super Admin 6), all four on **STU101 / course B002**. Every screen fills the full browser width and scrolls **inside** its own frame, so a 1,080px dashboard and a 6,100px analytics rollup present as the same shape. Hotspots are real clickable regions measured off the live DOM, so a whole role can be walked without logging in. The meta-bar switches roles, which is the point: one link replaces signing into four accounts to show the product. *(The archived mockups in `_archive/` hold the prior 46-screen hand-built set.)*
 
-**The AI interaction loop is included on both sides**, which is the reason the platform exists: the student diagnostic shows an AI-generated assessment prompt and the model's per-objective scoring, and the coaching task shows an AI coaching prompt and its evaluation table. School Admin step 3 of the New Skill wizard shows the model choice, fallback chain, and compiled system prompt.
+**The AI interaction loop is included on both sides**, which is the reason the platform exists: the student diagnostic shows an AI-generated assessment prompt and the model's per-objective scoring, and the coaching task shows an AI coaching prompt and its evaluation table. The Instructor **Skill Preview** shows the same loop from the staff side — an AI-generated question against a staging Skill, and the model's evaluation of a submitted answer, marked "Preview only — no data is saved". School Admin step 3 of the New Skill wizard shows the model choice, fallback chain, and compiled system prompt, and the preview grades against exactly the Learning Objectives entered in step 2.
 
 Captures and hotspots are generated by `skillproof-qa-tools/demo-capture.js` (captures at 1920 wide; every PNG's width is asserted at build time) and verified by `verify-demo.js`, which clicks every hotspot and confirms it lands on the screen it claims. `flow.json` is script output, so re-run the capture rather than hand-editing it.
 
-**Known gaps**
+**Notes**
 
-- **No Skill Preview screen.** `/instructor/staging-skills/:id/preview` is the instructor-side AI screen, but it needs a **staging** skill and B002 holds only Production(3) + Archived(3). The only staging skills on the account are two `qa-wj80` seeds under A101. Adding this screen means deploying a staging skill into B002.
-- **STAGE seed debris is visible** on several admin screens: archived skills named `QA-TEST … (delete me)` appear on the B002 course detail, and the New Skill wizard's Course dropdown lists `QA-C1 · QA-TEST Run1 Course EDITED (delete me)`, `ZZUAT08 · ZZ-UAT-20260807-Course-Edited`, and typo'd names like `Object Oriented Systemsssss`. Cleaning these means renaming or archiving records other testers may be using.
 - **Student surnames are masked**; first names and all staff names are left visible, per the 12 AUG 2026 decision.
+- **STAGE test data and "test" labels are expected** and left as-is — this is a beta test tenant, not a cleanup target.
+- The Instructor Skill Preview runs against **`STU101-PREV · Weekly Planning Basics`**, a staging Skill created in B002 on 13 AUG 2026 for this purpose. Staging means students cannot launch it, and only staging Skills appear in the instructor Preview list.
 
 ---
 
@@ -153,7 +153,7 @@ SkillProof/
 │   ├── index.html              ← generated by build_prototypes.py
 │   ├── flow.json               screens + hotspot wiring (SCRIPT OUTPUT of demo-capture.js)
 │   └── screenshots/            4 PNGs (live-app captures)
-├── instructor/                 Live-app walkthrough — B002/STU101 (5 screens)
+├── instructor/                 Live-app walkthrough — B002/STU101, incl. Skill Preview AI loop (8 screens)
 │   ├── index.html
 │   ├── flow.json
 │   └── screenshots/            5 PNGs
