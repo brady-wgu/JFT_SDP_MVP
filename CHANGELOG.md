@@ -4,7 +4,47 @@ All notable changes to the SkillProof storyboard. Format loosely follows [Keep a
 
 The repo's storyboard version (`Storyboard vN.M`) tracks the visual prototype, not the underlying SkillProof product version that JFT is building. The SkillProof product follows the user scenario catalog versions (v1.2 MVP, v1.3 Additional, etc.).
 
-This is a prototype repo — entries below cover the active JFT meeting follow-up phases (v4.69 – v4.81). Earlier history exists in git but isn't tracked here.
+This is a prototype repo — entries below run from the active JFT meeting follow-up phases (v4.69) through the current release. Earlier history exists in git but isn't tracked here.
+
+---
+
+## v4.168 — 13 Aug 2026 — Demo rebuilt on STU101 with the AI interaction loop
+
+The persona walkthroughs were unusable as a stand-in for a live demo: the frames were letterboxed cards rather than full-width app windows, no screen showed the AI interaction the platform exists for, and the student flow had silently moved off STU101 onto Introduction to Python. This release fixes all three and makes the failure modes structurally impossible to repeat.
+
+**Full-browser-width frames.** `.shot` was pinned at `min(1440px, 100%)` with a 900px height cap, centred on a grey backdrop, so it read as a floating screenshot rather than the app. It is now `width: 100%` / `height: calc(100vh - bar)`, edge-to-edge, and the frame owns the only scrollbar. Captures vary from 1,080px to 6,139px tall; the internal scroll keeps every screen the same shape. `.stage` changed from flex to block — a flex row let a second `.active` screen shrink both children and produced phantom width readings.
+
+**The AI interaction loop, on all three sides.** Previously absent entirely; the July 2026 storyboard had two such screens and the 12 Aug rebuild had dropped them.
+- Student **AI diagnostic**: a model-generated assessment prompt, then its evaluation — narrative feedback, a per-Learning-Objective score table, and a next-focus line.
+- Student **AI coaching**: a coaching prompt for the recommended Topic, then the same per-objective evaluation.
+- Instructor **Skill Preview**: the staff-side view of the same loop, marked "Preview only — no data is saved". The 11 Aug site map had recorded this grading step as unverified because the Claude-browser permission classifier blocked the submit.
+- School Admin **New Skill wizard step 3** now shows the model choice, the fallback chain, the prompt configuration fields *filled in*, and the resulting compiled system prompt. The Preview grades against exactly the Learning Objectives entered in step 2, which demonstrates the authoring config reaching the model.
+
+**One course across all four roles.** Everything course-scoped points at `STU101 · Time Management & Study Skills` inside course folder `B002 · Brady's SoT Course` — 17 enrolled learners, so the heatmaps and learner profiles are populated with real data. A student session is pinned to one course by its LTI launch (the JWT carries `activeCourseId`; the app ignores `?course=`), so the launch link *is* the course selection: `provision/576572714`, not `568442570`.
+
+**Access + data created to make the capture possible.**
+- Granted the instructor account course folder B002 via Super Admin → Access Control → Add Course. Before that the app answered "You do not have access to this course folder". The grant is checked server-side and applied to the already-open session with no LTI re-launch.
+- Created staging Skill `STU101-PREV · Weekly Planning Basics` in B002 (1 Topic, 2 Learning Objectives, gpt-4o-mini) so Skill Preview has something to run. Staging means students cannot launch it, and only staging Skills appear in the Preview list.
+
+**Screen counts:** Student 4 → 8, Instructor 7 → 8, School Admin 8 → 10, Super Admin 6. **32 screens · 39 hotspots**, every capture 1920px wide (was a mix of 745/1329/1440), all four personas light-mode only.
+
+**Capture harness (`skillproof-qa-tools`, versioned in `brady-browser-kit`).**
+- Captures at 1920 wide so screens are 1:1 on a 1080p share instead of upscaled by the full-bleed frame.
+- `order` lets capture order differ from display order. Diagnostic Results needs a COMPLETED diagnostic while the diagnostic question screen needs one IN PROGRESS, so results is captured first and the retake that destroys it runs last.
+- **Content-readiness gate.** Three student screens shipped as grey loading skeletons with every wait reporting success, because the app's skeleton reuses the real class names — `waitSelector` proved presence, never readiness. Capture now blocks until no skeleton/spinner is present and re-asserts it at the shutter. Two traps: loading markers must be counted *raw*, since a skeleton wrapper measures 0×0 while its bars still paint (a visibility filter made the gate pass instantly); and `[role=progressbar]` must NOT count as a spinner, because the Super Admin cost bar legitimately carries that role and is always present.
+- New `select` step (`locator.fill()` cannot drive the wizard's required Course dropdown), optional per-step `timeout`, and `readyTimeout` for model-generated screens.
+- Fixed a real hotspot bug: resolving the dashboard's B002 target by text matched `DIV.tap__course-grid` — the entire 16-course grid at 60.8% width — so clicking anywhere in it navigated.
+- `demo-seed-diagnostic.js` now finishes any part-finished attempt before retaking; continuing a partial attempt answered only leftover questions and deleted the "Mastered Topics" group from the results screen.
+- `verify-demo.js` derives expected width per persona instead of hardcoding 1440, and launches its own browser rather than borrowing an SSO-authenticated profile.
+
+**Redaction.** Student surnames masked, first names and all staff names visible. Added masking to the Instructor dashboard's 68-learner cross-course table, which held real names and had never been redacted. Access Control masks Student rows only — staff keep names and emails.
+
+**Cache-buster.** Screenshots were re-captured several times while `v` stayed put, so the `?v=` query never changed and browsers kept serving the cached skeleton images — a shipped fix looked undeployed. All personas bumped to `v=7`, and the rule is now recorded in every flow file and the README.
+
+**Documentation.** Full README refresh against the current state: repointed five broken links to per-persona READMEs that moved to `_archive/` in v4.167; retargeted the "Python coding coach" framing to the course-agnostic platform the demo now shows; corrected the repo-layout PNG counts (4/5/4/4 → 8/8/10/6) and noted the personas are light-mode only; replaced the "Regenerate screenshots" instructions, which only covered the archived mockups, with the real five-step live pipeline plus what the tooling does and does not guarantee; scoped the Design System palette extensions and the shared persona/course reference to `_archive/`; added a **Live demo canon** table of the real STAGE ids; and fixed the changelog pointer, which claimed v4.160 while the badge read v4.167.
+
+### Files
+`README.md`, `CHANGELOG.md`, `index.html`, `build_prototypes.py`, `{student,instructor,tenant_admin,super_admin}/{index.html,flow.json,screenshots/}`, and in `skillproof-qa-tools` / `brady-browser-kit`: `demo-capture.js`, `verify-demo.js`, `verify-frame-width.js`, `demo-reauth.js`, `demo-seed-diagnostic.js`, `demo-complete-diagnostic.js`, `flow-{student,instructor,schooladmin,superadmin}.json`.
 
 ---
 
