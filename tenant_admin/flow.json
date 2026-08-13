@@ -2,7 +2,7 @@
   "persona": "tenant_admin",
   "title": "SkillProof — School Admin (STU101 · B002)",
   "metabarLabel": "SkillProof Demo · School Admin",
-  "v": 5,
+  "v": 7,
   "hasDark": false,
   "frame": {
     "width": 1920,
@@ -176,9 +176,9 @@
           "goto": 7,
           "pct": {
             "left": 19.58,
-            "top": 89.48,
+            "top": 89.61,
             "width": 5.59,
-            "height": 2.12
+            "height": 2.1
           }
         }
       ]
